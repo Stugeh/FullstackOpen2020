@@ -49,28 +49,94 @@ import ReactDOM from 'react-dom';
 
 // Event handling
 //--------------------------------------------------------------------------//
+//
+// const Display = ({counter}) => <div>{counter}</div>
+//
+//
+// const Button = ({handleClick, text}) => (
+//     <button onClick = {handleClick}>
+//       {text}
+//     </button>
+//   )
+//
+//
+// const App = (props) => {
+//   const [counter, setCounter] = useState(0)
+//   const increaseCount = () => setCounter(counter + 1)
+//   const decreaseCount = () => setCounter(counter - 1)
+//   const resetCount = () => setCounter(0)
+//
+//   return (
+//     <div>
+//       <Display counter = {counter}/>
+//       <Button handleClick = {increaseCount} text = "plus"/>
+//       <Button handleClick = {decreaseCount} text = "minus"/>
+//       <Button handleClick = {resetCount} text = "reset"/>
+//     </div>
+//   )
+// }
+//
+//
+// ReactDOM.render(
+//     <App />,
+//     document.getElementById('root')
+// )
+//
+//--------------------------------------------------------------------------//
 
-const Display = ({counter}) => <div>{counter}</div>
-
-const Button = ({handleClick, text}) => (
-    <button onClick = {handleClick}>
-      {text}
-    </button>
-  )
 
 
-const App = (props) => {
-  const [counter, setCounter] = useState(0)
-  const increaseCount = () => setCounter(counter + 1)
-  const decreaseCount = () => setCounter(counter - 1)
-  const resetCount = () => setCounter(0)
+//Complex state
+//--------------------------------------------------------------------------//
+
+const History = ({allClicks}) => {
+  if (allClicks.length === 0) {
+    return (
+      <div>
+        the app is used by pressing the buttons
+      </div>
+    )
+  }
 
   return (
     <div>
-      <Display counter = {counter}/>
-      <Button handleClick = {increaseCount} text = "plus"/>
-      <Button handleClick = {decreaseCount} text = "minus"/>
-      <Button handleClick = {resetCount} text = "reset"/>
+      button press history: {allClicks.join(' ')}
+    </div>
+  )
+}
+
+
+const Button = ({ a, text }) => (
+  <button a={a}>
+    {text}
+  </button>
+)
+
+
+const App = (props) => {
+  const [left, setLeft] = useState(0)
+  const [right, setRight] = useState(0)
+  const [allClicks, setAll] = useState([])
+
+  const handleLeftClick = () => {
+    setAll(allClicks.concat('L'))
+    setLeft(left + 1)
+  }
+
+  const handleRightClick = () => {
+    setAll(allClicks.concat('R'))
+    setRight(right + 1)
+  }
+
+  return (
+    <div>
+      <div>
+        {left}
+        <Button a={handleLeftClick} text = "left" />
+        <Button a={handleRightClick} text = "right" />
+        {right}
+        <History allClicks = {allClicks}/>
+      </div>
     </div>
   )
 }
@@ -80,7 +146,3 @@ ReactDOM.render(
     <App />,
     document.getElementById('root')
 )
-
-//--------------------------------------------------------------------------//
-
-
