@@ -106,8 +106,8 @@ const History = ({allClicks}) => {
 }
 
 
-const Button = ({ a, text }) => (
-  <button a={a}>
+const Button = ({ onClick, text }) => (
+  <button onClick={onClick}>
     {text}
   </button>
 )
@@ -132,8 +132,8 @@ const App = (props) => {
     <div>
       <div>
         {left}
-        <Button a={handleLeftClick} text = "left" />
-        <Button a={handleRightClick} text = "right" />
+        <Button onClick={handleLeftClick} text = "left" />
+        <Button onClick={handleRightClick} text = "right" />
         {right}
         <History allClicks = {allClicks}/>
       </div>
