@@ -51,18 +51,9 @@ const App = () => {
     average: (good - bad) / total,
     positivePercent: good / total * 100
   }
-
-  const handleGood = () => {
-    setGood(good + 1)
-  }
-
-  const handleNeutral = () => {
-    setNeutral(neutral + 1)
-  }
-
-  const handleBad = () => {
-    setBad(bad + 1)
-  }
+  const handleGood = () => { setGood(good + 1) }
+  const handleNeutral = () => { setNeutral(neutral + 1) }
+  const handleBad = () => { setBad(bad + 1) }
   
   return (
     <div>
