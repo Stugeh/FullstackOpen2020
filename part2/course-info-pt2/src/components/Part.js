@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Part = (props) => {
+const Part = ({part}) => {
     return(
       <>
-        <p>{props.name} has {props.num} exercises.</p>
+        <p>{part['name']} has {part['exercises']} exercises.</p>
       </>
     )
   }
