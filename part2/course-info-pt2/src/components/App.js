@@ -2,18 +2,7 @@ import React from 'react';
 import Course from './Course'
 import './App.css';
 
-
-
-// const Total = (props) => {
-//   return(
-//     <div>
-//       <p>
-//         There is a total of {props.parts[0].exercises + props.parts[1].exercises + 
-//         props.parts[2].exercises} exercises.
-//       </p>
-//     </div>
-//     )
-// }
+//defines the dictionary containing courses and calls Course to render the text on screen.
 
 const App = () => {
   const course = {

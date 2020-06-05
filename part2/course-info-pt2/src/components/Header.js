@@ -1,5 +1,7 @@
 import React from 'react'
 
+//Renders header of a course
+
 const Header = ({name}) => {
     return(
       <>
