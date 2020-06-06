@@ -5,26 +5,22 @@ import React, { useState } from 'react'
 const Person = ({ person }) =>
   <div>{person.name} {person.number} </div>
 
-const AddForm = ({ newName, newNumber, handleName, handleNumber, addPerson }) => {
-  return (
-    <form onSubmit={addPerson}>
-      <div>name: <input value={newName} onChange={handleName} /> </div>
-      <div>number: <input value={newNumber} onChange={handleNumber} /> </div>
-      <div><button type="submit">add</button></div>
-    </form>)
-}
 
-const Search = ({ newSearch, handleSearch }) => {
-  return (
-    <div>Search: <input value={newSearch} onChange={handleSearch} /></div>
-  )
-}
+const AddForm = ({ newName, newNumber, handleName, handleNumber, addPerson }) =>
+  <form onSubmit={addPerson}>
+    <div>name: <input value={newName} onChange={handleName} /> </div>
+    <div>number: <input value={newNumber} onChange={handleNumber} /> </div>
+    <div><button type="submit">add</button></div>
+  </form>
 
-const RenderNumbers = ({ filteredList }) => {
-  return (
-    filteredList.map(person => <Person key={person.name} person={person} />)
-  )
-}
+
+const Search = ({ newSearch, handleSearch }) =>
+  <div>Search: <input value={newSearch} onChange={handleSearch} /></div>
+
+
+const RenderNumbers = ({ filteredList }) =>
+  filteredList.map(person => <Person key={person.name} person={person} />)
+
 
 const App = () => {
   const [newName, setNewName] = useState('')
