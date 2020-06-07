@@ -59,7 +59,7 @@ const App = () => {
   }
 
 
-  const filteredList = countries.filter(country =>
+  const filteredList = newSearch === '' ? [] : countries.filter(country =>
     country.name.toLowerCase().includes(newSearch.toLowerCase()))
 
 
