@@ -7,16 +7,16 @@ const Search = ({ newSearch, handleSearch }) =>
   <div>Search: <input value={newSearch} onChange={handleSearch} /></div>
 
 
-const Render10 = ({ filteredList }) =>
+const Render10 = ({ filteredList, setNewSearch }) =>
   filteredList.map(country =>
     <div key={country.name}>
       {country.name}
+      <button onClick={() => setNewSearch(country.name)}> Show </button>
     </div>)
 
 
 
 const Render1 = ({ country }) => {
-  console.log(country)
   return (
     <div>
       <h1>{country.name}</h1>
@@ -32,24 +32,20 @@ const Render1 = ({ country }) => {
 }
 
 
-const RenderMaster = ({ filteredList }) => {
+const RenderMaster = ({ filteredList, setNewSearch }) => {
   if (filteredList.length === 1) {
     return (<Render1 country={filteredList[0]} />)
   }
   else if (filteredList.length < 10) {
-    return (<Render10 filteredList={filteredList} />)
+    return (<Render10 filteredList={filteredList} setNewSearch={setNewSearch} />)
   }
   return (<div>Too many matches</div>)
 }
 
 
-
-
-
 const App = () => {
   const [countries, setCountries] = useState([])
   const [newSearch, setNewSearch] = useState('')
-
 
   const hook = () => {
     axios
@@ -58,20 +54,19 @@ const App = () => {
   }
   useEffect(hook, [])
 
-
   const handleSearch = (event) => {
     setNewSearch(event.target.value)
   }
 
 
-  const filteredList = newSearch === '' ? [] : countries.filter(country =>
+  const filteredList = countries.filter(country =>
     country.name.toLowerCase().includes(newSearch.toLowerCase()))
 
 
   return (
     <div>
       <Search newSearch={newSearch} handleSearch={handleSearch} />
-      <RenderMaster filteredList={filteredList} />
+      <RenderMaster filteredList={filteredList} setNewSearch={setNewSearch} />
     </div>
   )
 }
