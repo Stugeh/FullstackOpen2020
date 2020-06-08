@@ -6,6 +6,27 @@ import './App.css';
 const Search = ({ newSearch, handleSearch }) =>
   <div>Search: <input value={newSearch} onChange={handleSearch} /></div>
 
+const RenderWeather = ({ capital }) => {
+  const apiKey = process.env.REACT_APP_API_KEY
+  const request = `http://api.weatherstack.com/current?access_key=${apiKey}&query=${capital}`
+  const [weather, setWeather] = useState([])
+
+  const hook = () => {
+    axios.get(request).then(response => { setWeather(response.data.current) })
+  }
+  useEffect(hook, [])
+
+  console.log(Object.keys(weather))
+
+  return (
+    <div>
+      <div><b>temperature:</b> {weather.temperature}c</div>
+      <img src={weather.weather_icons} alt='weather icon' />
+      <div><b>wind:</b> {weather.wind_speed}</div>
+    </div>
+  )
+}
+
 
 const Render10 = ({ filteredList, setNewSearch }) =>
   filteredList.map(country =>
@@ -22,11 +43,16 @@ const Render1 = ({ country }) => {
       <h1>{country.name}</h1>
       <div><b>Capital: </b>{country.capital}</div>
       <div><b>Population: </b>{country.population}</div>
+
       <h3>languages</h3>
       <ul>
         {country.languages.map(language => <li key={language.name}>{language.name}</li>)}
       </ul>
+
       <img src={country.flag} alt={`Flag of ${country.name}`} style={{ width: 250, height: 140 }} />
+
+      <h3>Weather in {country.capital}</h3>
+      <RenderWeather capital={country.capital} />
     </div>
   )
 }
