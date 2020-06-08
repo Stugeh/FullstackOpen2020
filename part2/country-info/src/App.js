@@ -7,20 +7,18 @@ const Search = ({ newSearch, handleSearch }) =>
   <div>Search: <input value={newSearch} onChange={handleSearch} /></div>
 
 const RenderWeather = ({ capital }) => {
+  //key from https://weatherstack.com/dashboard
   const apiKey = process.env.REACT_APP_API_KEY
   const request = `http://api.weatherstack.com/current?access_key=${apiKey}&query=${capital}`
   const [weather, setWeather] = useState([])
-
   const hook = () => {
     axios.get(request).then(response => { setWeather(response.data.current) })
   }
   useEffect(hook, [])
-
   console.log(Object.keys(weather))
-
   return (
     <div>
-      <div><b>temperature:</b> {weather.temperature}c</div>
+      <div><b>temperature:</b> {weather.temperature}</div>
       <img src={weather.weather_icons} alt='weather icon' />
       <div><b>wind:</b> {weather.wind_speed}</div>
     </div>
