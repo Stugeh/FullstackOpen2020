@@ -1,26 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import Renderers from './Renderers'
+import people from './services/people'
 
 
-const Person = ({ person }) =>
-  <div>{person.name} {person.number} </div>
-
-
-const AddForm = ({ newName, newNumber, handleName, handleNumber, addPerson }) =>
-  <form onSubmit={addPerson}>
-    <div>name: <input value={newName} onChange={handleName} /> </div>
-    <div>number: <input value={newNumber} onChange={handleNumber} /> </div>
-    <div><button type="submit">add</button></div>
-  </form>
-
-
-const Search = ({ newSearch, handleSearch }) =>
-  <div>Search: <input value={newSearch} onChange={handleSearch} /></div>
-
-
-const RenderNumbers = ({ filteredList }) =>
-  filteredList.map(person => <Person key={person.name} person={person} />)
-
+const FilterPeople = (persons, newSearch) => {
+  const filteredList = newSearch === '' ?
+    persons
+    :
+    persons.filter(person => person.name.toLowerCase().includes(newSearch.toLowerCase()))
+  return filteredList
+}
 
 const App = () => {
   const [newName, setNewName] = useState('')
@@ -29,9 +18,7 @@ const App = () => {
   const [persons, setPersons] = useState([])
 
   const hook = () => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => { setPersons(response.data) })
+    people.getPeople().then(initPeople => setPersons(initPeople))
   }
 
   useEffect(hook, [])
@@ -41,39 +28,54 @@ const App = () => {
     event.preventDefault()
     const person = { name: newName, number: newNumber }
     if (!persons.some(e => e.name === person.name)) {
-      setPersons(persons.concat(person))
-      setNewName('')
-      setNewNumber('')
+      people
+        .create(person)
+        .then(returnedPerson => {
+          setPersons(persons.concat(returnedPerson))
+          setNewName('')
+          setNewNumber('')
+          console.log('returnedPerson', returnedPerson)
+        })
+    } else {
+      const result = window.confirm(`${person.name} is already in the phonebook. Would you like to update the number?`)
+      if (result) {
+        const newPersons = persons.filter(personObject => personObject.name === person.name)
+        people.update(newPersons[0].id, { ...person, number: newNumber })
+          .then(returnedPersons => {
+            setNewName('')
+            setNewNumber('')
+            //fix this
+            //setPersons(returnedPersons)
+            console.log('returnedPerson', returnedPersons)
+            console.log('persons :>> ', persons);
+          })
+      }
     }
-    else { window.alert(`${person.name} is already in the phonebook`) }
   }
 
   const handleName = (event) => {
     setNewName(event.target.value)
-    console.log(event.target.value)
   }
 
   const handleNumber = (event) => {
     setNewNumber(event.target.value)
-    console.log(event.target.value);
   }
 
   const handleSearch = (event) => {
     setNewSearch(event.target.value)
   }
 
-  const filteredList = newSearch === '' ? persons : persons.filter(person =>
-    person.name.toLowerCase().includes(newSearch.toLowerCase()))
+  const filteredList = FilterPeople(persons, newSearch)
 
   return (
     <div>
       <h2>Phonebook</h2>
-      <Search newSearch={newSearch} handleSearch={handleSearch} />
+      <Renderers.Search newSearch={newSearch} handleSearch={handleSearch} />
       <h2>Add new</h2>
-      <AddForm newName={newName} newNumber={newNumber} handleName={handleName}
+      <Renderers.AddForm newName={newName} newNumber={newNumber} handleName={handleName}
         handleNumber={handleNumber} addPerson={addPerson} />
       <h2>Numbers</h2>
-      <RenderNumbers filteredList={filteredList} />
+      <Renderers.RenderNumbers filteredList={filteredList} setPersons={setPersons} />
     </div>
   )
 
