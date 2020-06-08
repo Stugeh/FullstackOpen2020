@@ -40,14 +40,12 @@ const App = () => {
       const result = window.confirm(`${person.name} is already in the phonebook. Would you like to update the number?`)
       if (result) {
         const newPersons = persons.filter(personObject => personObject.name === person.name)
-        people.update(newPersons[0].id, { ...person, number: newNumber })
+        people
+          .update(newPersons[0].id, { ...person, number: newNumber })
           .then(returnedPersons => {
             setNewName('')
             setNewNumber('')
-            //fix this
-            //setPersons(returnedPersons)
-            console.log('returnedPerson', returnedPersons)
-            console.log('persons :>> ', persons);
+            setPersons(returnedPersons)
           })
       }
     }

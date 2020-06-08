@@ -2,8 +2,6 @@ import React from 'react'
 import people from './services/people'
 
 const Remove = async (person, setPersons) => {
-    console.log(person)
-
     const result = window.confirm(`Are you sure you want to delete ${person.name}`)
     if (result) {
         const newList = await people.deletePerson(person.id)
