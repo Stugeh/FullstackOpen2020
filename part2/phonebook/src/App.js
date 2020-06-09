@@ -11,11 +11,31 @@ const FilterPeople = (persons, newSearch) => {
   return filteredList
 }
 
+const Notification = ({ message, errorMsg }) => {
+  if (message !== null) {
+    return (
+      <div className="message">
+        {message}
+      </div>
+    )
+  }
+  if (errorMsg !== null) {
+    return (
+      <div className="error">
+        {errorMsg}
+      </div>
+    )
+  } else { return (null) }
+}
+
+
 const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newSearch, setNewSearch] = useState('')
   const [persons, setPersons] = useState([])
+  const [message, setMessage] = useState(null)
+  const [errorMsg, setErrorMsg] = useState(null)
 
   const hook = () => {
     people.getPeople().then(initPeople => setPersons(initPeople))
@@ -34,6 +54,10 @@ const App = () => {
           setPersons(persons.concat(returnedPerson))
           setNewName('')
           setNewNumber('')
+          setMessage(`added ${returnedPerson.name}`)
+          setTimeout(() => {
+            setMessage(null)
+          }, 3000)
           console.log('returnedPerson', returnedPerson)
         })
     } else {
@@ -46,6 +70,16 @@ const App = () => {
             setNewName('')
             setNewNumber('')
             setPersons(returnedPersons)
+            setMessage(`updated ${person.name}`)
+            setTimeout(() => {
+              setMessage(null)
+            }, 3000)
+          }).catch(error => {
+            console.log('error')
+            setErrorMsg(`${person.name} has already been removed from the server.`)
+            setTimeout(() => {
+              setErrorMsg(null)
+            }, 5000)
           })
       }
     }
@@ -68,12 +102,13 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message} errorMsg={errorMsg} />
       <Renderers.Search newSearch={newSearch} handleSearch={handleSearch} />
       <h2>Add new</h2>
       <Renderers.AddForm newName={newName} newNumber={newNumber} handleName={handleName}
         handleNumber={handleNumber} addPerson={addPerson} />
       <h2>Numbers</h2>
-      <Renderers.RenderNumbers filteredList={filteredList} setPersons={setPersons} />
+      <Renderers.RenderNumbers filteredList={filteredList} setPersons={setPersons} setMessage={setMessage} />
     </div>
   )
 
