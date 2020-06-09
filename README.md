@@ -6,14 +6,14 @@ Coursework for open fullstack course from University of Helsinki https://fullsta
 
 ### part1 Introduction to react
 #### projects:
-*anecdotes
-*course_info
-*unicafe
+* anecdotes
+* course_info
+* unicafe
 
 ### part2 Communicating with servers
 #### projects:
-*country-info
-*course-info-pt2
-*phonebook
+* country-info
+* course-info-pt2
+* phonebook
 
 ### part3 Programming a server with NODEJS and Express
