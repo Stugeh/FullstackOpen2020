@@ -28,24 +28,34 @@ const mostBlogs = (blogs) => {
     if (!blogs[0]) {
         return {}
     }
-    //set list to a list of blogs grouped by authors 
-    //and order so that the author with most blogs is first
-    const list = _.chain(blogs)
-        .groupBy('author')
-        .orderBy('length', 'desc')
-        .value()
 
-    const blogger = {
-        author: list[0][0].author,
-        blogs: list[0].length
-    }
-    //console.log('blogger with most blogs:>> ', blogger);
-    return blogger
+    //create new list of objects with the author names and the number of blogs. Decending order.
+    const mostBlogs = _.chain(blogs)
+        .groupBy('author')
+        .map((blogs, name) => ({
+            'author': name,
+            'blogs': blogs.length
+        }))
+        .orderBy('blogs', 'desc')
+        .value()
+    return mostBlogs[0]
 }
 
 const mostLikes = (blogs) => {
+    if (!blogs[0]) {
+        return {}
+    }
     const list = _.chain(blogs)
         .groupBy('author')
+        //sum each authors likes and create new objects
+        .map((blogs, name) => ({
+            'author': name,
+            'likes': _.sumBy(blogs, 'likes')
+        }))
+        .orderBy('likes', 'desc')
+        .value()
+    //console.log('***LIST***', list)
+    return list[0]
 }
 
 module.exports = { dummy, totalLikes, mostBlogs, mostLikes, favouriteBlog }

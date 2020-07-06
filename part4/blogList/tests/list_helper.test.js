@@ -113,12 +113,12 @@ describe('blogger with most likes', () => {
     })
 
     test('of list with one blog is correct', () => {
-        const result = list_helper.mostBlogs(oneBlog)
+        const result = list_helper.mostLikes(oneBlog)
         expect(result).toStrictEqual({ author: "Edsger W. Dijkstra", likes: 5 })
     })
 
     test('correct blogger returned with n blogs', () => {
-        const result = list_helper.mostBlogs(nBlogs)
+        const result = list_helper.mostLikes(nBlogs)
         expect(result).toStrictEqual({ author: "Edsger W. Dijkstra", likes: 17 })
     })
 })
