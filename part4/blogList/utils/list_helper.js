@@ -30,7 +30,7 @@ const mostBlogs = (blogs) => {
     }
 
     //create new list of objects with the author names and the number of blogs. Decending order.
-    const mostBlogs = _.chain(blogs)
+    const totalBlogs = _.chain(blogs)
         .groupBy('author')
         .map((blogs, name) => ({
             'author': name,
@@ -38,7 +38,7 @@ const mostBlogs = (blogs) => {
         }))
         .orderBy('blogs', 'desc')
         .value()
-    return mostBlogs[0]
+    return totalBlogs[0]
 }
 
 const mostLikes = (blogs) => {
