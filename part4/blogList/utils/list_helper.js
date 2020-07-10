@@ -1,3 +1,4 @@
+const logger = require('../utils/logger')
 const _ = require('lodash')
 const dummy = blogs => {
     return 1
@@ -15,7 +16,7 @@ const favouriteBlog = (blogs) => {
     }
     //find object with most likes
     const max = blogs.reduce((prev, curr) => (prev.likes > curr.likes) ? prev : curr)
-    //console.log('max', max)
+    logger.info('max', max)
     return {
         title: max.title,
         author: max.author,
@@ -28,7 +29,6 @@ const mostBlogs = (blogs) => {
     if (!blogs[0]) {
         return {}
     }
-
     //create new list of objects with the author names and the number of blogs. Decending order.
     const totalBlogs = _.chain(blogs)
         .groupBy('author')
@@ -54,7 +54,7 @@ const mostLikes = (blogs) => {
         }))
         .orderBy('likes', 'desc')
         .value()
-    //console.log('***LIST***', list)
+    logger.info('***LIST***', list)
     return list[0]
 }
 

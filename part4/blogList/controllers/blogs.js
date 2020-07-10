@@ -1,22 +1,35 @@
 const blogRouter = require('express').Router()
 const Blog = require('../models/blog')
+const { errorHandler } = require('../utils/middleware')
+const logger = require('../utils/logger')
+require('express-async-errors')
 
-blogRouter.get('/', (request, response) => {
-    Blog.find({})
-        .then((blogs) => {
-            response.json(blogs)
-        })
-        .catch((err) => console.log('err', err))
+blogRouter.get('/', async (request, response) => {
+    const blogs = await Blog.find({})
+    if (blogs) {
+        response.json(blogs)
+    }
+    else {
+        response.status(404).end()
+    }
 })
 
-blogRouter.post('/', (request, response) => {
+blogRouter.post('/', async (request, response) => {
     const blog = new Blog(request.body)
+    const newBlog = await blog.save()
+    response.json(newBlog)
+})
 
-    blog.save()
-        .then((result) => {
-            response.status(201).json(result)
-        })
-        .catch((err) => console.log('err', err))
+blogRouter.put('/:id', async (req, res) => {
+    logger.info('Updating....\n', req.body)
+    console.log('req.body :>> ', req.body)
+    const newBlog = await Blog.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    res.json(newBlog)
+})
+
+blogRouter.delete('/:id', async (req, res) => {
+    await Blog.findByIdAndDelete(req.params.id)
+    res.status(204).end()
 })
 
 module.exports = blogRouter
