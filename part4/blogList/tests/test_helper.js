@@ -5,6 +5,7 @@ const initialBlogs = [
         author: "Michael Chan",
         url: "https://reactpatterns.com/",
         likes: 7,
+        userId: "5a422a851b54a676234d17f7",
         __v: 0
     },
     {
@@ -13,6 +14,7 @@ const initialBlogs = [
         author: "Edsger W. Dijkstra",
         url: "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html",
         likes: 5,
+        userId: "5a422a851b54a676234d17f8",
         __v: 0
     },
     {
@@ -21,6 +23,7 @@ const initialBlogs = [
         author: "Edsger W. Dijkstra",
         url: "http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html",
         likes: 12,
+        userId: "5a422a851b54a676234d17f7",
         __v: 0
     },
     {
@@ -29,6 +32,7 @@ const initialBlogs = [
         author: "Robert C. Martin",
         url: "http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.html",
         likes: 10,
+        userId: "5a422a851b54a676234d17f7",
         __v: 0
     },
     {
@@ -37,6 +41,7 @@ const initialBlogs = [
         author: "Robert C. Martin",
         url: "http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html",
         likes: 0,
+        userId: "5a422a851b54a676234d17f9",
         __v: 0
     },
     {
@@ -45,8 +50,33 @@ const initialBlogs = [
         author: "Robert C. Martin",
         url: "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html",
         likes: 2,
+        userId: "5a422a851b54a676234d17f8",
         __v: 0
     }
 ]
 
-module.exports = { initialBlogs }
+const initialUsers = [
+    {
+        _id: "5a422a851b54a676234d17f7",
+        username: 'Stugeh',
+        name: 'Tuukka',
+        password: 'password',
+        blogs: []
+    },
+    {
+        _id: "5a422a851b54a676234d17f8",
+        username: 'AnotherUser',
+        name: 'Name',
+        password: 'pw2',
+        blogs: []
+    },
+    {
+        _id: "5a422a851b54a676234d17f9",
+        username: 'ThirdOne',
+        name: 'Steve',
+        password: 'Pw32',
+        blogs: []
+    }
+]
+
+module.exports = { initialBlogs, initialUsers }
