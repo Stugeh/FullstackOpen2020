@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
-var uniqueValidator = require('mongoose-unique-validator');
+var uniqueValidator = require('mongoose-unique-validator')
+mongoose.set('useFindAndModify', false)
+mongoose.set('useCreateIndex', true)
 
 const userSchema = mongoose.Schema({
     username: { type: String, unique: true, required: true },
