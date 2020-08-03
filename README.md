@@ -18,3 +18,6 @@ Coursework for open fullstack course from University of Helsinki https://fullsta
 
 ### part3 Programming a server with NODEJS and Express
 * Phonebook Git repo: https://github.com/Stugeh/Phonebook.git
+
+### part4 testing and user management
+* Bloglist
