@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import LoginForm from './components/loginForm'
+import BlogForm from './components/blogForm'
 
 const Notification = ({ message, errorMsg }) => {
   if (message !== null) {
@@ -30,6 +32,7 @@ const App = () => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
+  const [formVisible, setFormVisible] = useState(false)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -45,24 +48,6 @@ const App = () => {
       blogService.setToken(user.token)
     }
   }, [])
-
-
-  const addBlog = (event) => {
-    event.preventDefault()
-    const blog = {
-      title: title,
-      author: author,
-      url: url,
-      likes: 0
-    }
-    blogService.create(blog)
-      .then(res => { setBlogs(blogs.concat(res)) })
-    setMessage('added new blog')
-    setTimeout(() => {
-      setMessage(null)
-    }, 5000)
-  }
-
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -88,68 +73,21 @@ const App = () => {
     }
   }
 
-  const loginForm = () => (
-    <form onSubmit={handleLogin}>
-      <div>
-        username:
-            <input
-          type="text"
-          value={username}
-          name="username"
-          onChange={({ target }) => setUsername(target.value)}
-        />
-      </div>
-      <div>
-        password:
-            <input
-          type="text"
-          value={password}
-          name="password"
-          onChange={({ target }) => setPassword(target.value)}
-        />
-      </div>
-      <button type="submit">login</button>
-    </form>
-  )
-
-
-  const blogForm = () => (
-    <form onSubmit={addBlog}>
-      <h3>Add new blog</h3>
-
-      <div>
-        Title:
-        <input
-          type='text'
-          value={title}
-          name='title'
-          onChange={({ target }) => setTitle(target.value)}
-        />
-      </div>
-
-      <div>
-        Author:
-        <input
-          type='text'
-          value={author}
-          name='author'
-          onChange={({ target }) => setAuthor(target.value)}
-        />
-      </div>
-
-      <div>
-        url:
-        <input
-          type='text'
-          value={url}
-          name='url'
-          onChange={({ target }) => setUrl(target.value)}
-        />
-      </div>
-
-      <button type="submit">save</button>
-    </form>
-  )
+  const addBlog = (event) => {
+    event.preventDefault()
+    const blog = {
+      title: title,
+      author: author,
+      url: url,
+      likes: 0
+    }
+    blogService.create(blog)
+      .then(res => { setBlogs(blogs.concat(res)) })
+    setMessage('added new blog')
+    setTimeout(() => {
+      setMessage(null)
+    }, 5000)
+  }
 
   const blogList = () => (
     <div>
@@ -172,11 +110,26 @@ const App = () => {
       <h1>Blogs</h1>
       <Notification message={message} errorMsg={errorMsg} />
       {user === null ?
-        loginForm() :
+        <LoginForm
+          username={username}
+          password={password}
+          usrHndlr={({ target }) => setUsername(target.value)}
+          pwHndlr={({ target }) => setPassword(target.value)}
+          submitHndlr={handleLogin}
+        />
+        :
         <div>
           <p>{user.name} logged in</p>
           <button onClick={logOut}>log out</button>
-          {blogForm()}
+          <BlogForm
+            title={title}
+            author={author}
+            url={url}
+            titleHndlr={({ target }) => setTitle(target.value)}
+            authorHndlr={({ target }) => setAuthor(target.value)}
+            urlHndlr={({ target }) => setUrl(target.value)}
+            submitHndlr={addBlog}
+          />
           <h2>Blogs</h2>
           {blogList()}
         </div>
