@@ -26,6 +26,7 @@ const BlogForm = ({ setMessage, blogs, setBlogs }) => {
             url: url,
             likes: 0
         }
+        setTitle(''); setAuthor(''); setUrl('');
         blogService.create(blog).then(res => { setBlogs(blogs.concat(res)) })
         setMessage('added new blog')
         setTimeout(() => { setMessage(null) }, 5000)

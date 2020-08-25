@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useImperativeHandle } from 'react'
 import PropTypes from 'prop-types'
 
 //
@@ -7,6 +7,7 @@ import PropTypes from 'prop-types'
 
 const Togglable = React.forwardRef((props, ref) => {
     const [visible, setVisible] = useState(false)
+    const [expanded, setExpanded] = useState(false)
 
     // sets css property 'display' of children to none 
     const hideWhenVisible = { display: visible ? 'none' : '' }
@@ -15,6 +16,12 @@ const Togglable = React.forwardRef((props, ref) => {
     const toggleVisibility = () => {
         setVisible(!visible)
     }
+
+    const toggleExpanded = () => {
+        setExpanded(!expanded)
+    }
+
+    useImperativeHandle(ref, () => { return { toggleExpanded } })
 
     return (
         <div>
