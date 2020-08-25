@@ -1,5 +1,9 @@
 import React from 'react'
 
+//
+// displays the errors and notifications to the user
+//
+
 const Notification = ({ message, errorMsg }) => {
     if (message !== null) {
         return (

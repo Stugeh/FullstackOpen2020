@@ -18,12 +18,14 @@ const App = () => {
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
 
+  //effect loop to retrieve list of blogs from database.
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs(blogs)
     )
   }, [])
 
+  // effect loop to retrieve logged in user from local storage
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedInUser')
     if (loggedUserJSON) {
@@ -33,6 +35,10 @@ const App = () => {
     }
   }, [])
 
+
+  // eventhandler for LoginForm. 
+  // tries to call loginService.login to verify params against database
+  // if succesful sets the user, gives it a token and saves it in local storage.
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
@@ -57,6 +63,8 @@ const App = () => {
     }
   }
 
+  // event handler thats called when submit is pressed on BlogForm
+  // adds new blog to database and shows a notification to the user.
   const addBlog = (event) => {
     event.preventDefault()
     const blog = {
@@ -72,6 +80,8 @@ const App = () => {
       setMessage(null)
     }, 5000)
   }
+
+  // removes users token from local storage 
   const logOut = () => {
     console.log('logging out')
     setMessage('logged out')

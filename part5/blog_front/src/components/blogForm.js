@@ -1,6 +1,12 @@
 import React from 'react'
 
 
+//
+// displays the form  the addition of new blogs
+//
+
+
+// Hndlr functions = ({ target }) => setAttribute(target.value)
 const blogForm = ({
     submitHndlr,
     titleHndlr,
