@@ -1,26 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import Blog from './components/Blog'
+import BlogList from './components/blogList'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import LoginForm from './components/loginForm'
 import BlogForm from './components/blogForm'
-
-const Notification = ({ message, errorMsg }) => {
-  if (message !== null) {
-    return (
-      <div className="message">
-        {message}
-      </div>
-    )
-  }
-  if (errorMsg !== null) {
-    return (
-      <div className="error">
-        {errorMsg}
-      </div>
-    )
-  } else { return (null) }
-}
+import Togglable from './components/togglable'
+import Notification from './components/notification'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -32,7 +17,6 @@ const App = () => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
-  const [formVisible, setFormVisible] = useState(false)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -88,15 +72,6 @@ const App = () => {
       setMessage(null)
     }, 5000)
   }
-
-  const blogList = () => (
-    <div>
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
-      )}
-    </div>
-  )
-
   const logOut = () => {
     console.log('logging out')
     setMessage('logged out')
@@ -121,17 +96,20 @@ const App = () => {
         <div>
           <p>{user.name} logged in</p>
           <button onClick={logOut}>log out</button>
-          <BlogForm
-            title={title}
-            author={author}
-            url={url}
-            titleHndlr={({ target }) => setTitle(target.value)}
-            authorHndlr={({ target }) => setAuthor(target.value)}
-            urlHndlr={({ target }) => setUrl(target.value)}
-            submitHndlr={addBlog}
-          />
+          <Togglable buttonLabel='add a new blog'>
+            <BlogForm
+              title={title}
+              author={author}
+              url={url}
+              titleHndlr={({ target }) => setTitle(target.value)}
+              authorHndlr={({ target }) => setAuthor(target.value)}
+              urlHndlr={({ target }) => setUrl(target.value)}
+              submitHndlr={addBlog}
+            />
+          </Togglable>
           <h2>Blogs</h2>
-          {blogList()}
+          <BlogList blogs={blogs} />
+
         </div>
       }
     </div>

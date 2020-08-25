@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
 const Notification = ({ message, errorMsg }) => {
     if (message !== null) {
@@ -16,3 +16,5 @@ const Notification = ({ message, errorMsg }) => {
         )
     } else { return (null) }
 }
+
+export default Notification
