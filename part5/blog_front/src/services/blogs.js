@@ -28,7 +28,17 @@ const create = async newObject => {
 
 // enables editing existing entries in the database.
 const update = (id, newObject) => {
-  const request = axios.put(`${baseUrl} /${id}`, newObject)
+  const config = {
+    headers: { Authorization: token },
+  }
+  const link = `${baseUrl}/${id}`
+  const request = axios.put(link, newObject, config)
+    .catch(err => {
+      console.log('err', err)
+      console.log('request :>> ', request);
+      console.log('config.headers :>> ', config.headers);
+      console.log('newObject :>> ', newObject);
+    })
   return request.then(response => response.data)
 }
 
