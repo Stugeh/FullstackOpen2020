@@ -22,6 +22,10 @@ const Blog = ({ blog }) => {
     setBlog(await blogService.update(blog.id, newBlog))
   }
 
+  const deleteBlog = async () => {
+    setBlog(await blogService.removeBlog(blog.id))
+  }
+
   return (
     <div className='blog'>
       Title: {updatedBlog.title}<br />
@@ -30,6 +34,7 @@ const Blog = ({ blog }) => {
         Likes: {updatedBlog.likes}
         <button onClick={addLike} >like</button><br />
         URL: {updatedBlog.url}<br />
+        <button onClick={deleteBlog} >delete</button><br />
       </Togglable>
       <br />
     </div >

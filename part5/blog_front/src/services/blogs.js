@@ -9,9 +9,10 @@ const setToken = newToken => {
 }
 
 // returns all entries in database
-const getAll = () => {
+const getAll = async () => {
   const request = axios.get(baseUrl)
-  return request.then(response => response.data)
+  const response = await request
+  return response.data
 }
 
 
@@ -27,7 +28,7 @@ const create = async newObject => {
 
 
 // enables editing existing entries in the database.
-const update = (id, newObject) => {
+const update = async (id, newObject) => {
   const config = {
     headers: { Authorization: token },
   }
@@ -39,7 +40,17 @@ const update = (id, newObject) => {
       console.log('config.headers :>> ', config.headers);
       console.log('newObject :>> ', newObject);
     })
-  return request.then(response => response.data)
+  const response = await request
+  return response.data
 }
 
-export default { getAll, create, update, setToken }
+
+const removeBlog = async (id) => {
+  const config = {
+    headers: { Authorization: token },
+  }
+  await axios.delete(`${baseUrl}/${id}`, config)
+  return getAll()
+}
+
+export default { getAll, create, update, setToken, removeBlog }
