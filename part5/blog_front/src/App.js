@@ -5,6 +5,7 @@ import LoginForm from './components/loginForm'
 import BlogForm from './components/blogForm'
 import Togglable from './components/togglable'
 import Notification from './components/notification'
+import UserForm from './components/userForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -44,6 +45,9 @@ const App = () => {
       <Notification message={message} errorMsg={errorMsg} />
       {user === null ?
         <LoginForm setMessage={setMessage} setErrorMsg={setErrorMsg} setUser={setUser} />
+        <Togglable buttonLabel='create user'>
+          <UserForm />
+        </Togglable>
         :
         <div>
           <p>{user.name} logged in</p>

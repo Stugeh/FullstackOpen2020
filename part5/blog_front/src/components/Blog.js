@@ -23,8 +23,11 @@ const Blog = ({ blog, setBlogs }) => {
   }
 
   const deleteBlog = async () => {
-    setBlog(await blogService.removeBlog(blog.id))
-    setBlogs(await blogService.getAll())
+    if (window.confirm(`delete blog ${blog.title}?`)) {
+      setBlog(await blogService.removeBlog(blog.id))
+      setBlogs(await blogService.getAll())
+    }
+
     //hide remove if not adder of blog
   }
 
