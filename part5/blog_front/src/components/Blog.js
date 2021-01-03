@@ -8,7 +8,7 @@ import blogService from '../services/blogs'
 
 
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, setBlogs }) => {
   const [updatedBlog, setBlog] = useState(blog)
   const blogRef = useRef()
 
@@ -24,6 +24,8 @@ const Blog = ({ blog }) => {
 
   const deleteBlog = async () => {
     setBlog(await blogService.removeBlog(blog.id))
+    setBlogs(await blogService.getAll())
+    //hide remove if not adder of blog
   }
 
   return (

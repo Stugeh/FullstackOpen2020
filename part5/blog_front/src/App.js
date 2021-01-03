@@ -52,7 +52,7 @@ const App = () => {
             <BlogForm setMessage={setMessage} blogs={blogs} setBlogs={setBlogs} />
           </Togglable>
           <h2>Blogs</h2>
-          <BlogList blogs={blogs} />
+          <BlogList blogs={blogs} setBlogs={setBlogs} />
 
         </div>
       }
