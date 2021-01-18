@@ -4,14 +4,14 @@ const User = require('../models/user')
 const logger = require('../utils/logger')
 
 userRouter.post('/', async (request, response) => {
-    console.log("USERROUTER")
     const body = request.body
-    console.log('body :>> ', body);
-    console.log('body', body)
     if (body.password === undefined || body.password.length < 3) {
         logger.info('Password not ok')
         response.status(400).json({ error: 'malformated password' })
-    } else {
+    } else if (body.name === undefined || body.username === undefined) {
+        response.status(400).json({ error: 'all fields must have a value' })
+    }
+    else {
         const saltRounds = 10
         const passwordHash = await bcrypt.hash(body.password, saltRounds)
         const user = new User({

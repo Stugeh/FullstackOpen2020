@@ -19,23 +19,27 @@ const UserForm = ({ setMessage, setErrorMsg }) => {
     // if succesful sets the user, gives it a token and saves it in local storage.
     const addUser = async (event) => {
         event.preventDefault()
+        const user = {
+            username: username,
+            password: password,
+            name: name
+        }
+        setUsername(''); setPassword(''); setName('');
         try {
-            const user = {
-                username: username,
-                password: password,
-                name: name
+            const response = await userService.create(user)
+            if (response.status === 200) {
+                setMessage('New user created')
+                setTimeout(() => { setMessage(null) }, 5000)
             }
-            setUsername(''); setPassword(''); setName('');
-            userService.create(user)
-            setMessage('New user created')
-            setTimeout(() => { setMessage(null) }, 5000)
-
         } catch (exception) {
-            console.log('exception :>> ', exception)
             setErrorMsg('user creation failed')
             setTimeout(() => { setErrorMsg(null) }, 5000)
         }
     }
+
+
+
+
 
     return (
         <form onSubmit={addUser}>

@@ -3,9 +3,8 @@ const baseUrl = '/api/users'
 
 
 const create = async newUser => {
-    const response = await axios.post(baseUrl, newUser)
-    console.log('response :>> ', response.data);
-    return response.data
+    let response = await axios.post(baseUrl, newUser)
+    return response
 }
 
 export default { create }
