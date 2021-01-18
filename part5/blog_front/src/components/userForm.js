@@ -1,45 +1,50 @@
 import React, { useState } from 'react'
-import loginService from '../services/login'
-import blogService from '../services/blogs'
+import userService from '../services/users'
 
 //
 // renders new user form
 //
 
-const UserForm = ({ setMessage, setErrorMsg, setUser }) => {
+const UserForm = ({ setMessage, setErrorMsg }) => {
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [name, setName] = useState('')
     const handleUsername = (event) => setUsername(event.target.value)
     const handlePassword = (event) => setPassword(event.target.value)
+    const handleName = (event) => setName(event.target.value)
 
-    // eventhandler for LoginForm submit. 
+    // eventhandler for UserForm submit 
     // tries to call loginService.login to verify params against database
     // if succesful sets the user, gives it a token and saves it in local storage.
-    const handleNewUser = async (event) => {
+    const addUser = async (event) => {
         event.preventDefault()
         try {
-            const user = await loginService.login({ username, password })
-            window.localStorage.setItem('loggedInUser', JSON.stringify(user))
-            blogService.setToken(user.token)
-            setUser(user)
-            setMessage('logged in')
+            const user = {
+                username: username,
+                password: password,
+                name: name
+            }
+            setUsername(''); setPassword(''); setName('');
+            userService.create(user)
+            setMessage('New user created')
             setTimeout(() => { setMessage(null) }, 5000)
+
         } catch (exception) {
             console.log('exception :>> ', exception)
-            setErrorMsg('wrong credentials')
+            setErrorMsg('user creation failed')
             setTimeout(() => { setErrorMsg(null) }, 5000)
         }
     }
 
     return (
-        <form onSubmit={handleNewUser}>
+        <form onSubmit={addUser}>
             <div>
-                username:
+                new username:
                 <input
                     type="text"
                     value={username}
-                    name="username"
+                    name="new username"
                     onChange={handleUsername}
                 />
             </div>
@@ -48,13 +53,21 @@ const UserForm = ({ setMessage, setErrorMsg, setUser }) => {
                 <input
                     type="text"
                     value={password}
-                    name="password"
+                    name="new password"
                     onChange={handlePassword}
+                />
+            </div>
+            <div>
+                Name:
+                <input
+                    type="text"
+                    value={name}
+                    name="new name"
+                    onChange={handleName}
                 />
             </div>
             <button type="submit">create new user</button>
         </form>
     )
 }
-
-export default LoginForm
+export default UserForm

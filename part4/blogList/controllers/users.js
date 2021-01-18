@@ -6,6 +6,7 @@ const logger = require('../utils/logger')
 userRouter.post('/', async (request, response) => {
     console.log("USERROUTER")
     const body = request.body
+    console.log('body :>> ', body);
     console.log('body', body)
     if (body.password === undefined || body.password.length < 3) {
         logger.info('Password not ok')

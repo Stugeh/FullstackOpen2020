@@ -43,11 +43,16 @@ const App = () => {
     <div>
       <h1>Blogs</h1>
       <Notification message={message} errorMsg={errorMsg} />
-      {user === null ?
-        <LoginForm setMessage={setMessage} setErrorMsg={setErrorMsg} setUser={setUser} />
-        <Togglable buttonLabel='create user'>
-          <UserForm />
-        </Togglable>
+      {user === null ? (
+        <div>
+
+          <LoginForm setMessage={setMessage} setErrorMsg={setErrorMsg} setUser={setUser} />
+          <Togglable buttonLabel='create user'>
+            <h4>Create new user</h4>
+            <UserForm setMessage={setMessage} setErrorMsg={setErrorMsg} />
+          </Togglable>
+        </div>
+      )
         :
         <div>
           <p>{user.name} logged in</p>
@@ -57,7 +62,6 @@ const App = () => {
           </Togglable>
           <h2>Blogs</h2>
           <BlogList blogs={blogs} setBlogs={setBlogs} />
-
         </div>
       }
     </div>
