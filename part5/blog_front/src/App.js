@@ -7,6 +7,8 @@ import Togglable from './components/togglable'
 import Notification from './components/notification'
 import UserForm from './components/userForm'
 
+
+
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
@@ -30,7 +32,7 @@ const App = () => {
     }
   }, [])
 
-  // removes users token from local storage 
+  // removes users token from local storage
   const logOut = () => {
     console.log('logging out')
     setMessage('logged out')
@@ -39,13 +41,18 @@ const App = () => {
     window.localStorage.removeItem('loggedInUser')
   }
 
+  const createBlog = (blog) => {
+    blogService.create(blog).then(res => { setBlogs(blogs.concat(res)) })
+    setMessage('added new blog')
+    setTimeout(() => { setMessage(null) }, 5000)
+  }
+
   return (
     <div>
       <h1>Blogs</h1>
       <Notification message={message} errorMsg={errorMsg} />
       {user === null ? (
         <div>
-
           <LoginForm setMessage={setMessage} setErrorMsg={setErrorMsg} setUser={setUser} />
           <Togglable buttonLabel='create user'>
             <h4>Create new user</h4>
@@ -58,7 +65,7 @@ const App = () => {
           <p>{user.name} logged in</p>
           <button onClick={logOut}>log out</button>
           <Togglable buttonLabel='add a new blog'>
-            <BlogForm setMessage={setMessage} blogs={blogs} setBlogs={setBlogs} />
+            <BlogForm createBlog={createBlog} />
           </Togglable>
           <h2>Blogs</h2>
           <BlogList blogs={blogs} setBlogs={setBlogs} />

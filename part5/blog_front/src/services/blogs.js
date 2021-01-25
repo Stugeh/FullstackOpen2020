@@ -36,9 +36,9 @@ const update = async (id, newObject) => {
   const request = axios.put(link, newObject, config)
     .catch(err => {
       console.log('err', err)
-      console.log('request :>> ', request);
-      console.log('config.headers :>> ', config.headers);
-      console.log('newObject :>> ', newObject);
+      console.log('request :>> ', request)
+      console.log('config.headers :>> ', config.headers)
+      console.log('newObject :>> ', newObject)
     })
   const response = await request
   return response.data

@@ -1,25 +1,28 @@
 import React, { useRef, useState } from 'react'
 import Togglable from '../components/togglable'
 import blogService from '../services/blogs'
-
+import PropTypes from 'prop-types'
 //
 //Renders a single blog in the list
 //
 
 
 
-const Blog = ({ blog, setBlogs }) => {
+const Blog = ({ blog, setBlogs, testHandler = () => {} }) => {
   const [updatedBlog, setBlog] = useState(blog)
   const blogRef = useRef()
 
   const addLike = async (event) => {
     event.preventDefault()
-    const newBlog = {
-      ...updatedBlog,
-      likes: updatedBlog.likes + 1,
-      user: updatedBlog.user.id
-    }
-    setBlog(await blogService.update(blog.id, newBlog))
+    testHandler()
+    try{
+      const newBlog = {
+        ...updatedBlog,
+        likes: updatedBlog.likes + 1,
+        user: updatedBlog.user.id
+      }
+      setBlog(await blogService.update(blog.id, newBlog))}
+    catch(e){}
   }
 
   const deleteBlog = async () => {
@@ -35,7 +38,7 @@ const Blog = ({ blog, setBlogs }) => {
     <div className='blog'>
       Title: {updatedBlog.title}<br />
       Author: {updatedBlog.author}
-      <Togglable buttonLabel='expand' ref={blogRef}>
+      <Togglable buttonLabel='expand' ref={blogRef} className="moreInfo">
         Likes: {updatedBlog.likes}
         <button onClick={addLike} >like</button><br />
         URL: {updatedBlog.url}<br />
@@ -44,6 +47,14 @@ const Blog = ({ blog, setBlogs }) => {
       <br />
     </div >
   )
+}
+
+Blog.displayName = 'Blog'
+Blog.propTypes = {
+  newBlog: PropTypes.object,
+  updatedBlog: PropTypes.object,
+  blog: PropTypes.object,
+  setBlogs: PropTypes.func
 }
 
 export default Blog

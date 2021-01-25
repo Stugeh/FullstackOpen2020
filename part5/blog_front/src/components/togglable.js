@@ -6,39 +6,39 @@ import PropTypes from 'prop-types'
 //
 
 const Togglable = React.forwardRef((props, ref) => {
-    const [visible, setVisible] = useState(false)
-    const [expanded, setExpanded] = useState(false)
+  const [visible, setVisible] = useState(false)
+  const [expanded, setExpanded] = useState(false)
 
-    // sets css property 'display' of children to none 
-    const hideWhenVisible = { display: visible ? 'none' : '' }
-    const showWhenVisible = { display: visible ? '' : 'none' }
+  // sets css property 'display' of children to none
+  const hideWhenVisible = { display: visible ? 'none' : '' }
+  const showWhenVisible = { display: visible ? '' : 'none' }
 
-    const toggleVisibility = () => {
-        setVisible(!visible)
-    }
+  const toggleVisibility = () => {
+    setVisible(!visible)
+  }
 
-    const toggleExpanded = () => {
-        setExpanded(!expanded)
-    }
+  const toggleExpanded = () => {
+    setExpanded(!expanded)
+  }
 
-    useImperativeHandle(ref, () => { return { toggleExpanded } })
+  useImperativeHandle(ref, () => { return { toggleExpanded } })
 
-    return (
-        <div>
-            <div style={hideWhenVisible}>
-                <button onClick={toggleVisibility}>{props.buttonLabel}</button>
-            </div>
-            <div style={showWhenVisible}>
-                {props.children}
-                <button onClick={toggleVisibility}>hide</button>
-            </div>
-        </div>
-    )
+  return (
+    <div>
+      <div style={hideWhenVisible}>
+        <button onClick={toggleVisibility} className="infoEnable">{props.buttonLabel}</button>
+      </div>
+      <div style={showWhenVisible} className="togglableComponent">
+        {props.children}
+        <button onClick={toggleVisibility} className="infoDisable">hide</button>
+      </div>
+    </div>
+  )
 })
 
 Togglable.displayName = 'Togglable'
 Togglable.propTypes = {
-    buttonLabel: PropTypes.string.isRequired
+  buttonLabel: PropTypes.string.isRequired
 }
 
 export default Togglable
