@@ -35,20 +35,20 @@ const LoginForm = ({ setMessage, setErrorMsg, setUser }) => {
   return (
     <form onSubmit={handleLogin}>
       <div>
-                username:
         <input
           type="text"
           value={username}
-          name="username"
+          placeholder="Username"
+          id="username"
           onChange={handleUsername}
         />
       </div>
       <div>
-                password:
         <input
-          type="text"
+          type="password"
           value={password}
-          name="password"
+          placeholder="Password"
+          id="password"
           onChange={handlePassword}
         />
       </div>

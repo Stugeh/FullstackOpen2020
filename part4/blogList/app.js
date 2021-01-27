@@ -11,7 +11,6 @@ const logger = require('./utils/logger')
 const mongoose = require('mongoose')
 const Blog = require('./models/blog')
 
-
 logger.info('connecting to', config.MONGOURL)
 mongoose.connect(config.MONGOURL, { useNewUrlParser: true, useUnifiedTopology: true })
     .catch((err) => console.log('err', err))
@@ -24,6 +23,10 @@ app.use(middleware.tokenExtractor)
 app.use('/api/blogs', blogRouter)
 app.use('/api/users', userRouter)
 app.use('/api/login', loginRouter)
+if (process.env.NODE_ENV === 'test') {
+    const testingRouter = require('./controllers/tests')
+    app.use('/api/tests', testingRouter)
+  }
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
 
