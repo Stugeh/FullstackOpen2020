@@ -40,7 +40,7 @@ const Blog = ({ blog, setBlogs, testHandler = () => {} }) => {
       Author: {updatedBlog.author}
       <Togglable buttonLabel='expand' ref={blogRef} className="moreInfo">
         Likes: {updatedBlog.likes}
-        <button onClick={addLike} >like</button><br />
+        <button onClick={addLike} id='likeBtn'>like</button><br />
         URL: {updatedBlog.url}<br />
         <button onClick={deleteBlog} >delete</button><br />
       </Togglable>
