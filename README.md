@@ -25,3 +25,6 @@ Coursework for open fullstack course from University of Helsinki https://fullsta
 
 ### part5 Testing and user management frontend
 * Bloglist
+
+### part6 State management with redux
+* AnecdotesRedux
