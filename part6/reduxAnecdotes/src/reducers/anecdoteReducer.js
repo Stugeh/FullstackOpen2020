@@ -19,11 +19,43 @@ const asObject = (anecdote) => {
 
 const initialState = anecdotesAtStart.map(asObject)
 
+
+
 const reducer = (state = initialState, action) => {
-  console.log('state now: ', state)
-  console.log('action', action)
+  if(action.type === 'LIKE'){
+    const id = action.data.id
+    const anecdoteToUpdate = state.find(anecdote => anecdote.id === id)
+    const newAnecdote = {...anecdoteToUpdate, votes: anecdoteToUpdate.votes+1} 
+    state = state.map(anecdote => anecdote.id !== id ? anecdote : newAnecdote)
+    // alphabetical order
+    state = state.sort((a,b) => a.content < b.content ? 1 : -1)
+    // sort by likes
+    state = state.sort((a,b) => a.votes < b.votes ? 1 : -1)
+    return state
+  }
+  
+  if(action.type === 'CREATE'){
+    return [...state, action.data]
+  }
 
   return state
+}
+
+/* ACTION CREATORS */ 
+
+export const addLike = (id) => {
+  return {
+    type: "LIKE",
+    data: {id}
+  }
+}
+
+export const createNewAnecdote = (text) => {
+  const newAnecdote = asObject(text)
+  return {
+    type: "CREATE",
+    data: newAnecdote
+  }
 }
 
 export default reducer
