@@ -8,5 +8,4 @@ const reducer = (state = initialFilter, action) => {
 }
 
 export const updateFilter = (textBox) => ({type: 'CHANGE', data: {textBox}})
-
 export default reducer
