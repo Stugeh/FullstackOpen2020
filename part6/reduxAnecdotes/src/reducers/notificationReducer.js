@@ -1,6 +1,6 @@
-const initialNotification = ''
+let previousTimeout = null
 
-const reducer = (state = initialNotification, action) => {
+const reducer = (state = '', action) => {
     console.log('action :>> ', action);
     switch(action.type){
         case 'SET_NOTIFICATION': return action.text
@@ -13,7 +13,8 @@ const reducer = (state = initialNotification, action) => {
 export const setNotification = (text, sleepTime=5000) => {
     return async dispatch => {
         dispatch({type: 'SET_NOTIFICATION', text: text})
-        setTimeout(() => {dispatch({type: 'CLEAR'})}, sleepTime)
+        clearTimeout(previousTimeout)
+        previousTimeout = setTimeout(() => {dispatch({type: 'CLEAR'})}, sleepTime)
     }
 }
 
