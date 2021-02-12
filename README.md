@@ -32,3 +32,5 @@ Coursework for open fullstack course from University of Helsinki https://fullsta
 
 ### part7 React-router, Custom hooks, Style libraries, and Webpack
 * routedAnecdotes
+* countryHook
+* Improved blogList app based on the things learned in parts 6 and 7
