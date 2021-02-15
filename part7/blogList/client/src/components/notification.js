@@ -1,21 +1,16 @@
 import React from 'react'
+import {useSelector} from 'react-redux'
 
 //
 // displays the errors and notifications to the user
 //
 
-const Notification = ({ message, errorMsg }) => {
-  if (message !== null) {
+const Notification = () => {
+  const notification = useSelector(state=>state.notification)
+  if (notification.text !== null) {
     return (
-      <div className="message">
-        {message}
-      </div>
-    )
-  }
-  if (errorMsg !== null) {
-    return (
-      <div className="error">
-        {errorMsg}
+      <div className={notification.className}>
+        {notification.text}
       </div>
     )
   } else { return (null) }

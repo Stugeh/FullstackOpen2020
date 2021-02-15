@@ -1,18 +1,23 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+
 import loginService from '../services/login'
 import blogService from '../services/blogs'
 
+import  {setMessage, setError} from "../reducers/notificationReducer"
 //
 // Renders the login form
 //
 
-const LoginForm = ({ setMessage, setErrorMsg, setUser }) => {
-
+const LoginForm = ({ setUser }) => {
+  const dispatch = useDispatch()
+  
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const handleUsername = (event) => setUsername(event.target.value)
   const handlePassword = (event) => setPassword(event.target.value)
-
+  
+  
   // eventhandler for LoginForm submit.
   // tries to call loginService.login to verify params against database
   // if succesful sets the user, gives it a token and saves it in local storage.
@@ -23,12 +28,10 @@ const LoginForm = ({ setMessage, setErrorMsg, setUser }) => {
       window.localStorage.setItem('loggedInUser', JSON.stringify(user))
       blogService.setToken(user.token)
       setUser(user)
-      setMessage('logged in')
-      setTimeout(() => { setMessage(null) }, 5000)
+      dispatch(setMessage('logged in'))
     } catch (exception) {
       console.log('exception :>> ', exception)
-      setErrorMsg('wrong credentials')
-      setTimeout(() => { setErrorMsg(null) }, 5000)
+      dispatch(setError('wrong credentials'))
     }
   }
 
