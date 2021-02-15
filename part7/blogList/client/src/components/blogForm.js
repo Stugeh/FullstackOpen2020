@@ -1,68 +1,40 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { useDispatch} from 'react-redux'
 
+import {setMessage} from '../reducers/notificationReducer'
+import {createBlog} from '../reducers/blogReducer'
 //
 // displays the form  the addition of new blogs
 //
 
 
 // Hndlr functions = ({ target }) => setAttribute(target.value)
-const BlogForm = ({ createBlog }) => {
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
-  const handleTitle = (event) => setTitle(event.target.value)
-  const handleAuthor = (event) => setAuthor(event.target.value)
-  const handleUrl = (event) => setUrl(event.target.value)
-
+const BlogForm = () => {
+  const dispatch = useDispatch()
+  
   // event handler thats called when submit is pressed on BlogForm
   // adds new blog to database and shows a notification to the user.
   const addBlog = (event) => {
     event.preventDefault()
+    const e = event.target
     const blog = {
-      title: title,
-      author: author,
-      url: url,
+      title: e.title.value,
+      author: e.author.value,
+      url: e.url.value,
       likes: 0
     }
-    createBlog(blog)
-    setTitle(''); setAuthor(''); setUrl('')
+    console.log('blog :>> ', blog);
+    dispatch(createBlog(blog))
+    dispatch(setMessage('added new blog'))
   }
 
   return (
     <div>
       <form onSubmit={addBlog}>
         <h3>Add new blog</h3>
-
-        <div>
-          <input
-            id='title'
-            type='text'
-            value={title}
-            placeholder='title'
-            onChange={handleTitle}
-          />
-        </div>
-
-        <div>
-          <input
-            id='author'
-            type='text'
-            value={author}
-            placeholder='author'
-            onChange={handleAuthor}
-          />
-        </div>
-
-        <div>
-          <input
-            id='url'
-            type='text'
-            value={url}
-            placeholder='url'
-            onChange={handleUrl}
-          />
-        </div>
-
+        <input name='title' placeholder='title'/>
+        <input name='author' placeholder='author'/>
+        <input name='url' placeholder='URL' />
         <button type="submit">save</button>
       </form>
     </div>

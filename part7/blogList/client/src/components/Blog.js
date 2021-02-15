@@ -1,48 +1,37 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import Togglable from '../components/togglable'
-import blogService from '../services/blogs'
 import PropTypes from 'prop-types'
+
+import { useDispatch} from 'react-redux'
+import {likeBlog, deleteBlog} from '../reducers/blogReducer'
 //
 //Renders a single blog in the list
 //
 
 
 
-const Blog = ({ blog, setBlogs, testHandler = () => {} }) => {
-  const [updatedBlog, setBlog] = useState(blog)
+const Blog = ({ blog }) => {
   const blogRef = useRef()
-
-  const addLike = async (event) => {
-    event.preventDefault()
-    testHandler()
-    try{
-      const newBlog = {
-        ...updatedBlog,
-        likes: updatedBlog.likes + 1,
-        user: updatedBlog.user.id
-      }
-      setBlog(await blogService.update(blog.id, newBlog))}
-    catch(e){}
-  }
-
-  const deleteBlog = async () => {
+  const dispatch = useDispatch()
+  
+  const removeBlog = async () => {
     if (window.confirm(`delete blog ${blog.title}?`)) {
-      setBlog(await blogService.removeBlog(blog.id))
-      setBlogs(await blogService.getAll())
+        dispatch(deleteBlog(blog))
     }
-
-    //hide remove if not adder of blog
   }
 
+  const addLike = async () => {
+    dispatch(likeBlog(blog))
+  }
   return (
     <div className='blog'>
-      Title: {updatedBlog.title}<br />
-      Author: {updatedBlog.author}
+      Title: {blog.title}<br />
+      Author: {blog.author}
       <Togglable buttonLabel='expand' ref={blogRef} className="moreInfo">
-        Likes: {updatedBlog.likes}
+        Likes: {blog.likes}
         <button onClick={addLike} id='likeBtn'>like</button><br />
-        URL: {updatedBlog.url}<br />
-        <button onClick={deleteBlog} >delete</button><br />
+        URL: {blog.url}<br />
+        <button onClick={removeBlog} >delete</button><br />
       </Togglable>
       <br />
     </div >
@@ -51,10 +40,7 @@ const Blog = ({ blog, setBlogs, testHandler = () => {} }) => {
 
 Blog.displayName = 'Blog'
 Blog.propTypes = {
-  newBlog: PropTypes.object,
-  updatedBlog: PropTypes.object,
   blog: PropTypes.object,
-  setBlogs: PropTypes.func
 }
 
 export default Blog

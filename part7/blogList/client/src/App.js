@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch} from 'react-redux'
 import BlogList from './components/blogList'
 import blogService from './services/blogs'
 import LoginForm from './components/loginForm'
@@ -9,20 +9,16 @@ import Notification from './components/notification'
 import UserForm from './components/userForm'
 
 import  {setMessage} from "./reducers/notificationReducer"
-
+import  {initializeBlogs} from "./reducers/blogReducer"
 
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
   const dispatch = useDispatch()
-
   //effect loop to retrieve list of blogs from database.
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs(blogs.sort((a, b) => a.likes - b.likes).reverse())
-    )
-  }, [])
+    dispatch(initializeBlogs())
+  })
 
   // effect loop to retrieve logged in user from local storage
   useEffect(() => {
@@ -33,18 +29,13 @@ const App = () => {
       blogService.setToken(user.token)
     }
   }, [])
-
+ 
   // removes users token from local storage
   const logOut = () => {
     console.log('logging out')
     dispatch(setMessage('logged out'))
     setUser(null)
     window.localStorage.removeItem('loggedInUser')
-  }
-
-  const createBlog = (blog) => {
-    blogService.create(blog).then(res => { setBlogs(blogs.concat(res)) })
-    dispatch(setMessage('added new blog'))
   }
 
   return (
@@ -64,10 +55,10 @@ const App = () => {
           <p>{user.name} logged in</p>
           <button onClick={logOut}>log out</button>
           <Togglable buttonLabel='add a new blog'>
-            <BlogForm createBlog={createBlog} />
+            <BlogForm />
           </Togglable>
           <h2>Blogs</h2>
-          <BlogList blogs={blogs} setBlogs={setBlogs} />
+          <BlogList />
         </div>
       }
     </div>

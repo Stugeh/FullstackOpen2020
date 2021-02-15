@@ -33,14 +33,13 @@ const update = async (id, newObject) => {
     headers: { Authorization: token },
   }
   const link = `${baseUrl}/${id}`
-  const request = axios.put(link, newObject, config)
+  const response = await axios.put(link, newObject, config)
     .catch(err => {
       console.log('err', err)
-      console.log('request :>> ', request)
+      console.log()
       console.log('config.headers :>> ', config.headers)
       console.log('newObject :>> ', newObject)
     })
-  const response = await request
   return response.data
 }
 

@@ -1,22 +1,17 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import blogFormReducer from "./reducers/blogFormReducer";
-import blogListReducer from "./reducers/blogListReducer";
+
+//import userReducer from "./reducers/userReducer";
 import blogReducer from "./reducers/blogReducer";
-import loginReducer from "./reducers/loginFormReducer";
 import notifiReducer from "./reducers/notificationReducer";
-import togglableReducer from "./reducers/togglableReducer";
-import userFormReducer from "./reducers/userFormReducer";
+//import togglableReducer from "./reducers/togglableReducer";
 
 const reducer = combineReducers({
-    blogList: blogListReducer,
-    loginForm: loginReducer,
-    blogForm: blogFormReducer,
-    blog: blogReducer,
+    blogs: blogReducer,
     notification: notifiReducer,
-    togglable: togglableReducer,
-    userForm: userFormReducer
+    //togglable: togglableReducer,
+    //user: userReducer
 })
 
 const Store = createStore(
