@@ -7,11 +7,10 @@ const reducer = (state = [], action) => {
         case 'CREATE': return [...state, action.data]
         case 'DELETE': return action.data
         case 'LIKE':
-             return state.map(
-                    blog => blog.id !== action.data.id ?
+            return state.map( blog => blog.id !== action.data.id ?
                          blog : action.data)
                          .sort((a,b) => a.content < b.content ? 1 : -1)
-                         .sort((a,b) => a.votes < b.votes ? 1 : -1)
+                         .sort((a,b) => a.likes < b.likes ? 1 : -1)
         default: return state
     }
     
