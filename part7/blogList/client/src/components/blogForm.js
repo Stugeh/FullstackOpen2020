@@ -23,7 +23,6 @@ const BlogForm = () => {
       url: e.url.value,
       likes: 0
     }
-    console.log('blog :>> ', blog);
     dispatch(createBlog(blog))
     dispatch(setMessage('added new blog'))
   }
