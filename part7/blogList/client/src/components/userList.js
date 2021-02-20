@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-
+import {Link} from 'react-router-dom'
 //
 // Calls the Blog renderer recursively to render all blogs in the list
 
@@ -10,16 +10,24 @@ const UserList = () => {
       <div className='userList'>
         <h2>Users</h2>
         <table>
-            <tr>
-                <th>Username</th>
-                <th>Blog Count</th>
-            </tr>
-            {users.map(user =>
+            <thead>
                 <tr>
-                    <td>{user.username}</td>
-                    <td>{user.blogs.length}</td>
+                    <th>Username</th>
+                    <th>Blog Count</th>
                 </tr>
-            )}
+            </thead>
+            <tbody>
+                {users.map(user =>
+                        <tr key={user.username}>
+                            <td>
+                                <Link to={`/users/${user.username}`}>
+                                    {user.username}
+                                </Link>
+                            </td>
+                            <td>{user.blogs.length}</td>
+                        </tr>
+                )}
+            </tbody>
         </table>
       </div>
   )

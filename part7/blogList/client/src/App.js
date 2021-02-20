@@ -3,9 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   Switch,
   Route,
-  Link,
-  useRouteMatch,
-  useHistory,
+  useRouteMatch
 } from "react-router-dom"
 /* COMPONENTS */
 import BlogList from './components/blogList'
@@ -15,14 +13,17 @@ import Togglable from './components/togglable'
 import Notification from './components/notification'
 import UserForm from './components/userForm'
 import UserList from './components/userList'
+import User from './components/user'
 /* REDUCER ACTION CREATORS */
 import  {setMessage} from "./reducers/notificationReducer"
 import  {initializeBlogs} from "./reducers/blogReducer"
 import {retrieveUser, logout, initializeUsers} from "./reducers/userReducer"
+import users from './services/users'
 
 const App = () => {
-  const user = useSelector(state => state.users.loggedInUser)
   const dispatch = useDispatch()
+  const user = useSelector(state => state.users.loggedInUser)
+  const users = useSelector(state => state.users.allUsers)
   //effect loop to retrieve list of blogs from database.
   useEffect(() => {
     dispatch(initializeBlogs())
@@ -41,6 +42,10 @@ const App = () => {
     dispatch(setMessage('logged out'))
   }
 
+  const match = useRouteMatch('/users/:username')
+  const userToRender = match ? users
+                      .find(a => a.username ===match.params.username) : null
+
   return (
     <div>
       <h1>Blogs</h1>
@@ -48,7 +53,6 @@ const App = () => {
       <Switch>
         
         <Route path='/' exact>
-
           {user === null ? (
             <div>
               <LoginForm />
@@ -72,6 +76,10 @@ const App = () => {
 
         <Route path='/users' exact>
           <UserList />
+        </Route>
+        
+        <Route path='/users/:username'>
+          <User user={userToRender} />
         </Route>
 
       </Switch>
