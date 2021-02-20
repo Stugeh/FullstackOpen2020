@@ -12,6 +12,7 @@ const MenuBar = () => {
     const style = {
         background: 'MidnightBlue',
         padding: 10,
+        margin: -10,
         color: 'white',
     }
 

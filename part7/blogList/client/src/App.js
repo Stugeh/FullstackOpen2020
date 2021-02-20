@@ -49,6 +49,7 @@ const App = () => {
       <MenuBar />
       <h1>Blogs</h1>
       <Notification />
+
       <Switch>
         <Route path='/login'>
             <div>
@@ -81,7 +82,6 @@ const App = () => {
         <Route path='/blogs/:id'>
           <Blog blog={blogToRender} />
         </Route>
-
       </Switch>
     </div>
   )
