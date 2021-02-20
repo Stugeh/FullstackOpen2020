@@ -6,17 +6,19 @@ import BlogForm from './components/blogForm'
 import Togglable from './components/togglable'
 import Notification from './components/notification'
 import UserForm from './components/userForm'
+import UserList from './components/userList'
 
 import  {setMessage} from "./reducers/notificationReducer"
 import  {initializeBlogs} from "./reducers/blogReducer"
-import {retrieveUser, logout} from "./reducers/userReducer"
+import {retrieveUser, logout, initializeUsers} from "./reducers/userReducer"
 
 const App = () => {
-  const user = useSelector(state => state.user)
+  const user = useSelector(state => state.users.loggedInUser)
   const dispatch = useDispatch()
   //effect loop to retrieve list of blogs from database.
   useEffect(() => {
     dispatch(initializeBlogs())
+    dispatch(initializeUsers())
   },[dispatch])
 
   // effect loop to retrieve logged in user from local storage
@@ -30,7 +32,7 @@ const App = () => {
     dispatch(logout())
     dispatch(setMessage('logged out'))
   }
-  
+
   return (
     <div>
       <h1>Blogs</h1>
@@ -54,6 +56,7 @@ const App = () => {
           <BlogList />
         </div>
       }
+      <UserList />
     </div>
   )
 }

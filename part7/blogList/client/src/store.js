@@ -9,7 +9,7 @@ import notifiReducer from "./reducers/notificationReducer";
 const reducer = combineReducers({
     blogs: blogReducer,
     notification: notifiReducer,
-    user: userReducer
+    users: userReducer
 })
 
 const Store = createStore(
