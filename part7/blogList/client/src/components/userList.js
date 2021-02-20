@@ -1,5 +1,4 @@
 import React from 'react'
-import User from './user'
 import { useSelector } from 'react-redux'
 
 //
@@ -16,10 +15,12 @@ const UserList = () => {
                 <th>Blog Count</th>
             </tr>
             {users.map(user =>
-                <User key={user.username} user={user}/>
+                <tr>
+                    <td>{user.username}</td>
+                    <td>{user.blogs.length}</td>
+                </tr>
             )}
         </table>
-        
       </div>
   )
 }
