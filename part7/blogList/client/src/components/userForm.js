@@ -44,27 +44,24 @@ const UserForm = ({ setMessage, setErrorMsg }) => {
   return (
     <form onSubmit={addUser}>
       <div>
-                new username:
         <input
-          type="text"
+          placeholder = 'New username'
           value={username}
           name="new username"
           onChange={handleUsername}
         />
       </div>
       <div>
-                password:
         <input
-          type="text"
+          placeholder = 'New Password'
           value={password}
           name="new password"
           onChange={handlePassword}
         />
       </div>
       <div>
-                Name:
         <input
-          type="text"
+          placeholder = 'Name'
           value={name}
           name="new name"
           onChange={handleName}

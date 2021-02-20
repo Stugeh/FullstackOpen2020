@@ -1,8 +1,5 @@
-import React, { useRef } from 'react'
-import Togglable from '../components/togglable'
-import PropTypes from 'prop-types'
-
-import { useDispatch} from 'react-redux'
+import React from 'react'
+import { useDispatch, useSelector} from 'react-redux'
 import {likeBlog, deleteBlog} from '../reducers/blogReducer'
 //
 //Renders a single blog in the list
@@ -11,8 +8,8 @@ import {likeBlog, deleteBlog} from '../reducers/blogReducer'
 
 
 const Blog = ({ blog }) => {
-  const blogRef = useRef()
   const dispatch = useDispatch()
+  const loggedInAs = useSelector(state => state.users.loggedInUser)
   
   const removeBlog = async () => {
     if (window.confirm(`delete blog ${blog.title}?`)) {
@@ -23,24 +20,25 @@ const Blog = ({ blog }) => {
   const addLike = async () => {
     dispatch(likeBlog(blog))
   }
+
+  if (!blog){return null}
+
   return (
     <div className='blog'>
-      Title: {blog.title}<br />
-      Author: {blog.author}
-      <Togglable buttonLabel='expand' ref={blogRef} className="moreInfo">
-        Likes: {blog.likes}
-        <button onClick={addLike} id='likeBtn'>like</button><br />
-        URL: {blog.url}<br />
-        <button onClick={removeBlog} >delete</button><br />
-      </Togglable>
-      <br />
+      <h1>{blog.title}</h1>
+      <a href={blog.url}>{blog.url}</a> <br />
+      {blog.likes} 
+      <button onClick={addLike} id='likeBtn'>like</button> <br />
+      added by:{blog.user.username}
+      {loggedInAs.username === blog.user.username ? (
+        <div>
+          <button onClick={removeBlog} >delete</button><br />
+        </div>
+        )
+        : <div/>
+      }
     </div >
   )
-}
-
-Blog.displayName = 'Blog'
-Blog.propTypes = {
-  blog: PropTypes.object,
 }
 
 export default Blog

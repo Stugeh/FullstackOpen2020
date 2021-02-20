@@ -1,5 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
+import {useHistory} from 'react-router-dom'
 
 import loginService from '../services/login'
 
@@ -12,6 +13,7 @@ import  {setError, setMessage} from "../reducers/notificationReducer"
 
 const LoginForm = () => {
   const dispatch = useDispatch()
+  const history = useHistory()
 
   // eventhandler for LoginForm submit.
   // tries to call loginService.login to verify params against database
@@ -29,6 +31,7 @@ const LoginForm = () => {
     }catch{
       dispatch(setError('login failed'))
     }
+    history.push('/')
   } 
 
   

@@ -14,46 +14,43 @@ import Notification from './components/notification'
 import UserForm from './components/userForm'
 import UserList from './components/userList'
 import User from './components/user'
+import Blog from './components/Blog'
+import MenuBar from './components/MenuBar'
 /* REDUCER ACTION CREATORS */
-import  {setMessage} from "./reducers/notificationReducer"
 import  {initializeBlogs} from "./reducers/blogReducer"
-import {retrieveUser, logout, initializeUsers} from "./reducers/userReducer"
-import users from './services/users'
+import {retrieveUser, initializeUsers} from "./reducers/userReducer"
 
 const App = () => {
   const dispatch = useDispatch()
-  const user = useSelector(state => state.users.loggedInUser)
-  const users = useSelector(state => state.users.allUsers)
+  const users = useSelector(state => state.users)
+  const blogs = useSelector(state => state.blogs)
+  
   //effect loop to retrieve list of blogs from database.
   useEffect(() => {
     dispatch(initializeBlogs())
     dispatch(initializeUsers())
   },[dispatch])
-
+  
   // effect loop to retrieve logged in user from local storage
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedInUser')
     if (loggedUserJSON) { dispatch(retrieveUser(JSON.parse(loggedUserJSON))) }
   },[dispatch])
- 
-  // removes users token from local storage
-  const logOut = () => {
-    dispatch(logout())
-    dispatch(setMessage('logged out'))
-  }
 
-  const match = useRouteMatch('/users/:username')
-  const userToRender = match ? users
-                      .find(a => a.username ===match.params.username) : null
-
+  const matchUser = useRouteMatch('/users/:username')
+  const userToRender = matchUser ? users.allUsers
+  .find(a => a.username ===matchUser.params.username) : null
+  
+  const matchBlog = useRouteMatch('/blogs/:id')
+  const blogToRender = matchBlog ? blogs.find(a => a.id === matchBlog.params.id) : null
+  
   return (
     <div>
+      <MenuBar />
       <h1>Blogs</h1>
       <Notification />
       <Switch>
-        
-        <Route path='/' exact>
-          {user === null ? (
+        <Route path='/login'>
             <div>
               <LoginForm />
               <Togglable buttonLabel='create user'>
@@ -61,17 +58,16 @@ const App = () => {
                 <UserForm />
               </Togglable>
             </div>
-          ) :
-          <div>
-              <p>{user.name} logged in</p>
-              <button onClick={logOut}>log out</button>
+        </Route>
+
+        <Route path='/' exact>
+          <div>    
               <Togglable buttonLabel='add a new blog'>
                 <BlogForm />
               </Togglable>
               <h2>Blogs</h2>
               <BlogList />
             </div>
-          }
         </Route>
 
         <Route path='/users' exact>
@@ -80,6 +76,10 @@ const App = () => {
         
         <Route path='/users/:username'>
           <User user={userToRender} />
+        </Route>
+
+        <Route path='/blogs/:id'>
+          <Blog blog={blogToRender} />
         </Route>
 
       </Switch>
