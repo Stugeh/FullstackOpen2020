@@ -5,7 +5,7 @@ const reducer = (state = {loggedInUser: null, allUsers: []}, action) => {
     switch (action.type){
         case 'INIT_USERS': return {...state, allUsers: action.data}
         
-        case 'RETRIEVE':
+        case 'RETRIEVE_USERS':
             blogService.setToken(action.data.token)
             return {...state, loggedInUser: action.data}
 
@@ -18,8 +18,8 @@ const reducer = (state = {loggedInUser: null, allUsers: []}, action) => {
             window.localStorage.removeItem('loggedInUser')
             return {...state, loggedInUser: null}
 
-        case 'CREATE':
-            break
+        case 'CREATE_USER':
+            return state
         default: return state
     }
 }
@@ -55,7 +55,7 @@ export const createUser = () => {
 
 export const retrieveUser = (user) => {
     return dispatch => {
-        dispatch({type: 'RETRIEVE', data: user})
+        dispatch({type: 'RETRIEVE_USERS', data: user})
     }
 }
 

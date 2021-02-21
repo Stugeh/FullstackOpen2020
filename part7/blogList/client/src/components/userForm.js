@@ -1,12 +1,16 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+
 import userService from '../services/users'
 
+import  {setError, setMessage} from "../reducers/notificationReducer"
 //
 // renders new user form
 //
 
-const UserForm = ({ setMessage, setErrorMsg }) => {
-
+const UserForm = () => {
+  
+  const dispatch = useDispatch()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [name, setName] = useState('')
@@ -28,12 +32,10 @@ const UserForm = ({ setMessage, setErrorMsg }) => {
     try {
       const response = await userService.create(user)
       if (response.status === 200) {
-        setMessage('New user created')
-        setTimeout(() => { setMessage(null) }, 5000)
+        dispatch(setMessage('User created'))
       }
     } catch (exception) {
-      setErrorMsg('user creation failed')
-      setTimeout(() => { setErrorMsg(null) }, 5000)
+        dispatch(setError('user creation failed'))
     }
   }
 

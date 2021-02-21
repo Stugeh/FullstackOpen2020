@@ -1,3 +1,8 @@
+div {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: large;
+}
+
 .error {
     color: red;
     background: lightgrey;
@@ -24,9 +29,4 @@
     border: 'solid';
     border-width: 1;
     margin-bottom: 5;
-}
-
-div {
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-size: large;
 }
