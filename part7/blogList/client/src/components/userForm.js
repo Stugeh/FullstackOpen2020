@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import userService from '../services/users'
 
 import  {setError, setMessage} from "../reducers/notificationReducer"
+import { Form, Button } from 'react-bootstrap'
 //
 // renders new user form
 //
@@ -39,38 +40,32 @@ const UserForm = () => {
     }
   }
 
-
-
-
-
   return (
-    <form onSubmit={addUser}>
-      <div>
-        <input
+    <Form className='userCreateForm' onSubmit={addUser}>
+      
+        <Form.Control
           placeholder = 'New username'
           value={username}
           name="new username"
           onChange={handleUsername}
         />
-      </div>
-      <div>
-        <input
+        
+        <Form.Control
           placeholder = 'New Password'
           value={password}
           name="new password"
           onChange={handlePassword}
         />
-      </div>
-      <div>
-        <input
+      
+      
+        <Form.Control
           placeholder = 'Name'
           value={name}
           name="new name"
           onChange={handleName}
         />
-      </div>
-      <button type="submit">create new user</button>
-    </form>
+      <Button type="submit">create new user</Button>
+    </Form>
   )
 }
 export default UserForm

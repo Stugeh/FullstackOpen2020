@@ -11,7 +11,6 @@ import LoginForm from './components/loginForm'
 import BlogForm from './components/blogForm'
 import Togglable from './components/togglable'
 import Notification from './components/notification'
-import UserForm from './components/userForm'
 import UserList from './components/userList'
 import User from './components/user'
 import Blog from './components/Blog'
@@ -45,44 +44,42 @@ const App = () => {
   const blogToRender = matchBlog ? blogs.find(a => a.id === matchBlog.params.id) : null
   
   return (
-    <div className='container'>
+    <span>
       <MenuBar />
-      <h1>Blogs</h1>
-      <Notification />
+      <div className='container'>
+        <Notification />
+        <Switch>
+          <Route path='/login'>
+            <LoginForm />
+          </Route>
 
-      <Switch>
-        <Route path='/login'>
-            <div>
-              <LoginForm />
-              <Togglable buttonLabel='create user'>
-                <h4>Create new user</h4>
-                <UserForm />
-              </Togglable>
-            </div>
-        </Route>
-
-        <Route path='/' exact>
-          <div>    
-              <Togglable buttonLabel='add a new blog'>
-                <BlogForm />
-              </Togglable>
+          <Route path='/' exact>
+            <div className='blogList'>    
+              <h1>Blogs</h1>
               <BlogList />
             </div>
-        </Route>
+          </Route>
 
-        <Route path='/users' exact>
-          <UserList />
-        </Route>
-        
-        <Route path='/users/:username'>
-          <User user={userToRender} />
-        </Route>
+          <Route path='/users' exact>
+            <UserList />
+          </Route>
+          
+          <Route path='/users/:username'>
+            <User user={userToRender} />
+          </Route>
 
-        <Route path='/blogs/:id'>
-          <Blog blog={blogToRender} />
-        </Route>
-      </Switch>
-    </div>
+          <Route path='/blogs/:id'>
+            <Blog blog={blogToRender} />
+          </Route>
+        </Switch>
+      </div>
+      
+      <Route path='/' exact>
+        <Togglable buttonLabel='add a new blog'>
+        <BlogForm />
+        </Togglable>
+      </Route>
+    </span>
   )
 }
 

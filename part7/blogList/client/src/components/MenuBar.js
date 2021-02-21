@@ -10,12 +10,6 @@ const MenuBar = () => {
     const history = useHistory()
 
     const users = useSelector(state => state.users)
-    const style = {
-        background: 'MidnightBlue',
-        padding: 10,
-        color: 'white',
-
-    }
 
     const padding = {
         color: 'white',
@@ -37,16 +31,16 @@ const MenuBar = () => {
     }
     
     return (
-        <div style = {style}>
-            <Link style={padding} to='/'>Blogs</Link>
-            <Link style={padding} to='/users'>Users</Link>
+        <div className='topBar'>
+            <Link style={padding} to='/'><h2>Blogs</h2></Link>
+            <Link style={padding} to='/users'><h2>Users</h2></Link>
             {users.loggedInUser ? 
-            <span style={{'marginLeft': '40px'}}>
+            <span className='logged'>
                 {users.loggedInUser.username} logged in
-                <Button variant='danger' onClick={logOut}>log out</Button>
+                <Button variant='danger' className='logBtn' onClick={logOut}>log out</Button>
             </span>
             :
-            <Button variant='success'   onClick={login}>login</Button>}
+            <Button variant='success' className='logBtn'  onClick={login}>login</Button>}
         </div>
     )
 }

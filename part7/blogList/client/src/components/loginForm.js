@@ -5,6 +5,9 @@ import { Form, Button } from 'react-bootstrap'
 
 import loginService from '../services/login'
 
+import UserForm from '../components/userForm'
+import Togglable from '../components/togglable'
+
 import {login} from '../reducers/userReducer'
 import  {setError, setMessage} from "../reducers/notificationReducer"
 
@@ -39,13 +42,19 @@ const LoginForm = () => {
   
 
   return (
-    <Form onSubmit={handleLogin}>
-      <Form.Group>
-        <Form.Control name="username" placeholder="Username" />
-        <Form.Control name="password" placeholder="password" type='password'/>
-        <Button variant='primary' type="submit">login</Button>
-      </Form.Group>
-    </Form>
+    <div className='login'>
+      <Form className='loginForm' onSubmit={handleLogin}>
+        <Form.Group>
+          <Form.Control name="username" placeholder="Username" /> <br/>
+          <Form.Control name="password" placeholder="password" type='password'/><br/>
+          <Button variant='primary' type="submit">login</Button>
+        </Form.Group>
+      </Form>
+      <Togglable className='newUser' buttonLabel='create user'>
+        <h4>Create new user</h4>
+        <UserForm />
+      </Togglable>
+    </div>
   )
 }
 

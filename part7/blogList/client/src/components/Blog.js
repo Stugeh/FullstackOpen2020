@@ -1,5 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector} from 'react-redux'
+import {Button, Card} from 'react-bootstrap'
+import {Link} from 'react-router-dom'
 import {likeBlog, deleteBlog} from '../reducers/blogReducer'
 //
 //Renders a single blog in the list
@@ -26,19 +28,26 @@ const Blog = ({ blog }) => {
 
   return (
     <div className='blog'>
-      <h1>{blog.title}</h1>
-      <a href={blog.url}>{blog.url}</a> <br />
-      {blog.likes} 
-      <button onClick={addLike} id='likeBtn'>like</button> <br />
-      {console.log('blog.user :>> ', blog.user)}
-      added by:{blog.user.username}
-      {loggedInAs.username === blog.user.username ? (
-        <div>
-          <button onClick={removeBlog} >delete</button><br />
+      <Card className='card'>
+        <Card.Header>
+          <h1>{blog.title}</h1>
+          <Button className='cardBtn' variant='primary' href={blog.url}>Source</Button>
+        </Card.Header>  
+        <div className='inline'>
+          Likes: {blog.likes} 
+          <Button className='cardBtn' onClick={addLike} id='likeBtn'>like</Button>
         </div>
-        )
-        : <div/>
-      }
+        
+        {console.log('blog.user :>> ', blog.user)}
+        added by:{blog.user.username}
+        {loggedInAs.username === blog.user.username ? (
+          <span>
+            <Button variant='danger' onClick={removeBlog} >delete</Button><br />
+          </span>
+          )
+          : <div/>
+        }
+      </Card>
     </div >
   )
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import {Table} from 'react-bootstrap'
 
 const User = ({ user }) => {
     const style = {
@@ -11,7 +12,8 @@ const User = ({ user }) => {
     if (!user){return null}
     return(
         <div className='blogList'>
-          <table>
+          <h1>Blogs added by {user.username}</h1>
+          <Table striped>
             <tbody>
               {user.blogs.map(blog =>
                 <tr key={blog.id}>
@@ -23,7 +25,7 @@ const User = ({ user }) => {
                 </tr>
               )}
             </tbody>
-          </table>
+          </Table>
         </div>
     )
 }

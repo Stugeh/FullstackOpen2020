@@ -30,14 +30,12 @@ const BlogForm = () => {
 
   return (
     <span>
-      <Form onSubmit={addBlog}>
+      <Form className='blogForm' onSubmit={addBlog}>
         <h3>Add new blog</h3>
-        <Form.Group>
-          <Form.Control name='title' placeholder='title'/><br/>
-          <Form.Control name='author' placeholder='author'/><br/>
-          <Form.Control name='url' placeholder='URL' /><br/>
+          <Form.Control name='title' placeholder='title'/>
+          <Form.Control name='author' placeholder='author'/>
+          <Form.Control name='url' placeholder='URL' />
           <Button variant='primary' type="submit">save</Button>
-        </Form.Group>
       </Form>
     </span>
   )
