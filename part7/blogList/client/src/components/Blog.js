@@ -21,6 +21,7 @@ const Blog = ({ blog }) => {
     dispatch(likeBlog(blog))
   }
 
+
   if (!blog){return null}
 
   return (
@@ -29,6 +30,7 @@ const Blog = ({ blog }) => {
       <a href={blog.url}>{blog.url}</a> <br />
       {blog.likes} 
       <button onClick={addLike} id='likeBtn'>like</button> <br />
+      {console.log('blog.user :>> ', blog.user)}
       added by:{blog.user.username}
       {loggedInAs.username === blog.user.username ? (
         <div>
