@@ -3,6 +3,7 @@ import {Link, useHistory} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
 import  {setMessage} from "../reducers/notificationReducer"
 import {logout} from "../reducers/userReducer"
+import {Button} from 'react-bootstrap'
 
 const MenuBar = () => {
     const dispatch = useDispatch()
@@ -12,8 +13,8 @@ const MenuBar = () => {
     const style = {
         background: 'MidnightBlue',
         padding: 10,
-        margin: -10,
         color: 'white',
+
     }
 
     const padding = {
@@ -40,12 +41,12 @@ const MenuBar = () => {
             <Link style={padding} to='/'>Blogs</Link>
             <Link style={padding} to='/users'>Users</Link>
             {users.loggedInUser ? 
-            <span style={{'paddingLeft': '40px'}}>
+            <span style={{'marginLeft': '40px'}}>
                 {users.loggedInUser.username} logged in
-                <button onClick={logOut}>log out</button>
+                <Button variant='danger' onClick={logOut}>log out</Button>
             </span>
             :
-            <button onClick={login}>login</button>}
+            <Button variant='success'   onClick={login}>login</Button>}
         </div>
     )
 }

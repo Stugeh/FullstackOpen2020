@@ -45,7 +45,7 @@ const App = () => {
   const blogToRender = matchBlog ? blogs.find(a => a.id === matchBlog.params.id) : null
   
   return (
-    <div>
+    <div className='container'>
       <MenuBar />
       <h1>Blogs</h1>
       <Notification />
@@ -66,7 +66,6 @@ const App = () => {
               <Togglable buttonLabel='add a new blog'>
                 <BlogForm />
               </Togglable>
-              <h2>Blogs</h2>
               <BlogList />
             </div>
         </Route>

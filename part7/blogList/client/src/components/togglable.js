@@ -1,4 +1,5 @@
 import React, { useState, useImperativeHandle } from 'react'
+import {Button} from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
 //
@@ -24,15 +25,15 @@ const Togglable = React.forwardRef((props, ref) => {
   useImperativeHandle(ref, () => { return { toggleExpanded } })
 
   return (
-    <div>
-      <div style={hideWhenVisible}>
-        <button onClick={toggleVisibility} className="infoEnable">{props.buttonLabel}</button>
-      </div>
-      <div style={showWhenVisible} className="togglableComponent">
+    <span>
+      <span style={hideWhenVisible}>
+        <Button variant='secondary' onClick={toggleVisibility} className="infoEnable">{props.buttonLabel}</Button>
+      </span>
+      <span style={showWhenVisible} className="togglableComponent">
         {props.children}
-        <button onClick={toggleVisibility} className="infoDisable">hide</button>
-      </div>
-    </div>
+        <Button variant='secondary' onClick={toggleVisibility} className="infoDisable">hide</Button>
+      </span>
+    </span>
   )
 })
 

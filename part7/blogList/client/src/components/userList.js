@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import {Link} from 'react-router-dom'
+import {Table} from 'react-bootstrap'
 //
 // Calls the Blog renderer recursively to render all blogs in the list
 
@@ -9,7 +10,7 @@ const UserList = () => {
   return(
       <div className='userList'>
         <h2>Users</h2>
-        <table>
+        <Table striped>
             <thead>
                 <tr>
                     <th>Username</th>
@@ -18,17 +19,17 @@ const UserList = () => {
             </thead>
             <tbody>
                 {users.map(user =>
-                        <tr key={user.username}>
-                            <td>
-                                <Link to={`/users/${user.username}`}>
-                                    {user.username}
-                                </Link>
-                            </td>
-                            <td>{user.blogs.length}</td>
-                        </tr>
+                    <tr key={user.username}>
+                        <td>
+                            <Link to={`/users/${user.username}`}>
+                                {user.username}
+                            </Link>
+                        </td>
+                        <td>{user.blogs.length}</td>
+                    </tr>
                 )}
             </tbody>
-        </table>
+        </Table>
       </div>
   )
 }

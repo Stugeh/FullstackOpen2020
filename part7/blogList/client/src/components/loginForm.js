@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import {useHistory} from 'react-router-dom'
+import { Form, Button } from 'react-bootstrap'
 
 import loginService from '../services/login'
 
@@ -38,16 +39,13 @@ const LoginForm = () => {
   
 
   return (
-    <form onSubmit={handleLogin}>
-      <div>
-        <input name="username" placeholder="Username"
-        />
-      </div>
-      <div>
-        <input name="password" placeholder="password" type='password'/>
-      </div>
-      <button type="submit">login</button>
-    </form>
+    <Form onSubmit={handleLogin}>
+      <Form.Group>
+        <Form.Control name="username" placeholder="Username" />
+        <Form.Control name="password" placeholder="password" type='password'/>
+        <Button variant='primary' type="submit">login</Button>
+      </Form.Group>
+    </Form>
   )
 }
 
