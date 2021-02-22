@@ -48,11 +48,11 @@ const Blog = ({ blog }) => {
           : <div/>
         }
       </Card>
-      <div class='card' style={{'width': '60rem'}}>
-        <div class='card-header'><h3>Comments</h3></div>
-          <ul class="list-group list-group-flush">
+      <div className='card' style={{'width': '60rem'}}>
+        <div className='card-header'><h3>Comments</h3></div>
+          <ul className="list-group list-group-flush">
             {blog.comments.map( comment => 
-                <li class='list-group-item'>{comment}</li>
+                <li key={comment._id} className='list-group-item'>{comment.content}</li>
             )}
           </ul>
       </div>

@@ -58,7 +58,9 @@ blogRouter.delete('/:id', async (req, res) => {
 })
 
 blogRouter.post('/:id/comments', async (req, res) => {
-    const comment = req.body.comment
+    const comment = {
+        content: req.body.comment,
+    }
     const blog = await Blog.findById(req.params.id)
     blog.comments = blog.comments.concat(comment)
     await blog.save()

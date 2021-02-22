@@ -53,9 +53,8 @@ const removeBlog = async (id) => {
 }
 
 const createComment = async (id, comment) => {
-  console.log('id, comment', id, comment)
   const comments = await axios.post(`${baseUrl}/${id}/comments`, {comment})
-  return comments
+  return comments.data
 }
 
 export default { getAll, create, update, setToken, removeBlog, createComment }
