@@ -38,9 +38,6 @@ const LoginForm = () => {
     history.push('/')
   } 
 
-  
-  
-
   return (
     <div className='login'>
       <Form className='loginForm' onSubmit={handleLogin}>

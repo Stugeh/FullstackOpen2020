@@ -29,6 +29,7 @@ blogRouter.post('/', async (request, response) => {
         author: body.author,
         url: body.url,
         likes: body.likes,
+        comments: [],
         user: user._id
     })
     const newBlog = await blog.save()
@@ -43,6 +44,7 @@ blogRouter.put('/:id', async (req, res) => {
     res.json(newBlog)
 })
 
+
 blogRouter.delete('/:id', async (req, res) => {
     const blog = await Blog.findById(req.params.id)
     const decodedToken = jwt.verify(req.token, process.env.SECRET)
@@ -55,4 +57,12 @@ blogRouter.delete('/:id', async (req, res) => {
     }
 })
 
-module.exports = blogRouter
+blogRouter.post('/:id/comments', async (req, res) => {
+    const comment = req.body.comment
+    const blog = await Blog.findById(req.params.id)
+    blog.comments = blog.comments.concat(comment)
+    await blog.save()
+    res.json(blog.comments)
+})
+
+module.exports = blogRouter 

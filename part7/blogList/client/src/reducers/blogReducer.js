@@ -6,6 +6,7 @@ const reducer = (state = [], action) => {
         case 'INIT_BLOGS': return action.data
         case 'CREATE_BLOG': return [...state, action.data]
         case 'DELETE_BLOG': return action.data
+        case 'ADD_COMMENT': return [...state, action.data]
         case 'LIKE_BLOG':
             return state.map( blog => blog.id !== action.data.id ?
                          blog : action.data)
@@ -47,6 +48,13 @@ export const likeBlog = (blog) => {
         const newBlog = await blogService
             .update(blog.id, {...blog, likes: blog.likes + 1, user: blog.user.id})
         dispatch({type: 'LIKE_BLOG', data: {...newBlog, user: blog.user}})
+    }
+}
+
+export const addComment = (comment, blog) => {
+    return async dispatch => {
+        const comments = await blogService.createComment(blog.id, comment)
+        dispatch({type: 'ADD_COMMENT', data: comments})
     }
 }
 

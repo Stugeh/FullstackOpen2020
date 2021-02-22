@@ -7,18 +7,34 @@ div {
     text-align: left;
 }
 
+.comment{
+    max-width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    
+}
+
 .userCreateForm{
     max-width: fit-content;
     margin-left: auto;
     margin-right: auto;
 }
 
-.card{
+.blogCard{
     margin-top: 50px;
     width:60%;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
+    padding-bottom: 10px;
+}
+
+.card{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .blogForm{
