@@ -2,8 +2,8 @@ let previousTimeout = null
 
 const reducer = (state = '', action) => {
     switch(action.type){
-        case 'SET_MESSAGE': return {text: action.text,  className:'message'}
-        case 'SET_ERROR': return {text: action.text, className:'error'}
+        case 'SET_MESSAGE': return {text: action.text,  variant:'success'}
+        case 'SET_ERROR': return {text: action.text, variant:'danger'}
         case 'CLEAR_MESSAGE': return ''
         default: return state
     }

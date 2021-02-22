@@ -33,7 +33,7 @@ const Blog = ({ blog }) => {
       <Card className='blogCard'>
         <Card.Header>
           <h1>{blog.title}</h1>
-          <Button className='cardBtn' variant='primary' href={blog.url}>Source</Button>
+          <Button className='cardBtn' variant='success' href={blog.url}>Source</Button>
         </Card.Header>  
         <div className='inline'>
           Likes: {blog.likes} 

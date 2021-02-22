@@ -1,6 +1,6 @@
 import React from 'react'
 import {useSelector} from 'react-redux'
-
+import {Alert} from 'react-bootstrap'
 //
 // displays the errors and notifications to the user
 //
@@ -9,9 +9,9 @@ const Notification = () => {
   const notification = useSelector(state=>state.notification)
   if (notification.text !== null) {
     return (
-      <div className={notification.className}>
+      <Alert variant={notification.variant}>
         {notification.text}
-      </div>
+      </Alert>
     )
   } else { return (null) }
 }
