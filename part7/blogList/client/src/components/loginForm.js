@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import {useHistory} from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { Form, Button } from 'react-bootstrap'
 
 import loginService from '../services/login'
@@ -8,8 +8,8 @@ import loginService from '../services/login'
 import UserForm from '../components/userForm'
 import Togglable from '../components/togglable'
 
-import {login} from '../reducers/userReducer'
-import  {setError, setMessage} from "../reducers/notificationReducer"
+import { login } from '../reducers/userReducer'
+import  { setError, setMessage } from '../reducers/notificationReducer'
 
 //
 // Renders the login form
@@ -27,16 +27,16 @@ const LoginForm = () => {
     const e = event.target
     try{
       const user = await loginService.login({
-          username: e.username.value,
-          password: e.password.value
-        })
-        dispatch(login(user))
-        dispatch(setMessage('logged in'))
-    }catch{
+        username: e.username.value,
+        password: e.password.value
+      })
+      dispatch(login(user))
+      dispatch(setMessage('logged in'))
+      history.push('/')
+    }catch(err){
       dispatch(setError('login failed'))
     }
-    history.push('/')
-  } 
+  }
 
   return (
     <div className='login'>

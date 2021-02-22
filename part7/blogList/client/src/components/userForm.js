@@ -3,14 +3,14 @@ import { useDispatch } from 'react-redux'
 
 import userService from '../services/users'
 
-import  {setError, setMessage} from "../reducers/notificationReducer"
+import  { setError, setMessage } from '../reducers/notificationReducer'
 import { Form, Button } from 'react-bootstrap'
 //
 // renders new user form
 //
 
 const UserForm = () => {
-  
+
   const dispatch = useDispatch()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -36,34 +36,34 @@ const UserForm = () => {
         dispatch(setMessage('User created'))
       }
     } catch (exception) {
-        dispatch(setError('user creation failed'))
+      dispatch(setError('user creation failed'))
     }
   }
 
   return (
     <Form className='userCreateForm' onSubmit={addUser}>
-      
-        <Form.Control
-          placeholder = 'New username'
-          value={username}
-          name="new username"
-          onChange={handleUsername}
-        />
-        
-        <Form.Control
-          placeholder = 'New Password'
-          value={password}
-          name="new password"
-          onChange={handlePassword}
-        />
-      
-      
-        <Form.Control
-          placeholder = 'Name'
-          value={name}
-          name="new name"
-          onChange={handleName}
-        />
+
+      <Form.Control
+        placeholder = 'New username'
+        value={username}
+        name="new username"
+        onChange={handleUsername}
+      />
+
+      <Form.Control
+        placeholder = 'New Password'
+        value={password}
+        name="new password"
+        onChange={handlePassword}
+      />
+
+
+      <Form.Control
+        placeholder = 'Name'
+        value={name}
+        name="new name"
+        onChange={handleName}
+      />
       <Button type="submit">create new user</Button>
     </Form>
   )

@@ -1,5 +1,5 @@
 import React, { useState, useImperativeHandle } from 'react'
-import {Button} from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
 //

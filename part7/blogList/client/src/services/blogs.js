@@ -53,7 +53,7 @@ const removeBlog = async (id) => {
 }
 
 const createComment = async (id, comment) => {
-  const comments = await axios.post(`${baseUrl}/${id}/comments`, {comment})
+  const comments = await axios.post(`${baseUrl}/${id}/comments`, { comment })
   return comments.data
 }
 

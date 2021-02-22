@@ -1,20 +1,20 @@
 import React from 'react'
-import { useDispatch, useSelector} from 'react-redux'
-import {Button, Card, Form} from 'react-bootstrap'
-import {likeBlog, deleteBlog, addComment} from '../reducers/blogReducer'
-import {useField} from '../hooks/formHook'
+import { useDispatch, useSelector } from 'react-redux'
+import { Button, Card, Form } from 'react-bootstrap'
+import { likeBlog, deleteBlog, addComment } from '../reducers/blogReducer'
+import { useField } from '../hooks/formHook'
 //
 //Renders a single blog in the list
 //
 
 const Blog = ({ blog }) => {
   const dispatch = useDispatch()
-  const {reset: commentReset, ...comment} = useField('text', 'comment')
+  const { reset: commentReset, ...comment } = useField('text', 'comment')
   const loggedInAs = useSelector(state => state.users.loggedInUser)
-  
+
   const removeBlog = async () => {
     if (window.confirm(`delete blog ${blog.title}?`)) {
-        dispatch(deleteBlog(blog))
+      dispatch(deleteBlog(blog))
     }
   }
 
@@ -34,9 +34,9 @@ const Blog = ({ blog }) => {
         <Card.Header>
           <h1>{blog.title}</h1>
           <Button className='cardBtn' variant='success' href={blog.url}>Source</Button>
-        </Card.Header>  
+        </Card.Header>
         <div className='inline'>
-          Likes: {blog.likes} 
+          Likes: {blog.likes}
           <Button className='cardBtn' onClick={addLike} id='likeBtn'>like</Button>
         </div>
         added by:{blog.user.username}
@@ -44,17 +44,17 @@ const Blog = ({ blog }) => {
           <span>
             <Button variant='danger' onClick={removeBlog} >delete</Button><br />
           </span>
-          )
+        )
           : <div/>
         }
       </Card>
-      <div className='card' style={{'width': '60rem'}}>
+      <div className='card' style={{ 'width': '60rem' }}>
         <div className='card-header'><h3>Comments</h3></div>
-          <ul className="list-group list-group-flush">
-            {blog.comments.map( comment => 
-                <li key={comment._id} className='list-group-item'>{comment.content}</li>
-            )}
-          </ul>
+        <ul className="list-group list-group-flush">
+          {blog.comments.map( comment =>
+            <li key={comment._id} className='list-group-item'>{comment.content}</li>
+          )}
+        </ul>
       </div>
       <Form>
         <Form.Control {...comment}/>
