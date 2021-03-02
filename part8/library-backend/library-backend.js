@@ -129,12 +129,12 @@ const resolvers = {
   },
   Mutation: {
     addBook: (root, args) => {
-      if (!authors.find(author => args.Author === author.name)){
+      if (!authors.find(author => args.author === author.name)){
         authors = authors.concat({name: args.author, bookCount: 1, id: uuid()})
       }
       books = books.concat({...args, id: uuid()})
       return {...args, id: uuid()}
-    },
+    }, 
     editAuthor: (root, args) => {
       const author = authors.find(author => author.name === args.name)
       if (!author){
@@ -145,7 +145,7 @@ const resolvers = {
       return editedAuthor
     }
   }
-}
+} 
 
 const server = new ApolloServer({
   typeDefs,
