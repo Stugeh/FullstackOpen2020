@@ -1,72 +1,87 @@
-import React, { useState } from 'react'
+/* eslint-disable react/prop-types */
+import React, { useState } from 'react';
+import { useMutation } from '@apollo/client';
+import { CREATE_BOOK, ALL_BOOKS } from '../queries';
 
-const NewBook = (props) => {
-  const [title, setTitle] = useState('')
-  const [author, setAuhtor] = useState('')
-  const [published, setPublished] = useState('')
-  const [genre, setGenre] = useState('')
-  const [genres, setGenres] = useState([])
+const NewBook = ({ show }) => {
+  const [title, setTitle] = useState('');
+  const [author, setAuthor] = useState('');
+  const [published, setPublished] = useState('');
+  const [genre, setGenre] = useState('');
+  const [genres, setGenres] = useState([]);
 
-  if (!props.show) {
-    return null
+  const [createBook] = useMutation(CREATE_BOOK, {
+    refetchQueries: [{ query: ALL_BOOKS }],
+    onError: (error) => {
+      console.log('error :>> ', error);
+    },
+  });
+
+  if (!show) {
+    return null;
   }
 
   const submit = async (event) => {
-    event.preventDefault()
-    
-    console.log('add book...')
-
-    setTitle('')
-    setPublished('')
-    setAuhtor('')
-    setGenres([])
-    setGenre('')
-  }
+    event.preventDefault();
+    createBook({
+      variables: {
+        title, author, published, genres,
+      },
+    });
+    setTitle('');
+    setPublished('');
+    setAuthor('');
+    setGenres([]);
+    setGenre('');
+  };
 
   const addGenre = () => {
-    setGenres(genres.concat(genre))
-    setGenre('')
-  }
+    setGenres(genres.concat(genre));
+    setGenre('');
+  };
 
   return (
     <div>
       <form onSubmit={submit}>
         <div>
-          title
           <input
+            placeholder="title"
             value={title}
             onChange={({ target }) => setTitle(target.value)}
           />
         </div>
         <div>
-          author
           <input
+            placeholder="author"
             value={author}
-            onChange={({ target }) => setAuhtor(target.value)}
+            onChange={({ target }) => setAuthor(target.value)}
           />
         </div>
         <div>
-          published
           <input
-            type='number'
+            placeholder="year"
+            type="number"
             value={published}
-            onChange={({ target }) => setPublished(target.value)}
+            onChange={({ target }) => setPublished(parseInt(target.value, 10))}
           />
         </div>
         <div>
           <input
+            placeholder="genre"
             value={genre}
             onChange={({ target }) => setGenre(target.value)}
           />
           <button onClick={addGenre} type="button">add genre</button>
         </div>
         <div>
-          genres: {genres.join(' ')}
+          genres:
+          {' '}
+          {genres.join(', ')}
         </div>
-        <button type='submit'>create book</button>
+        <button type="submit">create book</button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default NewBook
+export default NewBook;
