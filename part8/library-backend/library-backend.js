@@ -1,4 +1,5 @@
 const { ApolloServer, gql } = require('apollo-server')
+const { v1: uuid } = require('uuid')
 
 let authors = [
   {
@@ -25,11 +26,6 @@ let authors = [
     id: "afa5b6f3-344d-11e9-a414-719c6709cf3e",
   },
 ]
-
-/*
- * Saattaisi olla järkevämpää assosioida kirja ja sen tekijä tallettamalla kirjan yhteyteen tekijän nimen sijaan tekijän id
- * Yksinkertaisuuden vuoksi tallennamme kuitenkin kirjan yhteyteen tekijän nimen
-*/
 
 let books = [
   {
@@ -102,23 +98,52 @@ const typeDefs = gql`
   type Query {
     bookCount: Int!
     authorCount: Int!
-    allBooks(author: String): [Book!]!
+    allBooks(author: String, genre: String): [Book!]!
     allAuthors: [Author!]!
+  }
+
+  type Mutation {
+    addBook(
+      title: String!,
+      author: String!,
+      published: Int!,
+      genres: [String!]!
+    ): Book
+    editAuthor(
+      name: String!
+      setBornTo: Int!
+    ): Author
   }
 `
 
 const resolvers = {
   Query: { 
     bookCount: () => books.length,
-    allBooks: (root, args) => args.author ? 
-      books.filter(book => book.author === args.author) 
-      : books,
-
+    allBooks: (root, args) => books.filter(book => args.author ? book.author === args.author : book)
+                                .filter(book => args.genre ? book.genres.includes(args.genre) : book ), 
     authorCount: () => authors.length,
     allAuthors: () => authors
   }, 
   Author: {
     bookCount: root => books.filter(book => book.author === root.name).length
+  },
+  Mutation: {
+    addBook: (root, args) => {
+      if (!authors.find(author => args.Author === author.name)){
+        authors = authors.concat({name: args.author, bookCount: 1, id: uuid()})
+      }
+      books = books.concat({...args, id: uuid()})
+      return {...args, id: uuid()}
+    },
+    editAuthor: (root, args) => {
+      const author = authors.find(author => author.name === args.name)
+      if (!author){
+        return null
+      }
+      const editedAuthor = {...author, born: args.setBornTo}
+      authors = authors.map(author => author.name === args.name ? editedAuthor : author)
+      return editedAuthor
+    }
   }
 }
 
