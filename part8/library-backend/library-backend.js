@@ -106,7 +106,13 @@ const server = new ApolloServer({
   resolvers,
 });
 
+<<<<<<< HEAD
 server.listen().then(({url}) => {
   console.log(`Server ready at ${url}`);
 })
 ;
+=======
+server.listen().then(({ url }) => {
+  console.log(`Server ready at ${url}`)
+})
+>>>>>>> ba3f8723d59a18df5099bfe055a2854b334fa000
