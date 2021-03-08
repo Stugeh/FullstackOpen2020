@@ -62,7 +62,8 @@ const resolvers = {
     bookCount: () => Book.collection.countDocuments(),
     allBooks: (root, args) => {
       const params = {author: args.author, genres: args.genre};
-      Book.find(params);
+      console.log('params :>> ', params);
+      return Book.find({});
     },
     authorCount: () => Author.collection.countDocuments(),
     allAuthors: () => Author.find({}),
@@ -72,18 +73,23 @@ const resolvers = {
   },
   Mutation: {
     addBook: async (root, args) => {
-      try {
-        if ( !Author.find( {name: args.author} ) ) {
-          const author = new Author({name: args.author, bookCount: 1});
-          await author.save();
-        }
-        const book = new Book({...args});
+      // try {
+      const author = await Author.findOne( {name: args.author} );
+      if ( !author ) {
+        const newAuthor = new Author({name: args.author, bookCount: 1});
+        console.log('newAuthor :>> ', newAuthor);
+        await newAuthor.save();
+        const book = new Book({...args, author: newAuthor._id});
         return book.save();
-      } catch (error) {
-        throw new UserInputError(error.message, {
-          invalidArgs: args,
-        });
       }
+
+      const book = new Book({...args, author: author._id});
+      return book.save();
+      // } catch (error) {
+      //   throw new UserInputError(error.message, {
+      //     invalidArgs: args,
+      //   });
+      // }
     },
     editAuthor: async (root, args) => {
       const author = await Author.find({name: args.name});
@@ -107,13 +113,6 @@ const server = new ApolloServer({
   resolvers,
 });
 
-<<<<<<< HEAD
 server.listen().then(({url}) => {
   console.log(`Server ready at ${url}`);
-})
-;
-=======
-server.listen().then(({ url }) => {
-  console.log(`Server ready at ${url}`)
-})
->>>>>>> ba3f8723d59a18df5099bfe055a2854b334fa000
+});
