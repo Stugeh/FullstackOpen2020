@@ -39,7 +39,7 @@ const typeDefs = gql`
   type Query {
     bookCount: Int!
     authorCount: Int!
-    allBooks(author: String, genre: String): [Book!]!
+    allBooks(author: String, genres: [String]): [Book!]!
     allAuthors: [Author!]!
   }
 
@@ -61,16 +61,23 @@ const resolvers = {
   Query: {
     bookCount: () => Book.collection.countDocuments(),
     allBooks: (root, args) => {
-      const params = {author: args.author, genres: args.genre};
-      console.log('params :>> ', params);
+      const params = {};
+      if (args.author) {
+        params.author = {$eq: args.author};
+      }
+      if (args.genres) {
+        return Book.find({genres: {$in: args.genres}});
+      }
       return Book.find({});
     },
     authorCount: () => Author.collection.countDocuments(),
     allAuthors: () => Author.find({}),
   },
+
   Author: {
     bookCount: (root) => Book.collection.countDocuments({author: root.name}),
   },
+
   Mutation: {
     addBook: async (root, args) => {
       // try {
@@ -92,13 +99,14 @@ const resolvers = {
       // }
     },
     editAuthor: async (root, args) => {
-      const author = await Author.find({name: args.name});
+      const author = await Author.findOne({name: args.name});
       if (!author) {
         return null;
       }
-      author.birth = args.setBornTo;
+      author.born = args.setBornTo;
       try {
         await author.save();
+        return author;
       } catch (error) {
         throw new UserInputError(error.message, {
           invalidArgs: args,
