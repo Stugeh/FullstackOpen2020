@@ -5,6 +5,7 @@ const Book = require('./models/book');
 const Author = require('./models/author');
 
 //* move to .env asap *//
+const MONGO_URI = 'mongodb+srv://Stugeh:CwQxTeWrgycl1jwa@cluster0-cj4cb.mongodb.net/Library?retryWrites=true&w=majority';
 
 mongoose.connect(
     MONGO_URI,

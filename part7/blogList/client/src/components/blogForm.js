@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { Form, Button } from 'react-bootstrap'
 
-import { setMessage } from '../reducers/notificationReducer'
+import { setMessage, setError } from '../reducers/notificationReducer'
 import { createBlog } from '../reducers/blogReducer'
 import { useField } from '../hooks/formHook'
 
@@ -11,7 +11,7 @@ import { useField } from '../hooks/formHook'
 //
 
 
-// Hndlr functions = ({ target }) => setAttribute(target.value)
+// Handler functions = ({ target }) => setAttribute(target.value)
 const BlogForm = () => {
   const dispatch = useDispatch()
   const { reset: titleReset, ...title } = useField('text', 'title')
@@ -21,18 +21,24 @@ const BlogForm = () => {
   // event handler thats called when submit is pressed on BlogForm
   // adds new blog to database and shows a notification to the user.
   const addBlog = (event) => {
-    event.preventDefault()
-    const blog = {
-      title: title.value,
-      author: author.value,
-      url: url.value,
-      likes: 0
+    if(window.localStorage.getItem('loggedInUser')){
+
+      event.preventDefault()
+      const blog = {
+        title: title.value,
+        author: author.value,
+        url: url.value,
+        likes: 0
+      }
+      dispatch(createBlog(blog))
+      dispatch(setMessage('added new blog'))
+      titleReset()
+      authorReset()
+      urlReset()
+    } 
+    else {
+      dispatch(setError('You have to log in first'))
     }
-    dispatch(createBlog(blog))
-    dispatch(setMessage('added new blog'))
-    titleReset()
-    authorReset()
-    urlReset()
   }
 
   return (
