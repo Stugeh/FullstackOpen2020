@@ -37,7 +37,7 @@ const typeDefs = gql`
   type Book {
     title: String!
     published: Int!
-    author: String!
+    author: Author!
     id: ID!
     genres: [String!]!
   }
@@ -92,9 +92,9 @@ const resolvers = {
         params.author = {$eq: args.author};
       }
       if (args.genres) {
-        return Book.find({genres: {$in: args.genres}});
+        return Book.find({genres: {$in: args.genres}}).populate('author');
       }
-      return Book.find({});
+      return Book.find({}).populate('author');
     },
 
     authorCount: () => Author.collection.countDocuments(),
