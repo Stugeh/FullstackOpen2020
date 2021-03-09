@@ -1,25 +1,25 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+import { Table } from 'react-bootstrap';
 
 const Books = ({ show, books }) => {
   if (!show) {
     return null;
   }
+  console.log('books :>> ', books);
+  const genres = books.reduce((book) => book.genres);
+  console.log('genres :>> ', genres);
 
   return (
     <div>
       <h2>books</h2>
 
-      <table>
+      <Table striped>
         <tbody>
           <tr>
             <th>title</th>
-            <th>
-              author
-            </th>
-            <th>
-              published
-            </th>
+            <th>author</th>
+            <th>publishe</th>
           </tr>
           {books.map((a) => (
             <tr key={a.title}>
@@ -29,7 +29,7 @@ const Books = ({ show, books }) => {
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
     </div>
   );
 };

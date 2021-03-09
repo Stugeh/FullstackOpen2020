@@ -1,5 +1,6 @@
 const {ApolloServer, gql} = require('apollo-server');
 
+const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const Book = require('./models/book');
 const Author = require('./models/author');
@@ -25,7 +26,7 @@ mongoose.connect(
 const typeDefs = gql`
   type User {
     username: String!
-    favoriteGenre: String!
+    favoriteGenre: String
     id: ID!
   }
 
@@ -55,6 +56,7 @@ const typeDefs = gql`
     allBooks(author: String, genres: [String]): [Book!]!
     allAuthors: [Author!]!
     me: User
+    allGenres: [String!]!
   }
 
   type Mutation {
@@ -72,7 +74,7 @@ const typeDefs = gql`
 
     createUser(
       username: String!
-      favoriteGenre: String!
+      favoriteGenre: String
     ): User
 
     login(
@@ -86,6 +88,13 @@ const resolvers = {
   Query: {
     bookCount: () => Book.collection.countDocuments(),
 
+
+    authorCount: () => Author.collection.countDocuments(),
+
+    allAuthors: () => Author.find({}),
+
+    me: (root, args, context) => (context.currentUser),
+
     allBooks: (root, args) => {
       const params = {};
       if (args.author) {
@@ -97,12 +106,12 @@ const resolvers = {
       return Book.find({}).populate('author');
     },
 
-    authorCount: () => Author.collection.countDocuments(),
-
-    allAuthors: () => Author.find({}),
-
-    me: (root, args, context) => (context.currentUser),
-
+    allGenres: async () => {
+      let genres = [];
+      const books = await Book.find({});
+      books.map((book) => genres = genres.concat(book.genres));
+      return [...new Set(genres)];
+    },
   },
 
   Author: {
@@ -118,13 +127,12 @@ const resolvers = {
         const author = await Author.findOne( {name: args.author} );
         if ( !author ) {
           const newAuthor = new Author({name: args.author, bookCount: 1});
-          console.log('newAuthor :>> ', newAuthor);
           await newAuthor.save();
-          const book = new Book({...args, author: newAuthor._id});
+          const book = new Book({...args, author: newAuthor});
           return book.save();
         }
 
-        const book = new Book({...args, author: author._id});
+        const book = new Book({...args, author: author});
         return book.save();
       } catch (error) {
         throw new UserInputError(error.message, {
@@ -152,16 +160,16 @@ const resolvers = {
       }
     },
 
-    createUser: (root, args) => {
-      const user = new User({username: args.username});
-      return user.save().catch((error) => {
+    createUser: async (root, args) => {
+      const user = new User(args);
+      await user.save().catch((error) => {
         throw new UserInputError(error.message, {invalidArgs: args});
       });
+      return user;
     },
 
     login: async (root, args) => {
       const user = await User.findOne({username: args.username});
-
       if ( !user || args.password !== 'secret' ) {
         throw new UserInputError('wrong credentials');
       }

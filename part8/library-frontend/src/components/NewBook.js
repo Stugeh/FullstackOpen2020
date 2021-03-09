@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
+import { Form } from 'react-bootstrap';
 import { CREATE_BOOK, ALL_BOOKS, ALL_AUTHORS } from '../queries';
 
-const NewBook = ({ show }) => {
+const NewBook = ({ show, setPage }) => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [published, setPublished] = useState('');
@@ -12,9 +13,10 @@ const NewBook = ({ show }) => {
 
   const [createBook] = useMutation(CREATE_BOOK, {
     refetchQueries: [{ query: ALL_BOOKS }, { query: ALL_AUTHORS }],
-    onError: (error) => {
-      console.log('error :>> ', error);
-    },
+    // onError: (error) => {
+    //   console.log('error :>> ', error);
+    // },
+    onCompleted: () => setPage('books'),
   });
 
   if (!show) {
@@ -42,23 +44,23 @@ const NewBook = ({ show }) => {
 
   return (
     <div>
-      <form onSubmit={submit}>
+      <Form onSubmit={submit}>
         <div>
-          <input
+          <Form.Control
             placeholder="title"
             value={title}
             onChange={({ target }) => setTitle(target.value)}
           />
         </div>
         <div>
-          <input
+          <Form.Control
             placeholder="author"
             value={author}
             onChange={({ target }) => setAuthor(target.value)}
           />
         </div>
         <div>
-          <input
+          <Form.Control
             placeholder="year"
             type="number"
             value={published}
@@ -66,7 +68,7 @@ const NewBook = ({ show }) => {
           />
         </div>
         <div>
-          <input
+          <Form.Control
             placeholder="genre"
             value={genre}
             onChange={({ target }) => setGenre(target.value)}
@@ -79,7 +81,7 @@ const NewBook = ({ show }) => {
           {genres.join(', ')}
         </div>
         <button type="submit">create book</button>
-      </form>
+      </Form>
     </div>
   );
 };
