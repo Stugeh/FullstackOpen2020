@@ -49,6 +49,18 @@ export const GET_BOOKS_BY_GENRE = gql`
     }
 `;
 
+export const GET_RECOMMENDATIONS = gql`
+    query{
+        recommendations{
+            title
+            author{
+                name
+            } genres
+            published
+        }
+    }
+`;
+
 /// *** MUTATIONS ***///
 export const LOGIN = gql`
   mutation login($username: String!, $password: String!) {

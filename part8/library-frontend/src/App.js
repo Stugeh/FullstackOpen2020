@@ -6,17 +6,16 @@ import Authors from './components/Authors';
 import Books from './components/Books';
 import NewBook from './components/NewBook';
 import Login from './components/Login';
+import Recommendations from './components/Recommendations';
 
-import { ALL_AUTHORS, ALL_BOOKS, FAVORITE_GENRE } from './queries';
+import { ALL_AUTHORS, ALL_BOOKS } from './queries';
 
 const App = () => {
   const [page, setPage] = useState('authors');
   const [token, setToken] = useState('');
-  const [genreFilter, setGenreFilter] = useState('');
-  const books = useQuery(ALL_BOOKS);
 
+  const books = useQuery(ALL_BOOKS);
   const authors = useQuery(ALL_AUTHORS);
-  const favGenreQueryResult = useQuery(FAVORITE_GENRE);
 
   const client = useApolloClient();
 
@@ -25,11 +24,7 @@ const App = () => {
   }
 
   const handleRecommended = () => {
-    if (favGenreQueryResult.data) {
-      const favGenre = favGenreQueryResult.data.me.favoriteGenre;
-      setGenreFilter(!favGenre ? '' : favGenre);
-    }
-    setPage('books');
+    setPage('recommended');
   };
 
   const logout = () => {
@@ -65,8 +60,10 @@ const App = () => {
       <Books
         books={books.data.allBooks}
         show={page === 'books'}
-        filter={genreFilter}
-        setFilter={setGenreFilter}
+      />
+
+      <Recommendations
+        show={page === 'recommended'}
       />
 
       <NewBook

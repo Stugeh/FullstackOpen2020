@@ -57,7 +57,8 @@ const typeDefs = gql`
     authorCount: Int!
     allBooks(author: String, genres: [String]): [Book!]!
     allAuthors: [Author!]!
-    booksByGenre(author: String, genre: String): [Book!]!
+    booksByGenre(genre: String): [Book!]!
+    recommendations: [Book!]!
     me: User
     allGenres: [String!]!
   }
@@ -98,6 +99,17 @@ const resolvers = {
 
     me: (root, args, context) => (context.currentUser),
 
+    recommendations: (root, args, context) => {
+      if ( context.currentUser.favoriteGenre) {
+        return (
+          Book.find({
+            genres: {$in: context.currentUser.favoriteGenre}},
+          ).populate('author')
+        );
+      }
+      return Book.find({}).populate('author');
+    },
+
     allBooks: (root, args) => {
       const params = {};
       if (args.author) {
@@ -116,7 +128,7 @@ const resolvers = {
       return [...new Set(genres)];
     },
 
-    booksByGenre: (root, args, context) => {
+    booksByGenre: (root, args) => {
       return Book.find({genres: {$in: args.genre}}).populate('author');
     },
   },
