@@ -83,6 +83,7 @@ const typeDefs = gql`
       username: String!
       password: String!
     ): Token
+
   }
 `;
 
@@ -166,6 +167,7 @@ const resolvers = {
 
     createUser: async (root, args) => {
       const user = new User(args);
+      console.log('args :>> ', user);
       await user.save().catch((error) => {
         throw new UserInputError(error.message, {invalidArgs: args});
       });
