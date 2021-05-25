@@ -57,6 +57,7 @@ const typeDefs = gql`
     authorCount: Int!
     allBooks(author: String, genres: [String]): [Book!]!
     allAuthors: [Author!]!
+    booksByGenre(author: String, genres: [String]): [Book!]!
     me: User
     allGenres: [String!]!
   }
@@ -113,6 +114,10 @@ const resolvers = {
       const books = await Book.find({});
       books.map((book) => genres = genres.concat(book.genres));
       return [...new Set(genres)];
+    },
+
+    booksByGenre: (root, args, context) => {
+
     },
   },
 
