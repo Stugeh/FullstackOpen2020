@@ -1,13 +1,19 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
-import { Table } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Table, Button } from 'react-bootstrap';
 
 const Books = ({ show, books }) => {
   if (!show || !books) {
     return null;
   }
 
-  // const genres = books.reduce((book) => book.genres);
+  const [filter, setFilter] = useState('');
+
+  const genres = books.flatMap((book) => book.genres);
+  const uniqueGenres = [...new Set(genres)];
+
+  const filteredBooks = filter !== ''
+    ? books.filter((book) => book.genres.includes(filter)) : books;
 
   return (
     <div>
@@ -20,7 +26,7 @@ const Books = ({ show, books }) => {
             <th>author</th>
             <th>published</th>
           </tr>
-          {books.map((a) => (
+          {filteredBooks.map((a) => (
             <tr key={a.title}>
               <td>{a.title}</td>
               <td>{a.author.name}</td>
@@ -29,6 +35,10 @@ const Books = ({ show, books }) => {
           ))}
         </tbody>
       </Table>
+      <Button onClick={() => setFilter('')}>All</Button>
+      {uniqueGenres.map((genre) => (
+        <Button key={genre} onClick={() => setFilter(genre)}>{genre}</Button>
+      ))}
     </div>
   );
 };
