@@ -1,10 +1,14 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { useQuery } from '@apollo/client';
 import { Table } from 'react-bootstrap';
 
 import { GET_RECOMMENDATIONS } from '../queries';
 
-const Recommendations = () => {
+const Recommendations = ({ show }) => {
+  if (!show) {
+    return null;
+  }
   const recommended = useQuery(GET_RECOMMENDATIONS);
 
   if (!recommended.data) { return <div>loading...</div>; }
