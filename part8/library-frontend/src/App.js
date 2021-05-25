@@ -40,7 +40,6 @@ const App = () => {
               </span>
             )
             : <Button onClick={() => setPage('login')} variant="success">log in</Button>}
-
         </span>
       </div>
 

@@ -4,7 +4,7 @@
   "description": "",
   "main": "library-backend.js",
   "scripts": {
-    "dev": "nodemon library-backend.js",
+    "dev": "nodemon --trace-warnings library-backend.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -17,7 +17,8 @@
   "dependencies": {
     "apollo-server": "^2.21.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.11.18",
+    "mongodb": "^3.6.8",
+    "mongoose": "^5.12.11",
     "mongoose-unique-validator": "^2.0.3"
   }
 }

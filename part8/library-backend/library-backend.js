@@ -1,4 +1,4 @@
-const {ApolloServer, gql} = require('apollo-server');
+const {ApolloServer, UserInputError, gql} = require('apollo-server');
 
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
@@ -12,10 +12,12 @@ const SECRET = 'secret';
 
 mongoose.connect(
     MONGO_URI,
-    {useNewUrlParser: true,
+    {
+      useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false,
-      useCreateIndex: true})
+      useCreateIndex: true,
+    })
     .then(() => {
       console.log('connected to MongoDB');
     })
@@ -88,7 +90,6 @@ const resolvers = {
   Query: {
     bookCount: () => Book.collection.countDocuments(),
 
-
     authorCount: () => Author.collection.countDocuments(),
 
     allAuthors: () => Author.find({}),
@@ -123,6 +124,9 @@ const resolvers = {
       if (!context.currentUser) {
         throw new AuthenticationError('not authenticated');
       }
+      // if (args.author.length < 4) {
+      //   throw new UserInputError('author must be at least 4 characters long')
+      // }
       try {
         const author = await Author.findOne( {name: args.author} );
         if ( !author ) {

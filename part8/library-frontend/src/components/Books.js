@@ -3,12 +3,11 @@ import React from 'react';
 import { Table } from 'react-bootstrap';
 
 const Books = ({ show, books }) => {
-  if (!show) {
+  if (!show || !books) {
     return null;
   }
-  console.log('books :>> ', books);
-  const genres = books.reduce((book) => book.genres);
-  console.log('genres :>> ', genres);
+
+  // const genres = books.reduce((book) => book.genres);
 
   return (
     <div>
@@ -19,7 +18,7 @@ const Books = ({ show, books }) => {
           <tr>
             <th>title</th>
             <th>author</th>
-            <th>publishe</th>
+            <th>published</th>
           </tr>
           {books.map((a) => (
             <tr key={a.title}>
