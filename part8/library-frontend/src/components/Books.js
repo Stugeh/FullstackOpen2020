@@ -26,7 +26,7 @@ const Books = ({ show, books }) => {
   }, [result]);
 
   return (
-    <div>
+    <div style={{ height: '88vh', overflow: 'scroll' }}>
       <h2>books</h2>
 
       <Table striped>
