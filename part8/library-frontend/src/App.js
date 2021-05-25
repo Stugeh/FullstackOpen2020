@@ -7,18 +7,30 @@ import Books from './components/Books';
 import NewBook from './components/NewBook';
 import Login from './components/Login';
 
-import { ALL_AUTHORS, ALL_BOOKS } from './queries';
+import { ALL_AUTHORS, ALL_BOOKS, FAVORITE_GENRE } from './queries';
 
 const App = () => {
   const [page, setPage] = useState('authors');
   const [token, setToken] = useState('');
-  const authors = useQuery(ALL_AUTHORS);
+  const [genreFilter, setGenreFilter] = useState('');
   const books = useQuery(ALL_BOOKS);
+
+  const authors = useQuery(ALL_AUTHORS);
+  const favGenreQueryResult = useQuery(FAVORITE_GENRE);
+
   const client = useApolloClient();
 
   if (authors.loading || books.loading) {
     return <div>loading..</div>;
   }
+
+  const handleRecommended = () => {
+    if (favGenreQueryResult.data) {
+      const favGenre = favGenreQueryResult.data.me.favoriteGenre;
+      setGenreFilter(!favGenre ? '' : favGenre);
+    }
+    setPage('books');
+  };
 
   const logout = () => {
     setToken(null);
@@ -31,6 +43,7 @@ const App = () => {
       <div style={{ paddingBottom: '10px' }}>
         <Button onClick={() => setPage('authors')}>authors</Button>
         <Button onClick={() => setPage('books')}>books</Button>
+        <Button onClick={handleRecommended}>recommended</Button>
         <span>
           {localStorage.loggedUser
             ? (
@@ -52,6 +65,8 @@ const App = () => {
       <Books
         books={books.data.allBooks}
         show={page === 'books'}
+        filter={genreFilter}
+        setFilter={setGenreFilter}
       />
 
       <NewBook

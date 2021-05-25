@@ -15,7 +15,7 @@ const LoginForm = ({ setToken, show, setPage }) => {
   const [login, result] = useMutation(LOGIN, {
     onCompleted: () => { setPage('authors'); },
     onError: (error) => {
-      console.log(error.graphQLErrors[0].message);
+      throw new Error(error.graphQLErrors[0].message);
     },
   });
 

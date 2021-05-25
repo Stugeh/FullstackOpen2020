@@ -1,19 +1,29 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLazyQuery, useQuery } from '@apollo/client';
+
 import { Table, Button } from 'react-bootstrap';
+
+import { GET_BOOKS_BY_GENRE, ALL_GENRES } from '../queries';
 
 const Books = ({ show, books }) => {
   if (!show || !books) {
     return null;
   }
+  const [filteredBooks, setFilteredBooks] = useState([]);
 
-  const [filter, setFilter] = useState('');
+  const genreRes = useQuery(ALL_GENRES);
+  const genres = genreRes.data ? genreRes.data.allGenres : [];
 
-  const genres = books.flatMap((book) => book.genres);
-  const uniqueGenres = [...new Set(genres)];
+  const [getBooks, result] = useLazyQuery(GET_BOOKS_BY_GENRE);
 
-  const filteredBooks = filter !== ''
-    ? books.filter((book) => book.genres.includes(filter)) : books;
+  const fetchBooks = (genre) => {
+    getBooks({ variables: { genre } });
+  };
+
+  useEffect(() => {
+    setFilteredBooks(result.data ? result.data.booksByGenre : books);
+  }, [result]);
 
   return (
     <div>
@@ -35,10 +45,12 @@ const Books = ({ show, books }) => {
           ))}
         </tbody>
       </Table>
-      <Button onClick={() => setFilter('')}>All</Button>
-      {uniqueGenres.map((genre) => (
-        <Button key={genre} onClick={() => setFilter(genre)}>{genre}</Button>
-      ))}
+      <div style={{ position: 'fixed', bottom: '10px' }}>
+        <Button onClick={() => setFilteredBooks(books)}>All</Button>
+        {genres.map((genre) => (
+          <Button key={genre} onClick={() => fetchBooks(genre)}>{genre}</Button>
+        ))}
+      </div>
     </div>
   );
 };
