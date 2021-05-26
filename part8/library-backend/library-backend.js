@@ -139,9 +139,10 @@ const resolvers = {
   },
 
   Author: {
-    bookCount: (root) => Book.collection.countDocuments({
-      author: {name: root.name},
-    }),
+    bookCount: async (root) => {
+      const books = await Book.find({author: root});
+      return books.length;
+    },
   },
 
   Mutation: {
