@@ -12,6 +12,9 @@ import Notification from './components/Notification';
 
 import { ALL_AUTHORS, ALL_BOOKS, BOOK_ADDED } from './queries';
 
+const arrayHasObject = (array, object) => array
+  .filter((item) => item.title === object.title).length > 0;
+
 const App = () => {
   const [page, setPage] = useState('authors');
   const [token, setToken] = useState('');
@@ -22,10 +25,21 @@ const App = () => {
 
   const client = useApolloClient();
 
+  const updateCacheWith = (newBook) => {
+    const dataInStore = client.readQuery({ query: ALL_BOOKS });
+    if (!arrayHasObject(dataInStore.allBooks, newBook)) {
+      client.writeQuery({
+        query: ALL_BOOKS,
+        data: { allBooks: dataInStore.allBooks.concat(newBook) },
+      });
+    }
+  };
+
   useSubscription(BOOK_ADDED, {
     onSubscriptionData: ({ subscriptionData }) => {
+      const newBook = subscriptionData.data.bookAdded;
       setNotification({ ...notification, msg: 'a New book was added!' });
-      console.log(subscriptionData);
+      updateCacheWith(newBook);
     },
   });
 
