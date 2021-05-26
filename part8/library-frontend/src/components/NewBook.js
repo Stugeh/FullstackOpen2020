@@ -13,10 +13,10 @@ const NewBook = ({ show, setPage }) => {
 
   const [createBook] = useMutation(CREATE_BOOK, {
     refetchQueries: [{ query: ALL_BOOKS }, { query: ALL_AUTHORS }],
+    onCompleted: () => setPage('books'),
     onError: (error) => {
       throw new Error(error.graphQLErrors[0].message);
     },
-    onCompleted: () => setPage('books'),
   });
 
   if (!show) {

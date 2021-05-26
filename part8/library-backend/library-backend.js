@@ -139,7 +139,9 @@ const resolvers = {
   },
 
   Author: {
-    bookCount: (root) => Book.collection.countDocuments({author: root.name}),
+    bookCount: (root) => Book.collection.countDocuments({
+      author: {name: root.name},
+    }),
   },
 
   Mutation: {
@@ -156,12 +158,14 @@ const resolvers = {
           const newAuthor = new Author({name: args.author, bookCount: 1});
           await newAuthor.save();
           const book = new Book({...args, author: newAuthor});
-          return book.save();
+          pubsub.publish('BOOK_ADDED', {bookAdded: book});
+          await book.save();
+          return book;
         }
-
         const book = new Book({...args, author: author});
         pubsub.publish('BOOK_ADDED', {bookAdded: book});
-        return book.save();
+        book.save();
+        return book;
       } catch (error) {
         throw new UserInputError(error.message, {
           invalidArgs: args,

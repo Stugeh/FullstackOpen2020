@@ -15,13 +15,24 @@ export const ALL_BOOKS = gql`
     query{
         allBooks{
             title
-            author{
-                name
-            } genres
+            author{name} 
+            genres
             published
         }
     }
 `;
+
+export const BOOK_ADDED = gql`
+    subscription {
+        bookAdded {
+            title
+            author{name}
+            genres
+            published
+        }
+    }  
+`;
+
 export const ALL_GENRES = gql`
     query{
         allGenres
