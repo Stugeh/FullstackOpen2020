@@ -37,3 +37,6 @@ Coursework for open fullstack course from University of Helsinki https://fullsta
 
 ### part8 GraphQL
 * Library back- and frontend
+
+### part9 Typescript
+* 
