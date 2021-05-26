@@ -12,5 +12,11 @@ const schema = new mongoose.Schema({
   },
 });
 
+schema.virtual('books', {
+  ref: 'Book',
+  localField: '_id',
+  foreignField: 'author',
+});
+
 module.exports = mongoose.model('Author', schema)
 ;

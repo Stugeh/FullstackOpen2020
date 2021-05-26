@@ -52,6 +52,7 @@ const typeDefs = gql`
     bookCount: Int!
     id: ID!
     born: Int
+    books: [Book]
   }
 
   type Query {
@@ -100,7 +101,7 @@ const resolvers = {
 
     authorCount: () => Author.collection.countDocuments(),
 
-    allAuthors: () => Author.find({}),
+    allAuthors: () => Author.find({}).populate('books'),
 
     me: (root, args, context) => (context.currentUser),
 
@@ -139,10 +140,7 @@ const resolvers = {
   },
 
   Author: {
-    bookCount: async (root) => {
-      const books = await Book.find({author: root});
-      return books.length;
-    },
+    bookCount: (root) => root.books.length,
   },
 
   Mutation: {
@@ -223,14 +221,18 @@ const resolvers = {
   },
 };
 
+const fetchUser = (auth) => {
+  const decodedToken = jwt.verify(auth.substring(7), SECRET);
+  return User.findById(decodedToken.id);
+};
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: async ({req}) => {
     const auth = req ? req.headers.authorization : null;
     if (auth && auth.toLowerCase().startsWith('bearer ')) {
-      const decodedToken = jwt.verify(auth.substring(7), SECRET);
-      const currentUser = await User.findById(decodedToken.id);
+      const currentUser = await fetchUser(auth);
       return {currentUser};
     }
   },
