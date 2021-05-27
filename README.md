@@ -36,3 +36,7 @@ Coursework for open fullstack course from University of Helsinki https://fullsta
 * Improved blogList app based on the things learned in parts 6 and 7
 
 ### part8 GraphQL
+* Library back- and frontend
+
+### part9 Typescript
+* 
