@@ -38,4 +38,23 @@ const calculateExercises = (loggedHoursArray: Array<number>): Result => {
     }
 }
 
-console.log(`calculateExercises([])`, calculateExercises([3, 0, 2, 4.5, 0, 3, 1]))
+
+const parseIntError = () => {
+    throw new Error('Some of your arguments are not numbers.');
+}
+
+const parseArray = (args: Array<string>): Array<number> => {
+    if (args.length < 0) throw new Error('Not enough arguments');
+    const numArray = args.map(numString =>
+        isNaN(parseInt(numString)) ? parseIntError() : parseInt(numString)
+    )
+    return numArray;
+}
+
+
+try {
+    const rawArguments = process.argv.slice(2)
+    console.log(calculateExercises(parseArray(rawArguments)))
+} catch (err) {
+    console.log('Error, something bad happened, message: ', err.message);
+}
