@@ -1,36 +1,53 @@
 
-const calculateBmi = (height: number, weight: number): string => {
-    const bmi = weight / Math.pow(height / 100, 2);
-    if (bmi > 40) return "Obese Class III (Very severely obese)";
-    if (bmi > 35) return "Obese Class II (Severely obese)";
-    if (bmi > 30) return "Obese Class I (Moderately obese)";
-    if (bmi > 25) return "Overweight";
-    if (bmi > 18.5) return "Normal (healthy weight)";
-    if (bmi > 16) return "Underweight";
-    if (bmi > 15) return "Severely underweight";
-    return "Very severely underweight";
+type BmiOutput = { height: number, weight: number, bmi: string }
 
-}
+const calculateBmi = (inputs: { height: string, weight: string }): object => {
+    const parsedHeight = parseInt(inputs.height)
+    const parsedWeight = parseInt(inputs.weight)
 
-
-const parseArguments = (args: Array<string>): { height: number, weight: number } => {
-    if (args.length < 4) throw new Error('Not enough arguments');
-    if (args.length > 4) throw new Error('Too many arguments');
-
-    if (!isNaN(Number(args[2])) && !isNaN(Number(args[3]))) {
-        return {
-            height: Number(args[2]),
-            weight: Number(args[3])
-        }
-    } else {
-        throw new Error('Provided values were not numbers!');
+    if (isNaN(parsedHeight) || isNaN(parsedWeight)) {
+        return { error: "Malformatted params" }
     }
+
+    const bmi = parsedWeight / Math.pow(parsedHeight / 100, 2);
+    const result: BmiOutput = {
+        height: parsedHeight,
+        weight: parsedWeight,
+        bmi: ''
+    }
+
+    if (bmi > 40) result.bmi = "Obese Class III (Very severely obese)";
+    else if (bmi > 35) result.bmi = "Obese Class II (Severely obese)";
+    else if (bmi > 30) result.bmi = "Obese Class I (Moderately obese)";
+    else if (bmi > 25) result.bmi = "Overweight";
+    else if (bmi > 18.5) result.bmi = "Normal (healthy weight)";
+    else if (bmi > 16) result.bmi = "Underweight";
+    else if (bmi > 15) result.bmi = "Severely underweight";
+    else result.bmi = "Very severely underweight";
+
+    return result;
 }
 
+// const parseArguments = (args: Array<string>): { height: number, weight: number } => {
+//     if (args.length < 4) throw new Error('Not enough arguments');
+//     if (args.length > 4) throw new Error('Too many arguments');
 
-try {
-    const { height, weight } = parseArguments(process.argv);
-    console.log(calculateBmi(height, weight));
-} catch (e) {
-    console.log('Error, something bad happened, message: ', e.message);
-}
+//     if (!isNaN(Number(args[2])) && !isNaN(Number(args[3]))) {
+//         return {
+//             height: Number(args[2]),
+//             weight: Number(args[3])
+//         }
+//     } else {
+//         throw new Error('Provided values were not numbers!');
+//     }
+// }
+
+
+// try {
+//     const { height, weight } = parseArguments(process.argv);
+//     console.log(calculateBmi(height, weight));
+// } catch (e) {
+//     console.log('Error, something bad happened, message: ', e.message);
+// }
+
+module.exports = calculateBmi;
