@@ -1,10 +1,11 @@
 {
-  "name": "activitytracker",
+  "name": "activity-tracker",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "ts-node": "ts-node",
+    "calculateBmi": "ts-node bmiCalculator.ts",
     "dev": "ts-node-dev index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
