@@ -8,6 +8,11 @@ interface Result {
     average: number
 }
 
+interface CalcInput {
+    daily_exercises: Array<number>,
+    target: number,
+}
+
 const getRating = (target: number, average: number) => {
     const ratio = average / target;
     if (ratio > 1) return 3;
@@ -15,8 +20,9 @@ const getRating = (target: number, average: number) => {
     return 1;
 };
 
-const calculateExercises = (loggedHoursArray: Array<number>): Result => {
-    const target = 2;
+export const calculateExercises = (trainingPeriod: CalcInput): Result => {
+    const loggedHoursArray = trainingPeriod.daily_exercises;
+    const target = trainingPeriod.target;
     const average = loggedHoursArray
         .reduce((total, current) => total + current) / loggedHoursArray.length;
     const rating = getRating(target, average);
@@ -43,18 +49,12 @@ const parseIntError = () => {
     throw new Error('Some of your arguments are not numbers.');
 };
 
-const parseArray = (args: Array<string>): Array<number> => {
-    if (args.length < 0) throw new Error('Not enough arguments');
+export const stringsToNum = (args: Array<string>): Array<number> => {
+    if (args.length < 0) {
+        throw new Error('Not enough arguments');
+    }
     const numArray = args.map(numString =>
         isNaN(parseInt(numString)) ? parseIntError() : parseInt(numString)
     );
     return numArray;
 };
-
-
-try {
-    const rawArguments = process.argv.slice(2);
-    console.log(calculateExercises(parseArray(rawArguments)));
-} catch (err) {
-    console.log('Error, something bad happened, message: ', err);
-}
