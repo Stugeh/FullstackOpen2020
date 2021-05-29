@@ -1,12 +1,12 @@
 
-type BmiOutput = { height: number, weight: number, bmi: string }
+type BmiOutput = { height: number, weight: number, bmi: string };
 
-const calculateBmi = (inputs: { height: string, weight: string }): object => {
-    const parsedHeight = parseInt(inputs.height)
-    const parsedWeight = parseInt(inputs.weight)
+export const calculateBmi = (inputs: { height: string, weight: string }): Record<string,unknown> => {
+    const parsedHeight = parseInt(inputs.height);
+    const parsedWeight = parseInt(inputs.weight);
 
     if (isNaN(parsedHeight) || isNaN(parsedWeight)) {
-        return { error: "Malformatted params" }
+        return { error: "Malformatted params" };
     }
 
     const bmi = parsedWeight / Math.pow(parsedHeight / 100, 2);
@@ -14,7 +14,7 @@ const calculateBmi = (inputs: { height: string, weight: string }): object => {
         height: parsedHeight,
         weight: parsedWeight,
         bmi: ''
-    }
+    };
 
     if (bmi > 40) result.bmi = "Obese Class III (Very severely obese)";
     else if (bmi > 35) result.bmi = "Obese Class II (Severely obese)";
@@ -26,7 +26,7 @@ const calculateBmi = (inputs: { height: string, weight: string }): object => {
     else result.bmi = "Very severely underweight";
 
     return result;
-}
+};
 
 // const parseArguments = (args: Array<string>): { height: number, weight: number } => {
 //     if (args.length < 4) throw new Error('Not enough arguments');
@@ -49,5 +49,3 @@ const calculateBmi = (inputs: { height: string, weight: string }): object => {
 // } catch (e) {
 //     console.log('Error, something bad happened, message: ', e.message);
 // }
-
-module.exports = calculateBmi;

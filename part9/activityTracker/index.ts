@@ -1,16 +1,28 @@
 import express from 'express';
 const app = express();
-const bmiCalc = require('./bmiCalculator')
+import { calculateBmi } from './bmiCalculator';
 
+interface HeightWeight {
+    height: string,
+    weight: string
+}
 
 app.get('/hello', (_req, res) => {
     res.send('Hello Full Stack');
 });
 
 app.get('/bmi', (req, res) => {
-    const response = bmiCalc(req.query)
-    res.send(response)
-})
+    try {
+        const formattedQuery: HeightWeight = {
+            height: req.query.height as string,
+            weight: req.query.weight as string
+        };
+        const response = calculateBmi(formattedQuery);
+        res.send(response);
+    } catch (err) {
+        console.log('Error, something bad happened, message: ', err);
+    }
+});
 
 const PORT = 3003;
 
