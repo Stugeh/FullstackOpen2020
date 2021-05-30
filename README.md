@@ -39,4 +39,5 @@ Coursework for open fullstack course from University of Helsinki https://fullsta
 * Library back- and frontend
 
 ### part9 Typescript
-* 
+* activityTracker
+* Patientor
