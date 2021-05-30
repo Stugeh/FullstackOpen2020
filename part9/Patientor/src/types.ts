@@ -11,5 +11,6 @@ export interface Patient {
     ssn:  string,
     gender:  string,
     occupation: string,
-
 }
+
+export type NonConfidentialPatient = Omit<Patient, 'ssn'>;
