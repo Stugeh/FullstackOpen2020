@@ -1,6 +1,11 @@
 import React from 'react';
 
-const Content = ({courseParts}) => (
+interface CoursePart {
+    name: string;
+    exerciseCount: number;
+}
+
+const Content = ({courseParts}:{courseParts:Array<CoursePart>}) => (
     <div>
         <p>
             {courseParts[0].name} {courseParts[0].exerciseCount}

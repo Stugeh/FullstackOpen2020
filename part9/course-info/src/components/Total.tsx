@@ -1,6 +1,11 @@
 import React from 'react';
 
-const Total = ({courseParts}) => (
+interface CoursePart {
+    name: string;
+    exerciseCount: number;
+}
+
+const Total = ({courseParts}:{courseParts:Array<CoursePart>}) => (
     <p>
         Number of exercises{" "}
         {courseParts.reduce((carry, part) => carry + part.exerciseCount, 0)}
