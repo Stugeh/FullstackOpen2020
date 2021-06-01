@@ -1,9 +1,5 @@
 import React from 'react';
-
-interface CoursePart {
-    name: string;
-    exerciseCount: number;
-}
+import { CoursePart } from '../types';
 
 const Total = ({courseParts}:{courseParts:Array<CoursePart>}) => (
     <p>
