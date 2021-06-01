@@ -41,3 +41,4 @@ Coursework for open fullstack course from University of Helsinki https://fullsta
 ### part9 Typescript
 * activityTracker
 * Patientor
+* course-info
