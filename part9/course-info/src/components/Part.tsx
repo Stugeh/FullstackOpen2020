@@ -3,31 +3,41 @@ import { CoursePart } from '../types'
 
 const Part = ({part}: {part: CoursePart}) => { 
     switch (part.type) {
-            case 'normal':
-                return (
-                    <div>
-                        <h2>{part.name}:</h2>
-                        <p>{part.description}</p>
-                        <p>Exercises: {part.exerciseCount}</p>
-                    </div>
-                )
-            case 'groupProject':
-                return (
-                    <div>
-                        <h2>{part.name}:</h2>
-                        <p>Exercises: {part.exerciseCount}</p>
-                        <p>Group projects: {part.groupProjectCount}</p>
-                    </div>
-                )
-            case 'submission':
-                return (
-                    <div>
-                        <h2>{part.name}:</h2>
-                        <p>{part.description}</p>
-                        <p>Exercises: {part.exerciseCount}</p>
-                        <p>{part.exerciseSubmissionLink}</p>
-                    </div>
-                )
+        case 'normal':
+            return (
+                <div>
+                    <h3>{part.name}:</h3>
+                    {part.description}<br/>
+                    Exercises: {part.exerciseCount}<br/>
+                </div>
+            )
+        case 'groupProject':
+            return (
+                <div>
+                    <h3>{part.name}:</h3>
+                    Exercises: {part.exerciseCount}<br/>
+                    Group projects: {part.groupProjectCount}<br/>
+                </div>
+            )
+        case 'submission':
+            return (
+                <div>
+                    <h3>{part.name}:</h3>
+                    {part.description}<br/>
+                    Exercises: {part.exerciseCount}<br/>
+                    Submission: {part.exerciseSubmissionLink}<br/>
+                </div>
+            )
+        case 'special':
+            return (
+                <div>
+                    <h3>{part.name}:</h3>
+                    {part.description}<br />
+                    Requirements: {part.requirements}<br />
+                    Exercises: {part.exerciseCount}<br/>
+                </div>
+            )
+            
             default:
                 return assertNever(part)
         }
