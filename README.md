@@ -5,13 +5,11 @@ Coursework for open fullstack course from University of Helsinki https://fullsta
 ### part0 Fundamentals of Web apps
 
 ### part1 Introduction to react
-#### projects:
 * anecdotes
 * course_info
 * unicafe
 
 ### part2 Communicating with servers
-#### projects:
 * country-info
 * course-info-pt2
 * phonebook
@@ -41,3 +39,4 @@ Coursework for open fullstack course from University of Helsinki https://fullsta
 ### part9 Typescript
 * activityTracker
 * Patientor
+* course-info
