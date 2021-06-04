@@ -9,6 +9,13 @@ router.get('/', (_req, res) => {
     res.send(patientService.getNonConfidentialPatients());
 });
 
+router.get('/:id',(req, res) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    const patient = patientService.getPatientById(req.params.id);
+    if(!patient) res.send(404);
+    res.send(patient);
+});
+
 router.post('/', (req, res) => {
     try {
         const newPatientEntry = toNewPatientEntry(req.body);
