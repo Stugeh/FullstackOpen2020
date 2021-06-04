@@ -5,10 +5,12 @@ import { Action } from "./reducer";
 
 export type State = {
   patients: { [id: string]: Patient };
+  activePatient: Patient | undefined;
 };
 
 const initialState: State = {
-  patients: {}
+  patients: {},
+  activePatient: undefined,
 };
 
 export const StateContext = createContext<[State, React.Dispatch<Action>]>([
