@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams } from 'react-router';
 
 import { Patient } from '../types';
-import { useStateValue } from "../state";
+import {setPatientList, useStateValue } from "../state";
 import { apiBaseUrl } from "../constants";
 
 import { Icon, Header } from 'semantic-ui-react';
@@ -21,7 +21,7 @@ const PatientPage = () => {
             .get<Patient>(`${apiBaseUrl}/patients/${id}`);
         patients[id] = patientFromApi;
         console.log(`patients`, patients);
-        dispatch({ type: 'SET_PATIENT_LIST', payload: Object.values(patients)});
+        dispatch(setPatientList(Object.values(patients)));
     };
 
     if (activePatient.ssn === undefined) void fetchPatient();
