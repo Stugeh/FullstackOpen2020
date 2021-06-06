@@ -11,16 +11,21 @@ import { SemanticICONS } from 'semantic-ui-react/dist/commonjs/generic';
 
 const PatientPage = () => {
     const { id } = useParams<{ id: string }>();
-    const [{activePatient}, dispatch] = useStateValue();
+    const [{patients}, dispatch] = useStateValue();
+    const activePatient: Patient = patients[id];
+    
+    if (!activePatient) return <div>Could not find patient</div>;
 
     const fetchPatient = async () => {
-        const {data: patientFromApi} = await axios.get<Patient>(`${apiBaseUrl}/patients/${id}`);
-        dispatch({type:'SET_ACTIVE_PATIENT', payload: patientFromApi});
+        const { data: patientFromApi } = await axios
+            .get<Patient>(`${apiBaseUrl}/patients/${id}`);
+        patients[id] = patientFromApi;
+        console.log(`patients`, patients);
+        dispatch({ type: 'SET_PATIENT_LIST', payload: Object.values(patients)});
     };
 
-    void fetchPatient();
+    if (activePatient.ssn === undefined) void fetchPatient();
     
-    if (!activePatient) return <div></div>;
 
     let iconType: SemanticICONS = 'mars';
     if (activePatient.gender === 'female') iconType = 'venus';

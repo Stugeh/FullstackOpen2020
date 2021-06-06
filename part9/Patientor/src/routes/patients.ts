@@ -11,6 +11,7 @@ router.get('/', (_req, res) => {
 
 router.get('/:id',(req, res) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    console.log("Fetching patient");
     const patient = patientService.getPatientById(req.params.id);
     if(!patient) res.send(404);
     res.send(patient);

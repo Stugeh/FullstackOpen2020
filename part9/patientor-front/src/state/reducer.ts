@@ -36,11 +36,6 @@ export const reducer = (state: State, action: Action): State => {
           [action.payload.id]: action.payload
         }
       };
-    case "SET_ACTIVE_PATIENT":
-      return {
-        ...state,
-        activePatient: action.payload
-      };
     default:
       return state;
   }
