@@ -18,6 +18,16 @@ export interface Diagnose {
     latin?: string
 }
 
+export interface Patient {
+    id: string,
+    name: string,
+    dateOfBirth:  string,
+    ssn:  string,
+    gender:  Gender,
+    occupation: string,
+    entries: Entry[],
+}
+
 interface BaseEntry {
     id: string;
     description: string;
@@ -40,17 +50,6 @@ interface OccupationalHealthcareEntry extends BaseEntry {
 interface HospitalEntry extends BaseEntry {
     type: "Hospital",
     discharge: { date: string, criteria: string },
-    
-}
-
-export interface Patient {
-    id: string,
-    name: string,
-    dateOfBirth:  string,
-    ssn:  string,
-    gender:  Gender,
-    occupation: string,
-    entries: Entry[],
 }
 
 export type NewPatient = Omit<Patient, 'id'>;

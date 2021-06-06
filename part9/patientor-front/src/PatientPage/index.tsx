@@ -2,12 +2,14 @@ import React from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router';
 
-import { Patient } from '../types';
+import { Patient} from '../types';
 import {setPatientList, useStateValue } from "../state";
 import { apiBaseUrl } from "../constants";
 
 import { Icon, Header } from 'semantic-ui-react';
 import { SemanticICONS } from 'semantic-ui-react/dist/commonjs/generic';
+
+import Entries from './Entries';
 
 const PatientPage = () => {
     const { id } = useParams<{ id: string }>();
@@ -20,7 +22,6 @@ const PatientPage = () => {
         const { data: patientFromApi } = await axios
             .get<Patient>(`${apiBaseUrl}/patients/${id}`);
         patients[id] = patientFromApi;
-        console.log(`patients`, patients[id]);
         dispatch(setPatientList(Object.values(patients)));
     };
 
@@ -30,7 +31,6 @@ const PatientPage = () => {
     let iconType: SemanticICONS = 'mars';
     if (activePatient.gender === 'female') iconType = 'venus';
     if (activePatient.gender === 'other') iconType = 'transgender alternate';
-
     return (
         <div>
             <Header as='h1'>
@@ -39,7 +39,11 @@ const PatientPage = () => {
             </Header>
             <b>ssn: {activePatient.ssn}</b>
             <br/>
-            <b>occupation: { activePatient.occupation }</b>
+            <b>occupation: {activePatient.occupation}</b><br /><br/>
+            {activePatient.entries ?
+                <Entries entries={activePatient.entries} /> : null
+            }
+            
         </div>
     );
 };
