@@ -3,10 +3,12 @@ import React from 'react';
 import {Header} from 'semantic-ui-react';
 
 import { Entry } from '../types';
- 
+
+import {useStateValue} from '../state';
 
 
 const Entries = ({entries}:{entries:Entry[]}) => {
+    const [{diagnoses},] = useStateValue();
     return (
         <div>
             <Header as="h1">Entries</Header>
@@ -19,7 +21,10 @@ const Entries = ({entries}:{entries:Entry[]}) => {
                             <Header as="h3">Diagnose codes</Header>
                             <ul>
                             {entry.diagnosisCodes
-                                .map(code => <li key={code}>{code}</li>)}
+                                    .map(code =>
+                                        <li key={code}>
+                                            {code}: {diagnoses[code].name}
+                                        </li>)}
                             </ul>
                         </div>) : null
                     }

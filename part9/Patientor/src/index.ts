@@ -8,7 +8,7 @@ import patientRouter from './routes/patients';
 app.use(express.json());
 app.use(cors());
 
-app.use('/api/diagnoses', diagnoseRouter);
+app.use('/api/diagnosis', diagnoseRouter);
 app.use('/api/patients', patientRouter);
 
 const PORT = 3001;
