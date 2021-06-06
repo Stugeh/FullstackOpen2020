@@ -20,7 +20,7 @@ const PatientPage = () => {
         const { data: patientFromApi } = await axios
             .get<Patient>(`${apiBaseUrl}/patients/${id}`);
         patients[id] = patientFromApi;
-        console.log(`patients`, patients);
+        console.log(`patients`, patients[id]);
         dispatch(setPatientList(Object.values(patients)));
     };
 
