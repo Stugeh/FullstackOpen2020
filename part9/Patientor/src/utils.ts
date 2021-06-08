@@ -48,7 +48,7 @@ const parseOccupation = (occupation: unknown):string => {
     return occupation;
 };
 
-type Fields = {
+type PatientFields = {
     ssn: unknown,
     name: unknown,
     dateOfBirth: unknown,
@@ -56,7 +56,7 @@ type Fields = {
     occupation: unknown
 };
 
-const toNewPatientEntry = ({ssn, name, dateOfBirth, gender, occupation}: Fields):NewPatient => {
+const toNewPatientEntry = ({ssn, name, dateOfBirth, gender, occupation}: PatientFields):NewPatient => {
     const newEntry: NewPatient = {
         ssn: parseSSN(ssn),
         name: parseName(name),
@@ -66,6 +66,10 @@ const toNewPatientEntry = ({ssn, name, dateOfBirth, gender, occupation}: Fields)
         entries: [],
     };
     return newEntry;
+};
+
+export const toNewEntry = (props: unknown) => {
+    return props;
 };
 
 export default toNewPatientEntry;

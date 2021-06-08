@@ -20,7 +20,12 @@ const EntryListing: React.FC<{ entry: Entry }> = ({ entry }) => {
             return assertNever(entry);
     }
 };
-    
+
+const assertNever = (value: never): never => {
+    throw new Error(
+      `Unhandled discriminated union member: ${JSON.stringify(value)}`
+    );
+};
 
 const Entries = ({entries}:{entries:Entry[]}) => {
     return (
@@ -35,10 +40,5 @@ const Entries = ({entries}:{entries:Entry[]}) => {
     );
 };
 
-const assertNever = (value: never): never => {
-    throw new Error(
-      `Unhandled discriminated union member: ${JSON.stringify(value)}`
-    );
-  };
 
 export default Entries;
