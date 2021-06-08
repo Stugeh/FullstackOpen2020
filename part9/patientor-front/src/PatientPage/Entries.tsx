@@ -1,37 +1,44 @@
 import React from 'react';
 
-import {Header} from 'semantic-ui-react';
+import {Header, Segment} from 'semantic-ui-react';
 
 import { Entry } from '../types';
 
-import {useStateValue} from '../state';
+import HealthCheck from './HealthCheck';
+import Hospital from './Hospital';
+import Occupational from './Occupational'; 
 
+const EntryListing: React.FC<{ entry: Entry }> = ({ entry }) => {
+    switch (entry.type) {
+        case 'Hospital':
+            return <Hospital entry={ entry }/>;
+        case 'OccupationalHealthcare':
+            return <Occupational entry={ entry } />;
+        case 'HealthCheck':
+            return <HealthCheck entry={ entry }/>;
+        default:
+            return assertNever(entry);
+    }
+};
+    
 
 const Entries = ({entries}:{entries:Entry[]}) => {
-    const [{diagnoses},] = useStateValue();
     return (
         <div>
             <Header as="h1">Entries</Header>
             {entries.map((entry: Entry) =>
-                <div key={entry.id}>
-                    <b>{entry.date}: </b>
-                    {entry.description}<br /><br/>
-                    {entry.diagnosisCodes ? (
-                        <div>
-                            <Header as="h3">Diagnose codes</Header>
-                            <ul>
-                            {entry.diagnosisCodes
-                                    .map(code =>
-                                        <li key={code}>
-                                            {code}: {diagnoses[code].name}
-                                        </li>)}
-                            </ul>
-                        </div>) : null
-                    }
-                </div> 
+                <Segment raised key={entry.id}>
+                    <EntryListing entry={entry}/>
+                </Segment>
             )}
         </div>
     );
 };
+
+const assertNever = (value: never): never => {
+    throw new Error(
+      `Unhandled discriminated union member: ${JSON.stringify(value)}`
+    );
+  };
 
 export default Entries;
