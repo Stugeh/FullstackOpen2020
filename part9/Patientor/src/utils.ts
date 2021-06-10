@@ -5,8 +5,8 @@ import {
     Entry,
     Diagnose,
     HealthCheckRating,
-    NewHealthCheckEntry,
     NewOccupationalEntry,
+    NewHospitalEntry
 } from './types';
 
 
@@ -27,12 +27,21 @@ const isGender = (param: any): param is Gender => {
     return Object.values(Gender).includes(param);
 };
 
-const isSickLeave = (obj: any): obj is NewOccupationalEntry['sickLeave'] => {
-    if (Object.keys(obj).includes('startDate' && 'endDate')){
-        return true
+const isSickLeave = (obj: unknown): obj is NewOccupationalEntry['sickLeave'] => {
+    if(typeof obj !== 'object' || obj === null){return false;}
+    if (Object.keys(obj).includes('startDate' && 'endDate')) {
+        return true;
     }
     return false;
-}
+};
+
+const isDischarge = (obj: unknown): obj is NewHospitalEntry['discharge'] => {
+    if (typeof obj !== 'object' || obj === null) return false;
+    if (Object.keys(obj).includes('date' && 'criteria')) {
+        return true;
+    }
+    return false;
+};
 
 const parseName = (name: unknown):string => {
     if (!name || !isString(name)) {
@@ -56,8 +65,8 @@ const parseDiagnoses = (diagnoses: unknown): Array<Diagnose['code']> => {
         if (!diagnosis.code || !isString(diagnosis.code)) {
             throw new Error(`${diagnosis} missing or malformatted diagnosis code`);
         }
-        return diagnosis.code;
-    }) as Array<Diagnose['code']>;
+        return diagnosis.code as string;
+    }) ;
 };
 
 const parseSpecialist = (specialist: unknown):string => {
@@ -119,14 +128,31 @@ const parseHealthCheckRating = (healthRating: unknown): HealthCheckRating => {
 
 const parseSickLeave = (leave: unknown): NewOccupationalEntry['sickLeave'] => {
     if (!isSickLeave(leave) && leave !== undefined) {
-        throw new Error('Sick leave is malformatted.')
+        throw new Error('Sick leave is malformatted.');
     }
     if (leave === undefined) return undefined;
-    if (!isDate(leave.startDate) || !isDate(leave.endDate)) {
-        throw new Error('Sick leave start or end date not a valid date')
+    return {
+        startDate: parseDate(leave.startDate),
+        endDate: parseDate(leave.endDate)
+    };
+};
+
+const parseCriteria = (criteria: unknown): string => {
+    if (!criteria || !isString(criteria)) {
+        throw new Error('Incorrect or missing criteria');
     }
-    return {startDate: leave.startDate, endDate: leave.endDate}
-}
+    return criteria;
+};
+
+const parseDischarge = (discharge: unknown): NewHospitalEntry['discharge'] => {
+    if (!isDischarge(discharge)) {
+        throw new Error('Discharge is malformatted.');
+    }
+    return {
+        date: parseDate(discharge.date),
+        criteria: parseCriteria(discharge.criteria)
+    };
+};
 
 type PatientFields = {
     ssn: unknown,
@@ -196,12 +222,20 @@ export const toNewEntry = ({
                 date: parseDate(date),
                 specialist: parseSpecialist(specialist),
                 employerName: parseName(employerName),
-                sickLeave: parseSickLeave(sickLeave)
+                sickLeave: parseSickLeave(sickLeave),
                 diagnosisCodes: diagnosisCodes ? parseDiagnoses(diagnosisCodes) : undefined,
                 type: "OccupationalHealthcare",
             };
         
         case 'Hospital':
+            return {
+                description: parseDescription(description),
+                date: parseDate(date),
+                specialist: parseSpecialist(specialist),
+                diagnosisCodes: diagnosisCodes ? parseDiagnoses(diagnosisCodes) : undefined,
+                discharge: parseDischarge(discharge),
+                type: "Hospital",
+            };
 
     }
 };

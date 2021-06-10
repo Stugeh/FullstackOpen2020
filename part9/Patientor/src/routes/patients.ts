@@ -31,9 +31,15 @@ router.get('/:id',(req, res) => {
 
 // adds entry
 router.post('/:id', (req, res) => {
-    const newEntry = toNewEntry(req.body);
-    console.log(`newEntry`, newEntry);
-    res.send(201);
+    try {
+        const newEntry = toNewEntry(req.body);
+        console.log(`newEntry`, newEntry);
+        const newPatient = patientService.addNewEntry(newEntry, req.params.id);
+        res.send(newPatient);
+    } catch (err) {
+        res.send(err.message);
+    }
+
 });
 
 export default router;
