@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import express from 'express';
 import patientService from '../services/patientService';
-import toNewPatientEntry, toNewEntry from '../utils';
+import toNewPatientEntry, { toNewEntry } from '../utils';
 
 const router = express.Router();
 
