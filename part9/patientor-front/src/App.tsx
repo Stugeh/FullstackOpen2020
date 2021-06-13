@@ -12,6 +12,7 @@ import PatientPage from "./PatientPage";
 
 const App = () => {
   const [, dispatch] = useStateValue();
+
   React.useEffect(() => {
     const fetchPatientList = async () => {
       try {
@@ -39,14 +40,17 @@ const App = () => {
             Home
           </Button>
           <Divider hidden />
+
           <Switch>
             <Route path="/patients/:id">
               <PatientPage />
             </Route>
+
             <Route path="/">
               <PatientListPage />
             </Route>
           </Switch>
+
         </Container>
       </Router>
     </div>
