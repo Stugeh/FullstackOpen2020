@@ -9,6 +9,7 @@ import Hospital from './Hospital';
 import Occupational from './Occupational'; 
 
 const EntryListing: React.FC<{ entry: Entry }> = ({ entry }) => {
+    console.log('entry :>> ', entry);
     switch (entry.type) {
         case 'Hospital':
             return <Hospital entry={ entry }/>;

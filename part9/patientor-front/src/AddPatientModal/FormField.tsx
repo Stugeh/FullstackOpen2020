@@ -96,7 +96,6 @@ export const DiagnosisSelection = ({
     text: `${diagnosis.name} (${diagnosis.code})`,
     value: diagnosis.code
   }));
-
   return (
     <Form.Field>
       <label>Diagnoses</label>

@@ -35,8 +35,7 @@ export const reducer = (state: State, action: Action): State => {
           ...action.payload.reduce(
             (memo, diagnosis) => ({ ...memo, [diagnosis.code]: diagnosis }),
             {}
-          ),
-          ...state.patients
+          )
         }
       };
     case "ADD_PATIENT":
@@ -57,7 +56,7 @@ export const setPatientList = (patients: Patient[]): Action => {
 };
 
 export const setDiagnosesList = (diagnoses: Diagnosis[]): Action => {
-  return {type: "SET_DIAGNOSES_LIST", payload: diagnoses};
+  return { type: "SET_DIAGNOSES_LIST", payload: diagnoses };
 };
 
 export const addPatient = (patient: Patient): Action => {
