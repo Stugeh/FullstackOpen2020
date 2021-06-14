@@ -8,7 +8,7 @@ import {Field, Formik, Form} from 'formik';
 import {useStateValue} from '../state';
 import { HealthCheckRating, NewHealthCheckEntry, Patient } from '../types';
 import {DiagnosisSelection, NumberField, TextField} from '../AddPatientModal/FormField';
-import { isDate } from 'util';
+import BaseFields from './BaseFields';
 
 interface Props {
     onSubmit: (values: NewHealthCheckEntry) => void;
@@ -16,7 +16,6 @@ interface Props {
   }
 
 const AddEntryForm = ({ onSubmit, onCancel }: Props) => {
-    const [{ diagnoses },] = useStateValue();
     return (
         <Formik
             initialValues={{
@@ -49,29 +48,10 @@ const AddEntryForm = ({ onSubmit, onCancel }: Props) => {
             {({ isValid, dirty, setFieldValue, setFieldTouched }) => {
                 return (
                     <Form className="form ui">
-                        <Field
-                            label="description"
-                            name="description"
-                            component={TextField}
-                            placeholder='description'
-                        />
-                        <Field
-                            label="date"
-                            name="date"
-                            component={TextField}
-                            placeholder="YYYY-MM-DD"
-                        />
-                        <Field
-                            label="specialist"
-                            name="specialist"
-                            component={TextField}
-                            placeholder="specialist"
-                        />
-                        <DiagnosisSelection
+                        <BaseFields
                             setFieldValue={setFieldValue}
                             setFieldTouched={setFieldTouched}
-                            diagnoses={Object.values(diagnoses)}
-                        />  
+                        />
                         <Field
                             label="healthCheckRating"
                             name="healthCheckRating"
