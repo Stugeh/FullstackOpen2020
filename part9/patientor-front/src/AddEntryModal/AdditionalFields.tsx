@@ -8,7 +8,19 @@ const AdditionalFields = ({formType}: {formType: string}) => {
     switch (formType) {
         case 'Hospital':
             return (
-                <div></div>
+                <div>
+                    <Field
+                        label='Discharge date'
+                        name='dischargeDate'
+                        component={TextField}
+                        placeholder='YYYY-MM-DD'
+                    />
+                    <Field
+                        label='Discharge criteria'
+                        name='dischargeCriteria'
+                        component={TextField}
+                    />
+                </div>
             );
         case 'OccupationalHealthcare':
             return (
