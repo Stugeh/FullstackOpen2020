@@ -51,6 +51,16 @@ export interface HospitalEntry extends BaseEntry {
   discharge: { date: string, criteria: string },
 }
 
+export interface EntryFormFields extends Omit<BaseEntry, 'id'> {
+  type: string;
+  healthCheckRating: HealthCheckRating;
+  dischargeDate: string,
+  dischargeCriteria: string,
+  employerName: string,
+  sickLeaveStart?: string,
+  sickLeaveEnd?: string
+}
+
 export type Entry =
   |HospitalEntry 
   |OccupationalHealthcareEntry 

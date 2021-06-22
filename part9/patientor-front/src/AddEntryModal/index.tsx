@@ -2,13 +2,13 @@ import React from 'react';
 import { Modal, Segment } from 'semantic-ui-react';
 import AddEntryForm from './AddEntryForm';
 
-import {NewHealthCheckEntry} from '../types';
+import {EntryFormFields} from '../types';
 
 interface Props {
   modalOpen: boolean;
   error?: string;
   onClose: () => void;
-  onSubmit: (values:  NewHealthCheckEntry) => void;
+  onSubmit: (values:  EntryFormFields) => void;
 }
 
 const AddEntryModal = ({ modalOpen, onClose, onSubmit, error }: Props) => (

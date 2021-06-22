@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router';
 
-import { HealthCheckEntry, NewHealthCheckEntry, Patient} from '../types';
+import { Entry, EntryFormFields, Patient} from '../types';
 import {setPatientList, useStateValue } from "../state";
 import { apiBaseUrl } from "../constants";
 
@@ -38,10 +38,10 @@ const PatientPage = () => {
       setError(undefined);
     };
 
-    const submitNewEntry = async (values: NewHealthCheckEntry) => {
+    const submitNewEntry = async (values: EntryFormFields) => {
         try {
             console.log(`values.diagnoses`, values);
-            const { data: newEntry } = await axios.post<HealthCheckEntry>(
+            const { data: newEntry } = await axios.post<Entry>(
                 `${apiBaseUrl}/patients/${activePatient.id}`,
                 values
             );
