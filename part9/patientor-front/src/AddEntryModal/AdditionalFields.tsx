@@ -15,20 +15,20 @@ const AdditionalFields = ({formType}: {formType: string}) => {
                 <div>
                 <Field
                     label="Employer"
-                    name="employer"
+                    name="employerName"
                     component={TextField}
                     placeholder='Employer'
                 />
-                <Header as= 'h3'>SickLeave</Header>
+                <Header as= 'h3'>Sick Leave</Header>
                 <Field
                     label='Start date'
-                    name='startDate'
+                    name='sickLeaveStart'
                     component={TextField}
                     placeholder='YYYY-MM-DD'
                 />
                 <Field
                     label='End date'
-                    name='endDate'
+                    name='sickLeaveEnd'
                     component={TextField}
                     placeholder='YYYY-MM-DD'
                 />
