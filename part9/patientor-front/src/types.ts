@@ -35,6 +35,14 @@ interface BaseEntry {
   diagnosisCodes?: string[];
 }
 
+export interface StrippedEntry {
+  [key: string]:
+  string
+  | string[]
+  | number
+  | { date: string, criteria: string }
+  | { startDate: string, endDate: string}
+}
 export interface HealthCheckEntry extends BaseEntry {
   type: "HealthCheck";
   healthCheckRating: HealthCheckRating;
@@ -57,8 +65,8 @@ export interface EntryFormFields extends Omit<BaseEntry, 'id'> {
   dischargeDate: string,
   dischargeCriteria: string,
   employerName: string,
-  sickLeaveStart?: string,
-  sickLeaveEnd?: string
+  sickLeaveStart: string,
+  sickLeaveEnd: string
 }
 
 export type Entry =

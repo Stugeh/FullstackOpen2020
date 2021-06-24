@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router';
 
-import { Entry, EntryFormFields, Patient} from '../types';
+import { Entry, EntryFormFields, Patient, StrippedEntry} from '../types';
 import {setPatientList, useStateValue } from "../state";
 import { apiBaseUrl } from "../constants";
 
@@ -40,11 +40,43 @@ const PatientPage = () => {
 
     const submitNewEntry = async (values: EntryFormFields) => {
         try {
-            console.log(`values.diagnoses`, values);
+            const strippedEntry: StrippedEntry = {
+                type: values.type,
+                description: values.description,
+                date: values.date,
+                specialist: values.specialist,
+            };
+            strippedEntry.diagnosisCodes = values.diagnosisCodes ?
+                values.diagnosisCodes : [];
+
+            switch (values.type) {
+                case 'Hospital':
+                    const discharge = {
+                        date: values.dischargeDate,
+                        criteria: values.dischargeCriteria
+                    };
+                    strippedEntry.discharge = discharge;
+                    break;
+                case 'OccupationalHealthcare':
+                    strippedEntry.employerName = values.employerName;
+                    if (![''].includes(values.sickLeaveStart || values.sickLeaveEnd)) {
+                        const sickLeave = {
+                            startDate: values.sickLeaveStart ,
+                            endDate: values.sickLeaveEnd 
+                        };
+                        strippedEntry.sickLeave = sickLeave;
+                    }
+                    break;
+                case 'HealthCheck':
+                    strippedEntry.healthCheckRating = values.healthCheckRating;
+                    break;
+            }
+
             const { data: newEntry } = await axios.post<Entry>(
                 `${apiBaseUrl}/patients/${activePatient.id}`,
-                values
+                strippedEntry
             );
+            console.log(`values.diagnoses`, values);
             activePatient.entries.push(newEntry);
             const patientsCopy = {...patients};
             patientsCopy[id] = activePatient;
