@@ -60,7 +60,6 @@ const AddEntryForm = ({ onSubmit, onCancel }: Props) => {
                 }
                 if (values.date.length !== 10 || !Date.parse(values.date))
                     errors.date = dateError;
-                console.log('values :>> ', values);
                 return errors;
               }}
         >

@@ -76,7 +76,6 @@ const PatientPage = () => {
                 `${apiBaseUrl}/patients/${activePatient.id}`,
                 strippedEntry
             );
-            console.log(`values.diagnoses`, values);
             activePatient.entries.push(newEntry);
             const patientsCopy = {...patients};
             patientsCopy[id] = activePatient;

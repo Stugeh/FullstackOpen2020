@@ -10,7 +10,8 @@ const Occupational = ({entry}: {entry: OccupationalHealthcareEntry}) => {
     return (
         <div>
             <Header as="h2">
-                {entry.date} 
+                {entry.date}:
+                Occupational Healthcare
                 <Icon name="briefcase"/>
             </Header>
             {entry.description}<br /><br/>

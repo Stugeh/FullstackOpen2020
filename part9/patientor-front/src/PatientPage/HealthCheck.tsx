@@ -19,7 +19,8 @@ const HealthCheck = ({entry}: {entry: HealthCheckEntry}) => {
     return (
         <div>
             <Header as="h2">
-                {entry.date}:
+                {entry.date}: 
+                Check up
                 <Icon name="stethoscope"/>
             </Header>
             {entry.description}<br /><br/>
