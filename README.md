@@ -41,3 +41,6 @@ Coursework for open fullstack course from University of Helsinki https://fullsta
 * Patientor(server)
 * patientor-front(client)
 * course-info
+
+### part10 React Native
+* rate-repo
