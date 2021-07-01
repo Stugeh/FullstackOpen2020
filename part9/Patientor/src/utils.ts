@@ -62,10 +62,10 @@ const parseDiagnoses = (diagnoses: unknown): Array<Diagnose['code']> => {
         throw new Error('Diagnoses is not an array');
     }
     return diagnoses.map(diagnosis => {
-        if (!diagnosis.code || !isString(diagnosis.code)) {
+        if (!diagnosis || !isString(diagnosis)) {
             throw new Error(`${diagnosis} missing or malformatted diagnosis code`);
         }
-        return diagnosis.code as string;
+        return diagnosis;
     }) ;
 };
 

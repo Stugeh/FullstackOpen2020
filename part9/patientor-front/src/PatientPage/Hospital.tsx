@@ -10,7 +10,8 @@ const Hospital = ({entry}: {entry: HospitalEntry}) => {
     return (
         <div>
             <Header as="h2">
-                {entry.date}:
+                {entry.date}: 
+                Hospital
                 <Icon name="hospital"/>
             </Header>
             {entry.description}<br /><br/>
