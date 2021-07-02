@@ -8,8 +8,9 @@ import {Heading} from './Text';
 const styles = StyleSheet.create({
   container: {
     paddingTop: Constants.statusBarHeight,
-    backgroundColor: theme.colors.primary,
-    padding: 5
+    backgroundColor: theme.colors.appbar,
+    paddingBottom: 15,
+    paddingLeft: 10,
   },
   
 });
