@@ -44,7 +44,19 @@ export const Heading = ({...props}) => (
   <Text 
     fontSize='heading'
     fontWeight='bold'
+    color={props.color === undefined ? 'textPrimary' : props.color}
+    style={props.style}
+  >
+    {props.children}
+  </Text>
+);
+
+export const SubHeading = ({...props}) => (
+  <Text 
+    fontSize='subheading'
+    fontWeight='bold'
     color='textPrimary'
+    style={props.style}
   >
     {props.children}
   </Text>
