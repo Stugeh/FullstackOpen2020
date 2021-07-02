@@ -4,8 +4,10 @@ import RepositoryItem from './RepositoryItem';
 
 const styles = StyleSheet.create({
   separator: {
-    height: 10,
-    borderTopWidth: 1
+    height: 3,
+    borderBottomWidth: 1,
+    borderRightWidth: 1,
+    margin: 5,
   },
 });
 
