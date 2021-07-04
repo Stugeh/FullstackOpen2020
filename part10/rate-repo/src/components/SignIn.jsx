@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, Pressable} from 'react-native';
-import Formik, {useField, TextInput} from 'formik';
+import {View,TextInput, Pressable} from 'react-native';
+import {useField, Formik} from 'formik';
 
 import Text from './Text';
 
@@ -41,7 +41,6 @@ const SignIn = () => {
       console.log(`${username} logging in`);
     }
   };
-
   return (
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
       {({ handleSubmit }) => <LoginForm onSubmit={handleSubmit} />}
