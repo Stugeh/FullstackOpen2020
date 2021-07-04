@@ -1,6 +1,8 @@
 import React from 'react';
 import {View, Pressable} from 'react-native';
 import {Formik} from 'formik';
+import * as yup from 'yup';
+
 import FormikTextInput from './FormikTextInput';
 import theme from '../theme';
 import Text from './Text';
@@ -47,6 +49,11 @@ const LoginForm = ({onSubmit}) => {
   );
 };
 
+const validationSchema = yup.object().shape({
+  username: yup.string().required('username is required'),
+  password: yup.string().required('password is required'),
+});
+
 const SignIn = () => {
   const onSubmit = values => {
     // const username = values.username;
@@ -58,7 +65,11 @@ const SignIn = () => {
   };
   return (
     <View style={styles.container}>
-      <Formik initialValues={initialValues} onSubmit={onSubmit}>
+      <Formik  
+        validationSchema={validationSchema}
+        initialValues={initialValues}
+        onSubmit={onSubmit}
+      >
         {({ handleSubmit }) => <LoginForm onSubmit={handleSubmit} />}
       </Formik>
     </View>
