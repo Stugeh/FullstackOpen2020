@@ -18,6 +18,7 @@ const styles = {
     alignSelf: 'center',
     borderRadius: 5,
     margin: 30,
+    elevation: 50,
   },
   form:{
     width:200,
