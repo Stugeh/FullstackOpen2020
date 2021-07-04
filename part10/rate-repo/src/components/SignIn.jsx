@@ -13,6 +13,14 @@ const LoginForm = () => {
 };
 
 const SignIn = () => {
+  const onSubmit = values => {
+    const username = values.username;
+    const password = values.password;
+    if(![username, password].includes('')){
+      console.log(`${username} logging in`);
+    }
+  };
+
   return (
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
       {({ handleSubmit }) => <LoginForm onSubmit={handleSubmit} />}
