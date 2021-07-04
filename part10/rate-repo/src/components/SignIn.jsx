@@ -61,7 +61,7 @@ const SignIn = () => {
     // if(![username, password].includes('')){
     //   console.log(`${username} logging in`);
     // }
-    console.log(values);
+    console.log("login: ", values);
   };
   return (
     <View style={styles.container}>
