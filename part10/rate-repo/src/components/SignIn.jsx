@@ -38,6 +38,7 @@ const LoginForm = ({onSubmit}) => {
         style={styles.field}
         placeholder='Password'
         name='password'
+        secureTextEntry
       />
       <Pressable onPress={onSubmit} style={theme.button}>
         <Text style={theme.buttonText}>Log in</Text>
