@@ -30,19 +30,6 @@ const styles = {
     borderColor: theme.separator,
     marginBottom: 3
   },
-  button: {
-    alignSelf: 'flex-start',
-    borderWidth: 1,
-    borderRadius: 6,
-    backgroundColor: theme.colors.primary,
-  },
-  buttonText:{
-    justifyContent: 'space-around',
-    color: '#FFFFFF',
-    fontWeight: 'bold',
-    paddingVertical: 5,
-    paddingHorizontal: 15,
-  },
 };
 
 const LoginForm = ({onSubmit}) => {
@@ -64,8 +51,8 @@ const LoginForm = ({onSubmit}) => {
         value={passwordField.value}
         onChangeText={text => passwordHelper.setValue(text)}
       />
-      <Pressable onPress={onSubmit} style={styles.button}>
-        <Text style={styles.buttonText}>Log in</Text>
+      <Pressable onPress={onSubmit} style={theme.button}>
+        <Text style={theme.buttonText}>Log in</Text>
       </Pressable>
     </View>
   );
