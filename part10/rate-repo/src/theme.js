@@ -30,8 +30,15 @@ const theme = {
     paddingVertical: 5,
     paddingHorizontal: 15,
   },
+  textField:{
+    padding: 5,
+    borderRadius: 3,
+    borderWidth: 1,
+    marginBottom: 3
+  },
 };
 
 theme.button.backgroundColor = theme.colors.primary;
+theme.textField.borderColor = theme.colors.separator;
 
 export default theme;

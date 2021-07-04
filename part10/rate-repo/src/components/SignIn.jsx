@@ -24,13 +24,6 @@ const styles = {
     width:200,
     padding: 10,
   },
-  field:{
-    padding: 5,
-    borderRadius: 3,
-    borderWidth: 1,
-    borderColor: theme.separator,
-    marginBottom: 3
-  },
 };
 
 const LoginForm = ({onSubmit}) => {
