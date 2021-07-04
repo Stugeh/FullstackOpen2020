@@ -1,13 +1,10 @@
 import React from 'react';
-import { TextInput as NativeTextInput, StyleSheet } from 'react-native';
+import { TextInput as NativeTextInput} from 'react-native';
 
 import theme from '../theme';
 
-const styles = StyleSheet.create({});
-
+// eslint-disable-next-line no-unused-vars
 const TextInput = ({ style, error, ...props }) => {
-  const textInputStyle = [style];
-
   return <NativeTextInput style={theme.textField} {...props} />;
 };
 
