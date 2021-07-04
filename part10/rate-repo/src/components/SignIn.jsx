@@ -1,7 +1,7 @@
 import React from 'react';
-import {View,TextInput, Pressable} from 'react-native';
-import {useField, Formik} from 'formik';
-
+import {View, Pressable} from 'react-native';
+import {Formik} from 'formik';
+import FormikTextInput from './FormikTextInput';
 import theme from '../theme';
 import Text from './Text';
 
@@ -33,23 +33,17 @@ const styles = {
 };
 
 const LoginForm = ({onSubmit}) => {
-  // eslint-disable-next-line no-unused-vars
-  const [usernameField, usernameMeta, usernameHelper] = useField('username');
-  // eslint-disable-next-line no-unused-vars
-  const [passwordField, passwordMeta, passwordHelper] = useField('password');
   return (
     <View style={styles.form}>
-      <TextInput
+      <FormikTextInput
         style={styles.field}
         placeholder='Username'
-        value={usernameField.value}
-        onChangeText={text => usernameHelper.setValue(text)}
+        name='username'
       />
-      <TextInput
+      <FormikTextInput
         style={styles.field}
         placeholder='Password'
-        value={passwordField.value}
-        onChangeText={text => passwordHelper.setValue(text)}
+        name='password'
       />
       <Pressable onPress={onSubmit} style={theme.button}>
         <Text style={theme.buttonText}>Log in</Text>
