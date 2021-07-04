@@ -22,6 +22,7 @@ const theme = {
     alignSelf: 'flex-start',
     borderWidth: 1,
     borderRadius: 3,
+    marginVertical: 3,
   },
   buttonText:{
     justifyContent: 'space-around',
@@ -34,7 +35,7 @@ const theme = {
     padding: 5,
     borderRadius: 3,
     borderWidth: 1,
-    marginBottom: 3
+    marginTop: 10,
   },
 };
 
