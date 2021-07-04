@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexShrink: 0,
     flexGrow: 0,
+    width: '100%',
     paddingTop: Constants.statusBarHeight + 5,
     backgroundColor: theme.colors.appbar,
     paddingBottom: 15,
