@@ -23,7 +23,7 @@ const theme = {
   fontWeights: {
     normal: '400',
     bold: '700',
-  },
+  }, 
   button: {
     alignSelf: 'flex-start',
     borderWidth: 1,
