@@ -48,11 +48,12 @@ const LoginForm = ({onSubmit}) => {
 
 const SignIn = () => {
   const onSubmit = values => {
-    const username = values.username;
-    const password = values.password;
-    if(![username, password].includes('')){
-      console.log(`${username} logging in`);
-    }
+    // const username = values.username;
+    // const password = values.password;
+    // if(![username, password].includes('')){
+    //   console.log(`${username} logging in`);
+    // }
+    console.log(values);
   };
   return (
     <View style={styles.container}>
