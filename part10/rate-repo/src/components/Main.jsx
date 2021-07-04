@@ -10,12 +10,12 @@ import SignIn from './SignIn';
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 0,
-    flexShrink: 1,
+    flex: 1,
+    flexGrow: 1,
+    flexShrink: 0,
     backgroundColor: theme.colors.separator
   },
   views: {
-    flexShrink: 0,
   }
 });
 
