@@ -25,9 +25,13 @@ const RepositoryList = () => {
     fetchRepositories();
   },[]);
 
+  const repositoryNodes = repositories.edges
+    ? repositories.edges.map(edge => edge.node)
+    : [];
+
   return (
     <FlatList
-      data={repositories}
+      data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
       renderItem={RepositoryItem}
       keyExtractor={repo => repo.id}
