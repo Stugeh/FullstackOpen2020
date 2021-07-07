@@ -1,11 +1,11 @@
 import {gql} from '@apollo/client';
 
 export const SIGN_IN = gql`
-    mutation {
+    mutation authorize($username: String!, $password: String!){
         authorize(
             credentials: {
-                username: "kalle",
-                password: "password" 
+                username: $username,
+                password: $password, 
             }
         ){accessToken}
     }
