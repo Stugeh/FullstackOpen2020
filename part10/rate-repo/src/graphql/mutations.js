@@ -1,2 +1,12 @@
-// eslint-disable-next-line no-unused-vars
 import {gql} from '@apollo/client';
+
+export const SIGN_IN = gql`
+    mutation {
+        authorize(
+            credentials: {
+                username: "kalle",
+                password: "password" 
+            }
+        ){accessToken}
+    }
+`;
