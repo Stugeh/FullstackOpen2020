@@ -6,7 +6,8 @@ const useSignIn = () => {
 
   const signIn = async ({ username, password }) => {
     login({variables: {username, password}});
-    return result.data?.authorize?.accessToken;
+    if(result.data) return result.data.authorize.accessToken; 
+    return undefined;
   };
   return [signIn, result.data];
 };
