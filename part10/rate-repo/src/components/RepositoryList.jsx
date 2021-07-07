@@ -10,9 +10,6 @@ const styles = StyleSheet.create({
     height: 5,
     backgroundColor: theme.colors.separator
   },
-  list: {
-    marginBottom: 80,
-  },
 });
 
 const ItemSeparator = () => <View style={styles.separator} />;
@@ -23,14 +20,14 @@ const RepositoryList = () => {
   const repositoryNodes = repositories
     ? repositories.edges.map(edge => edge.node)
     : [];
-    
+
   return (
     <FlatList
       data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
       renderItem={RepositoryItem}
       keyExtractor={repo => repo.id}
-      style={styles.list}
+      contentContainerStyle={{ paddingBottom: 75 }}
     />
   );
 };
