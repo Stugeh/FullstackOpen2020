@@ -1,12 +1,14 @@
 import {gql} from '@apollo/client';
 
-export const SIGN_IN = gql`
-    mutation authorize($username: String!, $password: String!){
+const SIGN_IN = gql`
+    mutation login($username: String!, $password: String!){
         authorize(
             credentials: {
                 username: $username,
-                password: $password, 
+                password: $password 
             }
         ){accessToken}
     }
 `;
+
+export default SIGN_IN;
