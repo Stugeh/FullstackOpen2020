@@ -1,3 +1,6 @@
+/* eslint-disable no-undef */
+import 'dotenv/config';
+
 export default {
   name: "rate-repo",
   "slug": "rate-repo",
@@ -29,5 +32,6 @@ export default {
   },
   extra: {
     env: process.env.ENV,
+    apolloURI: process.env.APOLLO_URI,
   },
 };
