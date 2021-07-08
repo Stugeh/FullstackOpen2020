@@ -59,7 +59,7 @@ const validationSchema = yup.object().shape({
 });
 
 const SignIn = () => {
-  const [signIn] = useSignIn();
+  const {signIn} = useSignIn();
   const history = useHistory();
 
   const onSubmit = async values => {
