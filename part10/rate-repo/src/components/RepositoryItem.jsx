@@ -46,8 +46,9 @@ const styles = StyleSheet.create({
 });
 
 const RepositoryItem = ({item}) => {
+  const {stargazersCount, forksCount, reviewCount, ratingAverage} = item;
   return (
-    <View style={styles.card}>
+    <View testID='repoCard' style={styles.card}>
       <View style={styles.header}>
         <Image 
           style={styles.thumbnail} 
@@ -59,11 +60,11 @@ const RepositoryItem = ({item}) => {
           <Text style={styles.language}>{item.language}</Text>
         </View>
       </View>
-      <View style={styles.footer}>
-        <Counter count={item.stargazersCount}>Stars</Counter>
-        <Counter count={item.forksCount}>Forks</Counter>
-        <Counter count={item.reviewCount}>Reviews</Counter>
-        <Counter count={item.ratingAverage}>Rating</Counter>
+      <View testID='repoCardCounters' style={styles.footer}>
+        <Counter count={stargazersCount}>Stars</Counter>
+        <Counter count={forksCount}>Forks</Counter>
+        <Counter count={reviewCount}>Reviews</Counter>
+        <Counter count={ratingAverage}>Rating</Counter>
       </View>
     </View>
   );
