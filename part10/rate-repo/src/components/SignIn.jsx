@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Pressable} from 'react-native';
+import {useHistory} from 'react-router-native';
 import {Formik} from 'formik';
 import * as yup from 'yup';
 
@@ -59,11 +60,13 @@ const validationSchema = yup.object().shape({
 
 const SignIn = () => {
   const [signIn] = useSignIn();
+  const history = useHistory();
+
   const onSubmit = async values => {
     const { username, password } = values;
     try {
       const token = await signIn({ username, password });
-      console.log(token);
+      if(token) history.push('/');
     } catch (e) {
       console.log(e);
     }
