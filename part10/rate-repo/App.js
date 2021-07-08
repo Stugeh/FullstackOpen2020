@@ -7,8 +7,10 @@ import { ApolloProvider } from '@apollo/client';
 import { StyleSheet, View } from 'react-native';
 
 import createApolloClient from './src/utils/apolloClient';
+import AuthStorage from './src/utils/authStorage';
 
-const apolloClient = createApolloClient();
+const authStorage = new AuthStorage;
+const apolloClient = createApolloClient(authStorage);
 
 export default function App() {
   return (
