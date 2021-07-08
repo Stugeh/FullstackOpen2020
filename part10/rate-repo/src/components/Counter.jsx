@@ -4,14 +4,14 @@ import Text, {Heading} from './Text';
 
 const numberToThousands = (number) => {
   const thousands = number/1000;
-  return Math.round(thousands * 10) / 10;
+  return `${Math.round(thousands * 10) / 10}k`;
 }; 
 
 const Counter = ({children, count}) => {
   return (
-    <View>
+    <View testID='repoCardCounter'>
       <Heading style={{textAlign: 'center'}}>
-        {count > 1000 ? `${numberToThousands(count)}k` : count}
+        {count > 1000 ? numberToThousands(count) : count}
       </Heading>
       <Text style={{textAlign: 'center'}}>{children}</Text>
     </View>
