@@ -8,6 +8,7 @@ import { StyleSheet, View } from 'react-native';
 
 import createApolloClient from './src/utils/apolloClient';
 import AuthStorage from './src/utils/authStorage';
+import AuthStorageContext from './src/contexts/AuthStorageContext';
 
 const authStorage = new AuthStorage;
 const apolloClient = createApolloClient(authStorage);
@@ -16,9 +17,11 @@ export default function App() {
   return (
     <NativeRouter>
       <ApolloProvider client={apolloClient}>
-        <View style={styles.container}>
-          <Main/>
-        </View>
+        <AuthStorageContext.Provider value={authStorage}>
+          <View style={styles.container}>
+            <Main/>
+          </View>
+        </AuthStorageContext.Provider>
       </ApolloProvider>
     </NativeRouter>
   );
