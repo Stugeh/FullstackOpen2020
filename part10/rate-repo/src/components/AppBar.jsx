@@ -1,8 +1,11 @@
 import React from 'react';
 import { ScrollView, StyleSheet} from 'react-native';
 import Constants from 'expo-constants';
-import theme from '../theme';
+import {useQuery} from '@apollo/client';
 
+import {IS_AUTHORIZED} from '../graphql/queries';
+import useSignIn from '../hooks/useSignIn';
+import theme from '../theme';
 import Tab from './Tab';
 
 const styles = StyleSheet.create({
@@ -20,10 +23,14 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
+  const {data} = useQuery(IS_AUTHORIZED);
+  const {logout} = useSignIn();
   return(
     <ScrollView horizontal style={styles.container}>
       <Tab route='/'>Repositories</Tab>
-      <Tab route='/login'>Sign in</Tab>
+      {data?.authorizedUser 
+        ? <Tab route='/' callback={logout}>logout</Tab> 
+        : <Tab route='/login'>Sign in</Tab>}
     </ScrollView>
   ); 
 };
