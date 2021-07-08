@@ -19,7 +19,13 @@ const useSignIn = () => {
     }
     return accessToken;
   };
-  return [signIn, accessToken];
+
+  const logout = async () =>{
+    await authStorage.removeAccessToken();
+    apolloClient.resetStore();
+  };
+
+  return {signIn, logout, accessToken};
 };
 
 export default useSignIn;
