@@ -9,10 +9,10 @@ const styles = StyleSheet.create({
   }
 });
 
-const Tab = ({children, route}) => {
+const Tab = ({children, route, callback}) => {
   return (
     <Pressable style={styles.link}>
-      <Link to={route}>
+      <Link onPress={callback} to={route}>
         <Heading color='textSecondary'>
           {children}
         </Heading>
