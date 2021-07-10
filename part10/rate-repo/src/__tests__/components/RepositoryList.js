@@ -2,6 +2,9 @@ import React from 'react';
 import { render } from '@testing-library/react-native';
 
 import {RepositoryListContainer} from '../../components/RepositoryList';
+import RepositoryItem from '../../components/RepositoryItem';
+
+import {formatNumber} from '../../components/Counter';
 
 describe('RepositoryList', () => {
   describe('RepositoryListContainer', () => {
@@ -49,23 +52,28 @@ describe('RepositoryList', () => {
     it('Renders correct number of cards', () => {
       const {getAllByTestId, getAllByText} = render(<RepositoryListContainer repositories={repositories}/>);
       const cards = getAllByTestId('repoCard');
-      expect(cards.length).toEqual(repositories.edges.length);
-      expect(getAllByText('Forks').length).toBe(2);    
+      expect(cards).toHaveLength(repositories.edges.length);
+      expect(getAllByText('Forks')).toHaveLength(repositories.edges.length);    
     });
     
     it('Cards have correct content', () => {
-      const {getAllByText} = render(<RepositoryListContainer repositories={repositories}/>);
+      const {getAllByText, getAllByTestId} = render(<RepositoryListContainer repositories={repositories}/>);
+      const cards = getAllByTestId('repoCard');
+      const keywords = ['Forks', 'Stars', 'Reviews', 'Rating'];
+      const {edges} = repositories;
       
-      expect(getAllByText('21.9k').length).toBe(1);
-      expect(getAllByText('1.6k').length).toBe(1);
-      expect(getAllByText('88').length).toBe(1);
-      expect(getAllByText('3').length).toBe(2);
-
-      expect(getAllByText('69').length).toBe(1);
-      expect(getAllByText('72').length).toBe(1);
-      expect(getAllByText('1.8k').length).toBe(1);
-      expect(getAllByText('3').length).toBe(2);
+      cards.forEach((card, index) => {
+        keywords.forEach(word => 
+          expect(card).toHaveTextContent(word)
+        );
+        expect(card).toHaveTextContent(edges[index].node.language);
+        expect(card).toHaveTextContent(edges[index].node.description);
+        // check counters
+        expect(getAllByText(formatNumber(edges[index].node.forksCount))).not.toHaveLength(0);
+        expect(getAllByText(formatNumber(edges[index].node.stargazersCount))).not.toHaveLength(0);
+        expect(getAllByText(formatNumber(edges[index].node.reviewCount))).not.toHaveLength(0);
+        expect(getAllByText(formatNumber(edges[index].node.ratingAverage))).not.toHaveLength(0);
+      });
     });
-
   });
 });
