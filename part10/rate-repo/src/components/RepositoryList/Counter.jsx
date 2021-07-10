@@ -1,6 +1,6 @@
 import React from 'react';
 import {View} from 'react-native';
-import Text, {Heading} from './Text';
+import Text, {Heading} from '../Text';
 
 export const formatNumber = (number) => {
   if (number < 1000) return `${number}`;

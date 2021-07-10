@@ -1,7 +1,7 @@
 import React from 'react';
 import {View,Image , StyleSheet} from 'react-native';
 import Text, {Heading} from '../Text'; 
-import Counter from '../Counter';
+import Counter from './Counter';
 import theme from '../../theme';
 
 const styles = StyleSheet.create({

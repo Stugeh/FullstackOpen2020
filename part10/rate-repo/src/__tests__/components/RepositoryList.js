@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react-native';
 
 import {RepositoryListContainer} from '../../components/RepositoryList';
-import {formatNumber} from '../../components/Counter';
+import {formatNumber} from '../../components/RepositoryList/Counter';
 
 describe('RepositoryList', () => {
   describe('RepositoryListContainer', () => {
