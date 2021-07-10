@@ -10,12 +10,6 @@ import theme from '../theme';
 import Text from './Text';
 import useSignIn from '../hooks/useSignIn';
 
-
-const initialValues = {
-  username : '',
-  password: '' 
-};
-
 const styles = {
   container: {
     backgroundColor: '#FFFFFF',
@@ -32,45 +26,44 @@ const styles = {
   },
 };
 
+
 const LoginForm = ({onSubmit}) => {
   return (
     <View style={styles.form}>
       <FormikTextInput
+        testID='usernameInput'
         style={styles.field}
         placeholder='Username'
         name='username'
       />
       <FormikTextInput
+        testID='passwordInput'
         style={styles.field}
         placeholder='Password'
         name='password'
         secureTextEntry
       />
-      <Pressable onPress={onSubmit} style={theme.button}>
+      <Pressable 
+        testID='loginSubmitButton'
+        onPress={onSubmit} 
+        style={theme.button}>
         <Text style={theme.buttonText}>Log in</Text>
       </Pressable>
     </View>
   );
 };
 
-const validationSchema = yup.object().shape({
-  username: yup.string().required('username is required'),
-  password: yup.string().required('password is required'),
-});
+export const  SignInContainer = ({onSubmit}) => {
+  const validationSchema = yup.object().shape({
+    username: yup.string().required('username is required'),
+    password: yup.string().required('password is required'),
+  });
 
-const SignIn = () => {
-  const {signIn} = useSignIn();
-  const history = useHistory();
-
-  const onSubmit = async values => {
-    const { username, password } = values;
-    try {
-      const token = await signIn({ username, password });
-      if(token) history.push('/');
-    } catch (e) {
-      console.log(e);
-    }
+  const initialValues = {
+    username : '',
+    password: '' 
   };
+  
   return (
     <View style={styles.container}>
       <Formik  
@@ -81,6 +74,24 @@ const SignIn = () => {
         {({ handleSubmit }) => <LoginForm onSubmit={handleSubmit} />}
       </Formik>
     </View>
+  );
+};
+
+const SignIn = () => {
+  const {signIn} = useSignIn();
+  const history = useHistory();
+
+  const onSubmit = async (values) => {
+    const { username, password } = values;
+    try {
+      const token = await signIn({ username, password });
+      if(token) history.push('/');
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  return (
+    <SignInContainer onSubmit={onSubmit}/>
   );
 };
 
