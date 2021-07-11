@@ -2,6 +2,7 @@ import React from 'react';
 import {View, FlatList, StyleSheet} from 'react-native';
 import {useParams} from 'react-router-native';
 import {useQuery} from '@apollo/client';
+import {format} from 'date-fns';
 
 import theme from '../theme';
 
@@ -46,7 +47,7 @@ const ReviewItem = ({review}) => {
       </Heading>
       <View style={styles.body}>
         <Heading>{user.username}</Heading>
-        <Text>{createdAt}</Text>
+        <Text>{format(new Date(createdAt), 'dd/mm/yyyy')}</Text>
         <Text>{text}</Text>
       </View>
     </View>
