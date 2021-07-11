@@ -20,6 +20,15 @@ export const GET_REPOSITORIES = gql`
     }
 `;
 
+export const GET_REPO_URL = gql`
+    query getRepoUrl($id: String!) {
+        repository(id: $id){
+            id
+            url
+        }
+    }
+`;
+
 export const IS_AUTHORIZED = gql`
     query{
         authorizedUser {
