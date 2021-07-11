@@ -20,10 +20,18 @@ export const GET_REPOSITORIES = gql`
     }
 `;
 
-export const GET_REPO_URL = gql`
-    query getRepoUrl($id: String!) {
+export const GET_REPO_BY_ID = gql`
+    query getRepo($id: ID!) {
         repository(id: $id){
             id
+            fullName
+            stargazersCount
+            language
+            description
+            ownerAvatarUrl
+            forksCount
+            ratingAverage
+            reviewCount
             url
         }
     }
