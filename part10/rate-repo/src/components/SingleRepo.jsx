@@ -20,7 +20,10 @@ const SingleRepo = () => {
   if (loading) return <Heading>loading</Heading>;
 
   return (
-    <RepositoryItemContainer item={data.repository}/>
+    <RepositoryItemContainer 
+      item={data.repository}
+      singleRepoView
+    />
   );
 };
 

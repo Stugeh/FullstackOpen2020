@@ -8,14 +8,12 @@ import theme from '../../theme';
 
 const styles = StyleSheet.create({
   card: {
-    flex:1,
     padding: 10,
+    flexDirection: 'column',
     borderWidth: 1,
-    width:'100%',
     backgroundColor: '#ffffff'
   },
   header:{
-    flex: 1,
     flexDirection: 'row',
   },
   details:{
@@ -41,7 +39,6 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   footer:{
-    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
@@ -68,37 +65,38 @@ export const RepositoryItemContainer = ({
     reviewCount,
     ratingAverage } = item;
 
-  return (<View testID='repoCard' style={styles.card}>
-    <Pressable onPress={() => pressHandler(id)}>
-      <View style={styles.header}>
-        <Image 
-          style={styles.thumbnail} 
-          source={{uri: item.ownerAvatarUrl}}
-        />
-        <View style={styles.details}>
-          <Heading>{item.fullName}</Heading>
-          <Text>{item.description}</Text>
-          <Text style={styles.language}>{item.language}</Text>
+  return (
+    <View testID='repoCard' style={styles.card}>
+      <Pressable onPress={() => pressHandler(id)}>
+        <View style={styles.header}>
+          <Image 
+            style={styles.thumbnail} 
+            source={{uri: item.ownerAvatarUrl}}
+          />
+          <View style={styles.details}>
+            <Heading>{item.fullName}</Heading>
+            <Text>{item.description}</Text>
+            <Text style={styles.language}>{item.language}</Text>
+          </View>
         </View>
-      </View>
-      <View testID='repoCardCounters' style={styles.footer}>
-        <Counter count={stargazersCount}>Stars</Counter>
-        <Counter count={forksCount}>Forks</Counter>
-        <Counter count={reviewCount}>Reviews</Counter>
-        <Counter count={ratingAverage}>Rating</Counter>
-      </View>
-      {singleRepoView ? (
-        <View style={styles.bigButton} hidden>
-          <Heading 
-            color='textSecondary'
-            style={{alignSelf: 'center'}}
-          >
+        <View testID='repoCardCounters' style={styles.footer}>
+          <Counter count={stargazersCount}>Stars</Counter>
+          <Counter count={forksCount}>Forks</Counter>
+          <Counter count={reviewCount}>Reviews</Counter>
+          <Counter count={ratingAverage}>Rating</Counter>
+        </View>
+        {singleRepoView ? (
+          <View style={styles.bigButton} hidden>
+            <Heading 
+              color='textSecondary'
+              style={{alignSelf: 'center'}}
+            >
             Github
-          </Heading>
-        </View>
-      ): null }
-    </Pressable>
-  </View>);
+            </Heading>
+          </View>
+        ): null }
+      </Pressable>
+    </View>);
 };
 
 const RepositoryItem = ({item}) => {
