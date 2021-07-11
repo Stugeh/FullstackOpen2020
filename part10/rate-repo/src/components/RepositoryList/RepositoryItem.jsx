@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View,Image , StyleSheet} from 'react-native';
 import Text, {Heading} from '../Text'; 
 import Counter from './Counter';
@@ -42,11 +42,21 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
+  },
+  bigButton:{
+    backgroundColor: theme.colors.primary,
+    color: theme.colors.textSecondary,
+    alignSelf: 'stretch',
+    padding: 10,
+    marginTop: 10,
   }
+
 });
 
 const RepositoryItem = ({item}) => {
   const {stargazersCount, forksCount, reviewCount, ratingAverage} = item;
+  const [repoLinkVisible, setRepoLinkVisible] = useState(false);
+
   return (
     <View testID='repoCard' style={styles.card}>
       <View style={styles.header}>
@@ -66,6 +76,16 @@ const RepositoryItem = ({item}) => {
         <Counter count={reviewCount}>Reviews</Counter>
         <Counter count={ratingAverage}>Rating</Counter>
       </View>
+      {repoLinkVisible ? (
+        <View style={styles.bigButton} hidden>
+          <Heading 
+            color='textSecondary'
+            style={{alignSelf: 'center'}}
+          >
+          Github
+          </Heading>
+        </View>
+      ): null }
     </View>
   );
 };
