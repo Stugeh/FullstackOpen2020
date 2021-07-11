@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
-import {View,Image , StyleSheet} from 'react-native';
+import {View,Image , StyleSheet, Pressable} from 'react-native';
+import {useHistory} from 'react-router-native';
+
 import Text, {Heading} from '../Text'; 
 import Counter from './Counter';
 import theme from '../../theme';
@@ -49,16 +51,25 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     padding: 10,
     marginTop: 10,
+    borderRadius: 8,
   }
 
 });
 
-const RepositoryItem = ({item}) => {
-  const {stargazersCount, forksCount, reviewCount, ratingAverage} = item;
-  const [repoLinkVisible, setRepoLinkVisible] = useState(false);
+export const RepositoryItemContainer = ({
+  item,
+  singleRepoView=false,
+  pressHandler=()=>{},
+}) => {
+  const {
+    id,
+    stargazersCount,
+    forksCount,
+    reviewCount,
+    ratingAverage } = item;
 
-  return (
-    <View testID='repoCard' style={styles.card}>
+  return (<View testID='repoCard' style={styles.card}>
+    <Pressable onPress={() => pressHandler(id)}>
       <View style={styles.header}>
         <Image 
           style={styles.thumbnail} 
@@ -76,17 +87,28 @@ const RepositoryItem = ({item}) => {
         <Counter count={reviewCount}>Reviews</Counter>
         <Counter count={ratingAverage}>Rating</Counter>
       </View>
-      {repoLinkVisible ? (
+      {singleRepoView ? (
         <View style={styles.bigButton} hidden>
           <Heading 
             color='textSecondary'
             style={{alignSelf: 'center'}}
           >
-          Github
+            Github
           </Heading>
         </View>
       ): null }
-    </View>
+    </Pressable>
+  </View>);
+};
+
+const RepositoryItem = ({item}) => {
+  const history = useHistory();
+  const openRepoView = (id) => {
+    history.push(`/${id}`);
+  };
+
+  return (
+    <RepositoryItemContainer item={item} pressHandler={openRepoView}/>
   );
 };
 
