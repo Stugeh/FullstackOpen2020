@@ -65,7 +65,8 @@ export const RepositoryItemContainer = ({
     forksCount,
     reviewCount,
     ratingAverage,
-    url  } = item;
+    url,
+  } = item;
 
   return (
     <View testID='repoCard' style={styles.card}>
@@ -94,7 +95,7 @@ export const RepositoryItemContainer = ({
                 color='textSecondary'
                 style={{alignSelf: 'center'}}
               >
-            Github
+            Open in Github
               </Heading>
             </View>
           </Pressable>
