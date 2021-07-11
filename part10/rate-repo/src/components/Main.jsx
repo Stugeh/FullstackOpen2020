@@ -8,6 +8,7 @@ import theme from '../theme';
 import AppBar from './Appbar';
 import RepositoryList from './RepositoryList';
 import SignIn from './SignIn';
+import SingleRepo from './SingleRepo';
 
 const styles = StyleSheet.create({
   container: {
@@ -32,6 +33,9 @@ const Main = () => {
           </Route>
           <Route path="/login">
             <SignIn/>
+          </Route>
+          <Route path="/:id">
+            <SingleRepo/>
           </Route>
           <Redirect to="/" />
         </Switch>
