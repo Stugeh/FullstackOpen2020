@@ -6,7 +6,7 @@ import {useQuery} from '@apollo/client';
 import {IS_AUTHORIZED} from '../../graphql/queries';
 import useSignIn from '../../hooks/useSignIn';
 import theme from '../../theme';
-import Tab from '../Tab';
+import Tab from './Tab';
 
 const styles = StyleSheet.create({
   container: {

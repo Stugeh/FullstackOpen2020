@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-native';
 import {Pressable, StyleSheet} from 'react-native';
-import {Heading} from './Text';
+import {Heading} from '../Text';
 
 const styles = StyleSheet.create({
   link:{
