@@ -46,8 +46,10 @@ const LoginForm = ({onSubmit}) => {
       <Pressable 
         testID='loginSubmitButton'
         onPress={onSubmit} 
-        style={theme.button}>
-        <Text style={theme.buttonText}>Log in</Text>
+      >
+        <View style={theme.button}>
+          <Text style={theme.buttonText}>Log in</Text>
+        </View>
       </Pressable>
     </View>
   );
