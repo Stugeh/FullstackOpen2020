@@ -1,6 +1,7 @@
 import React from 'react';
-import {View,Image , StyleSheet, Pressable} from 'react-native';
+import {View, Image, StyleSheet, Pressable} from 'react-native';
 import {useHistory} from 'react-router-native';
+import * as Linking from 'expo-linking';
 
 import Text, {Heading} from '../Text'; 
 import Counter from './Counter';
@@ -63,7 +64,8 @@ export const RepositoryItemContainer = ({
     stargazersCount,
     forksCount,
     reviewCount,
-    ratingAverage } = item;
+    ratingAverage,
+    url  } = item;
 
   return (
     <View testID='repoCard' style={styles.card}>
@@ -86,14 +88,16 @@ export const RepositoryItemContainer = ({
           <Counter count={ratingAverage}>Rating</Counter>
         </View>
         {singleRepoView ? (
-          <View style={styles.bigButton} hidden>
-            <Heading 
-              color='textSecondary'
-              style={{alignSelf: 'center'}}
-            >
+          <Pressable onPress={()=> Linking.openURL(url)}>
+            <View style={styles.bigButton} hidden>
+              <Heading 
+                color='textSecondary'
+                style={{alignSelf: 'center'}}
+              >
             Github
-            </Heading>
-          </View>
+              </Heading>
+            </View>
+          </Pressable>
         ): null }
       </Pressable>
     </View>);
