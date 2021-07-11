@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View,Image , StyleSheet, Pressable} from 'react-native';
 import {useHistory} from 'react-router-native';
 
