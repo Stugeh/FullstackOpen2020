@@ -17,8 +17,6 @@ const styles = StyleSheet.create({
     flexShrink: 0,
     backgroundColor: theme.colors.separator
   },
-  views: {
-  }
 });
 
 const Main = () => {
@@ -26,20 +24,18 @@ const Main = () => {
   return (
     <View style={styles.container}>
       <AppBar/>
-      <View style={styles.views}>
-        <Switch>
-          <Route path="/" exact>
-            <RepositoryList />
-          </Route>
-          <Route path="/login">
-            <SignIn/>
-          </Route>
-          <Route path="/:id">
-            <SingleRepo/>
-          </Route>
-          <Redirect to="/" />
-        </Switch>
-      </View>
+      <Switch>
+        <Route path="/" exact>
+          <RepositoryList />
+        </Route>
+        <Route path="/login">
+          <SignIn/>
+        </Route>
+        <Route path="/:id">
+          <SingleRepo/>
+        </Route>
+        <Redirect to="/" />
+      </Switch>
     </View>
   );
 };
