@@ -32,11 +32,11 @@ const Main = () => {
         <Route path="/login">
           <SignIn/>
         </Route>
-        <Route path="/:id">
-          <SingleRepo/>
-        </Route>
         <Route path="/review-form">
           <ReviewForm/>
+        </Route>
+        <Route path="/:id">
+          <SingleRepo/>
         </Route>
         <Redirect to="/" />
       </Switch>
