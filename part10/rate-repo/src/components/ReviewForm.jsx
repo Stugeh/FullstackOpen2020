@@ -94,7 +94,7 @@ const ReviewFormContainer = ({onSubmit}) => {
 
 const ReviewForm = () => {
   const history = useHistory();
-  const [postReview, {data, loading, error}] = useMutation(POST_REVIEW);
+  const [postReview, {data}] = useMutation(POST_REVIEW);
   
   const onSubmit = async (values) => {
     try{
