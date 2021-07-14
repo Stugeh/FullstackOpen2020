@@ -12,11 +12,10 @@ import { RepositoryItemContainer } from './RepositoryList/RepositoryItem';
 
 const styles = StyleSheet.create({
   reviewContainer:{
-    flex:1,
+    flex: 1,
     backgroundColor: 'white',
     padding: 10,
     flexDirection: 'row',
-    justifyContent: 'space-around',
   },
   rating:{
     height: 50,
@@ -30,7 +29,8 @@ const styles = StyleSheet.create({
     color: theme.colors.primary,
   },
   body:{
-    flexShrink:1,
+    flexGrow: 1,
+    flexShrink: 1,
   },
   separator: {
     height: 5,
