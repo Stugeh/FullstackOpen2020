@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Pressable} from 'react-native';
-import {useHistory} from 'react-native-router';
+import {useHistory} from 'react-router-native';
 import Formik from 'formik';
 import * as yup from 'yup';
 import {useMutation} from '@apollo/client';
@@ -98,7 +98,6 @@ const ReviewFormContainer = ({onSubmit}) => {
 const ReviewForm = () => {
   const history = useHistory();
   const [postReview, {data, loading, error}] = useMutation(POST_REVIEW);
-
   const onSubmit = async (values) => {
     const { repositoryName,ownerName,rating,review } = values;
     await postReview({repositoryName,ownerName,rating, review});
@@ -108,4 +107,5 @@ const ReviewForm = () => {
     <ReviewFormContainer onSubmit={onSubmit}/>
   );
 };
+
 export default ReviewForm;
