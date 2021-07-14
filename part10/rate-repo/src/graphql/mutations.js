@@ -11,4 +11,10 @@ const SIGN_IN = gql`
     }
 `;
 
+export const POST_REVIEW = gql`
+    mutation review($review: CreateReviewInput!) {
+        createReview(review: $review){repositoryId}
+  }
+`;
+
 export default SIGN_IN;
