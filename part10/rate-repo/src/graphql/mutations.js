@@ -17,4 +17,13 @@ export const POST_REVIEW = gql`
   }
 `;
 
+export const SIGN_UP = gql`
+mutation signUp($user: CreateUserInput!){
+    createUser(user: $user){
+      id
+      username
+    }
+  }
+`;
+
 export default SIGN_IN;
