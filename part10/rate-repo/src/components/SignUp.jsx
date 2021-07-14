@@ -2,6 +2,7 @@ import React from 'react';
 import {View} from 'react-native';
 import {Formik} from 'formik';
 import {useMutation} from '@apollo/client';
+import {useHistory} from 'react-router-native';
 
 import FormikTextInput from './FormikTextInput';
 import { Heading } from './Text';
@@ -34,10 +35,11 @@ const SignUpContainer = () => {
 
 const SignUp = () => {
   const [postUser, {data}] = useMutation(SIGN_UP); 
-  
+  const history = useHistory();
   const createUser = async ({username, password}) => {
     try{
       await postUser({variables:{username, password}});
+      history.push('/login');
     }catch(err){
       console.log(`ERROR: `, err);
     }
