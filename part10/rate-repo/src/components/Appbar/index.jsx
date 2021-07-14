@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet} from 'react-native';
+import { ScrollView, StyleSheet,View} from 'react-native';
 import Constants from 'expo-constants';
 import {useQuery} from '@apollo/client';
 
@@ -29,11 +29,12 @@ const AppBar = () => {
     <ScrollView horizontal style={styles.container}>
       <Tab route='/'>Repositories</Tab>
       {data?.authorizedUser 
-        ? <Tab route='/review-form'>Create a review</Tab> 
-        :null
-      }
-      {data?.authorizedUser 
-        ? <Tab route='/' callback={logout}>Log out</Tab>
+        ? (
+          <View style={{flexDirection: 'row'}}>
+            <Tab route='/review-form'>Create a review</Tab>
+            <Tab route='/' callback={logout}>Log out</Tab>
+          </View>
+        )
         : <Tab route='/login'>Sign in</Tab>}
     </ScrollView>
   ); 
