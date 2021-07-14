@@ -37,14 +37,14 @@ const ReviewFormContainer = ({onSubmit}) => {
       .integer()
       .max(100)
       .required('rating is required'),
-    review: yup.string()
+    text: yup.string()
   });
     
   const initialValues = {
     repositoryName: '',
     ownerName: '',
     rating: '',
-    review: '', 
+    text: '', 
   };
     
   return (
@@ -75,10 +75,10 @@ const ReviewFormContainer = ({onSubmit}) => {
               name='rating'
             />
             <FormikTextInput
-              testID='reviewInput'
+              testID='reviewTextInput'
               style={styles.field}
               placeholder='Review'
-              name='review'
+              name='text'
             />
             <Pressable testID='reviewSubmit' onPress={handleSubmit}>
               <View style={theme.bigButton}>
@@ -95,11 +95,24 @@ const ReviewFormContainer = ({onSubmit}) => {
 const ReviewForm = () => {
   const history = useHistory();
   const [postReview, {data, loading, error}] = useMutation(POST_REVIEW);
+  
   const onSubmit = async (values) => {
-    const { repositoryName,ownerName,rating,review } = values;
-    await postReview({repositoryName,ownerName,rating, review});
-    console.log(data);
+    try{
+      const { repositoryName,ownerName,rating,text } = values;
+      await postReview({
+        variables:{
+          review:{
+            repositoryName,ownerName,rating: parseInt(rating), text
+          }
+        }
+      });
+      console.log('data :>> ', data.createReview.repositoryId);
+      history.push(`/${data.createReview.repositoryId}`);
+    }catch(err){
+      console.log(`error:`, err);
+    }
   };
+
   return <ReviewFormContainer onSubmit={onSubmit}/>;
 };
 
