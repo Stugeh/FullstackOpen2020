@@ -106,7 +106,6 @@ const ReviewForm = () => {
           }
         }
       });
-      console.log('data :>> ', data.createReview.repositoryId);
       history.push(`/${data.createReview.repositoryId}`);
     }catch(err){
       console.log(`error:`, err);
