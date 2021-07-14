@@ -43,15 +43,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
-  bigButton:{
-    backgroundColor: theme.colors.primary,
-    color: theme.colors.textSecondary,
-    alignSelf: 'stretch',
-    padding: 10,
-    marginTop: 10,
-    borderRadius: 8,
-  }
-
 });
 
 export const RepositoryItemContainer = ({
@@ -90,7 +81,7 @@ export const RepositoryItemContainer = ({
         </View>
         {singleRepoView ? (
           <Pressable onPress={()=> Linking.openURL(url)}>
-            <View style={styles.bigButton} hidden>
+            <View style={theme.bigButton} hidden>
               <Heading 
                 color='textSecondary'
                 style={{alignSelf: 'center'}}

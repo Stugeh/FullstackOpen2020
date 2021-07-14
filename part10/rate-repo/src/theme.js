@@ -30,6 +30,12 @@ const theme = {
     borderRadius: 3,
     marginVertical: 3,
   },
+  bigButton:{
+    alignSelf: 'stretch',
+    padding: 10,
+    marginTop: 10,
+    borderRadius: 8,
+  },
   buttonText:{
     justifyContent: 'space-around',
     color: '#FFFFFF',
@@ -45,6 +51,8 @@ const theme = {
   },
 };
 
+theme.bigButton.backgroundColor = theme.colors.primary;
+theme.bigButton.color = theme.colors.textSecondary;
 theme.button.backgroundColor = theme.colors.primary;
 theme.textField.borderColor = theme.colors.separator;
 
