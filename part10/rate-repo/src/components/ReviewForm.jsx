@@ -21,8 +21,11 @@ const styles = {
   form:{
     padding: 30,
   },
-
-
+  field:{
+    fontSize: theme.fontSizes.heading,
+    padding: 15,
+    marginBottom: 10,
+  },
 };
 
 const ReviewFormContainer = ({onSubmit}) => {
@@ -80,8 +83,8 @@ const ReviewFormContainer = ({onSubmit}) => {
               name='review'
             />
             <Pressable testID='reviewSubmit' onPress={handleSubmit}>
-              <View style={theme.button}>
-                <Text style={theme.buttonText}>Submit</Text>
+              <View style={theme.bigButton}>
+                <Text style={theme.buttonText}>Submit Review</Text>
               </View>
             </Pressable>
           </View>
