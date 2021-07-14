@@ -14,24 +14,22 @@ import { POST_REVIEW } from '../graphql/mutations';
 const styles = {
   container: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 5,
-    elevation: 50,
     flexGrow: 1,
   },
   form:{
-    padding: 30,
+    paddingHorizontal: 30,
   },
   field:{
-    fontSize: theme.fontSizes.heading,
-    padding: 15,
+    fontSize: theme.fontSizes.subHeading,
+    padding: 10,
     marginBottom: 10,
   },
 };
 
 const ReviewFormContainer = ({onSubmit}) => {
   const validationSchema = yup.object().shape({
-    repositoryName: yup.string().required('username is required'),
-    ownerName: yup.string().required('password is required'),
+    repositoryName: yup.string().required('field is required'),
+    ownerName: yup.string().required('field is required'),
     rating: yup
       .number()
       .required()
