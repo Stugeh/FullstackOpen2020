@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
-  const {data} = useQuery(IS_AUTHORIZED);
+  const {data} = useQuery(IS_AUTHORIZED,{fetchPolicy: 'cache-and-network'});
   const {logout} = useSignIn();
   return(
     <ScrollView horizontal style={styles.container}>
