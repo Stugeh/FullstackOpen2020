@@ -3,6 +3,7 @@ import {View} from 'react-native';
 import {Formik} from 'formik';
 import {useMutation} from '@apollo/client';
 import {useHistory} from 'react-router-native';
+import * as yup from 'yup';
 
 import FormikTextInput from './FormikTextInput';
 import { Heading } from './Text';
@@ -25,10 +26,27 @@ const styles = {
   },
 };
 
-const SignUpContainer = () => {
+const SignUpContainer = (onSubmit) => {
+  const validationSchema = yup.object().shape({
+    username: yup.string(),
+    password: yup.string(),
+    passwordConfirmation: yup.string(),
+  });
+  const initialValues = {
+    username: '',
+    password: '',
+    passwordConfirmation: '',
+  };
   return (
-    <View>
-          
+    <View style={styles.container}>
+      <Formik
+        validationSchema={validationSchema}
+        initialValues={initialValues}
+        onSubmit={onSubmit}
+      >
+            
+      </Formik>
+ 
     </View>
   );  
 };
