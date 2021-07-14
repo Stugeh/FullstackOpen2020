@@ -35,7 +35,12 @@ const AppBar = () => {
             <Tab route='/' callback={logout}>Log out</Tab>
           </View>
         )
-        : <Tab route='/login'>Sign in</Tab>}
+        : (
+          <View style={{flexDirection: 'row'}}>
+            <Tab route='/login'>Sign in</Tab>
+            <Tab route='/sign-up'>Sign Up</Tab>
+          </View>
+        )}
     </ScrollView>
   ); 
 };
