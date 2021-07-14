@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Pressable} from 'react-native';
 import {useHistory} from 'react-router-native';
-import Formik from 'formik';
+import {Formik} from 'formik';
 import * as yup from 'yup';
 import {useMutation} from '@apollo/client';
 
@@ -14,20 +14,16 @@ import { POST_REVIEW } from '../graphql/mutations';
 const styles = {
   container: {
     backgroundColor: '#FFFFFF',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    alignSelf: 'center',
     borderRadius: 5,
-    margin: 30,
     elevation: 50,
+    flexGrow: 1,
   },
   form:{
-    width:200,
-    padding: 10,
+    padding: 30,
   },
+
+
 };
-
-
 
 const ReviewFormContainer = ({onSubmit}) => {
   const validationSchema = yup.object().shape({
@@ -85,7 +81,7 @@ const ReviewFormContainer = ({onSubmit}) => {
             />
             <Pressable testID='reviewSubmit' onPress={handleSubmit}>
               <View style={theme.button}>
-                <Text style={theme.buttonText}>Log in</Text>
+                <Text style={theme.buttonText}>Submit</Text>
               </View>
             </Pressable>
           </View>
@@ -103,9 +99,7 @@ const ReviewForm = () => {
     await postReview({repositoryName,ownerName,rating, review});
     console.log(data);
   };
-  return (
-    <ReviewFormContainer onSubmit={onSubmit}/>
-  );
+  return <ReviewFormContainer onSubmit={onSubmit}/>;
 };
 
 export default ReviewForm;
