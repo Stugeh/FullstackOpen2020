@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import {useLazyQuery} from '@apollo/client';
+import {useQuery} from '@apollo/client';
 import {GET_REPOSITORIES} from '../graphql/queries';
 
 const SORTS = {
@@ -18,17 +18,20 @@ const SORTS = {
 };
 
 const useRepositories = (selectedSort, search) => {
-  const [fetchRepositories, { loading, data, refetch, fetchMore }] = useLazyQuery(
-    GET_REPOSITORIES,
-    {fetchPolicy: 'cache-and-network'}
-  );
-
   const sort = SORTS[selectedSort];
   const variables = {
     orderBy: sort.orderBy,
     orderDirection: sort.orderDirection,
     search
   };
+  const { loading, data, refetch, fetchMore } = useQuery(
+    GET_REPOSITORIES,
+    {
+      fetchPolicy: 'cache-and-network', 
+      variables
+    }
+  );
+
 
   const handleFetchMore = () => {
     const canFetchMore = !loading && data?.repositories.pageInfo.hasNextPage;
@@ -42,10 +45,6 @@ const useRepositories = (selectedSort, search) => {
       },
     });
   };
-
-  useEffect(() => {
-    fetchRepositories({variables});
-  }, [selectedSort, search]);
 
   return { 
     repositories: data ? data.repositories : undefined,
