@@ -17,7 +17,7 @@ const SORTS = {
   },
 };
 
-const useRepositories = (selectedSort) => {
+const useRepositories = (selectedSort, search) => {
   const [fetchRepositories, { loading, data, refetch }] = useLazyQuery(
     GET_REPOSITORIES,
     {fetchPolicy: 'cache-and-network'}
@@ -29,9 +29,10 @@ const useRepositories = (selectedSort) => {
       variables: {
         orderBy: sort.orderBy,
         orderDirection: sort.orderDirection,
+        search
       }
     });
-  }, [selectedSort]);
+  }, [selectedSort, search]);
 
   return { 
     repositories: data ? data.repositories : undefined,
