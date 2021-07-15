@@ -6,7 +6,7 @@ import {format} from 'date-fns';
 
 import theme from '../theme';
 
-import { GET_REPO_BY_ID } from '../graphql/queries';
+import useSingleRepo from '../hooks/useSingleRepo';
 import Text, {Heading} from '../components/Text';
 import { RepositoryItemContainer } from './RepositoryList/RepositoryItem';
 
@@ -57,33 +57,25 @@ const Separator = () => (<View style={styles.separator}/>);
 
 const SingleRepo = () => {
   const {id} = useParams();
-  const {data, loading, error} = useQuery(
-    GET_REPO_BY_ID,
-    {   
-      variables: {id},
-      fetchPolicy:'cache-and-network'
-    }
-  );
+  const {loading, error, repository, reviews, fetchMore} = useSingleRepo(id);
 
-
-  const reviews = data?.repository?.reviews?.edges.map(edge => edge.node);
-
-  if (loading) return <Heading>loading</Heading>;
-  if(error) return <Heading>Error occurred</Heading>;
+  const cleanReviews = reviews?.edges.map(edge => edge.node);
+  
   return (
     <FlatList
-      data={reviews}
+      data={cleanReviews}
       renderItem={({ item }) => <ReviewItem review={item} />}
       keyExtractor={({ id }) => id}
       ItemSeparatorComponent={Separator}
       ListHeaderComponent={() => (
         <View> 
           <RepositoryItemContainer
-            item={data.repository} singleRepoView />
+            item={repository} singleRepoView />
           <Separator/>
         </View>
-      )
-      }
+      )}
+      onEndReached={fetchMore}
+      onEndReachedThreshold={0.1}
     />
 
   );
