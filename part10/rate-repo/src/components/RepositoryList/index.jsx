@@ -5,6 +5,7 @@ import {Picker} from '@react-native-picker/picker';
 import theme from '../../theme';
 import RepositoryItem from './RepositoryItem';
 import useRepositories from '../../hooks/useRepositories';
+import { Heading } from '../Text';
 
 
 const styles = StyleSheet.create({
@@ -46,6 +47,7 @@ const RepositoryList = () => {
         <Picker
           selectedValue={selectedSort}
           onValueChange={(itemValue)=> setSelectedSort(itemValue)}
+          prompt='Sort by'
         >
           <Picker.Item label='Latest' value='latest'/>
           <Picker.Item label='Highest Rated' value='ratingHigh'/>
