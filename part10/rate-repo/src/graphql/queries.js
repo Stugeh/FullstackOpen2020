@@ -23,6 +23,12 @@ query fetchRepositories(
           ratingAverage
           reviewCount
         }
+        cursor
+      }
+      pageInfo{
+        endCursor
+        startCursor
+        hasNextPage
       }
     }
   }
