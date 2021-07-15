@@ -48,7 +48,7 @@ const RepoListHeader = ({props}) => {
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-export const RepositoryListContainer = ({repositories, ...props}) => {
+export const RepositoryListContainer = ({repositories, onEndReach, ...props}) => {
   const repositoryNodes = repositories
     ? repositories.edges.map(edge => edge.node)
     : [];
@@ -61,6 +61,8 @@ export const RepositoryListContainer = ({repositories, ...props}) => {
       renderItem={({item}) => <RepositoryItem item={item}/>}
       keyExtractor={repo => repo.id}
       contentContainerStyle={{ paddingBottom: 80 }}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.5}
     />
   );
 };
@@ -70,6 +72,11 @@ const RepositoryList = () => {
   const [search, setSearch] = useState('');
   const [debouncedSearch] = useDebounce(search, 500);
   const { repositories } = useRepositories(selectedSort, debouncedSearch);
+  
+  const onEndReach = () => {
+    console.log('You have reached the end of the list');
+  };
+  
   return (
     <View style={styles.container}>
       <RepositoryListContainer 
@@ -78,6 +85,7 @@ const RepositoryList = () => {
         selectedSort={selectedSort}
         setSelectedSort={setSelectedSort}
         repositories={repositories}
+        onEndReach={onEndReach}
       />
     </View>
   );
