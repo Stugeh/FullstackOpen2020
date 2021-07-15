@@ -5,11 +5,14 @@ query fetchRepositories(
     $orderDirection: OrderDirection
     $orderBy: AllRepositoriesOrderBy
     $search: String
+    $after: String
   ) {
     repositories(
       searchKeyword: $search
       orderDirection: $orderDirection
       orderBy: $orderBy
+      after: $after
+      first: 5
     ) {
       edges {
         node {
