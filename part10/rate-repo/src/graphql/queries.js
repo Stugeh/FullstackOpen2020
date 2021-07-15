@@ -38,7 +38,7 @@ query fetchRepositories(
 `;
 
 export const GET_REPO_BY_ID = gql`
-    query getRepo($id: ID!) {
+    query getRepo($id: ID! $after: String) {
         repository(id: $id){
             id
             fullName
@@ -50,7 +50,7 @@ export const GET_REPO_BY_ID = gql`
             ratingAverage
             reviewCount
             url
-            reviews {
+            reviews (first: 4 after: $after){
                 edges {
                   node {
                     id
@@ -62,6 +62,12 @@ export const GET_REPO_BY_ID = gql`
                       username
                     }
                   }
+                  cursor
+                }
+                pageInfo{
+                  endCursor
+                  startCursor
+                  hasNextPage
                 }
               }
         }
