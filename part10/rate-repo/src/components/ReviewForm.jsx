@@ -94,19 +94,19 @@ const ReviewFormContainer = ({onSubmit}) => {
 
 const ReviewForm = () => {
   const history = useHistory();
-  const [postReview, {data}] = useMutation(POST_REVIEW);
+  const [postReview] = useMutation(POST_REVIEW);
   
   const onSubmit = async (values) => {
     try{
       const { repositoryName,ownerName,rating,text } = values;
-      await postReview({
+      const res = await postReview({
         variables:{
           review:{
             repositoryName,ownerName,rating: parseInt(rating), text
           }
         }
       });
-      history.push(`/${data.createReview.repositoryId}`);
+      history.push(`/${res.data.createReview.repositoryId}`);
     }catch(err){
       console.log(`error:`, err);
     }
