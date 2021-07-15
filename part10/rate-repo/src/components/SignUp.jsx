@@ -26,7 +26,7 @@ const styles = {
   },
 };
 
-const SignUpContainer = (onSubmit) => {
+const SignUpContainer = ({onSubmit}) => {
   const validationSchema = yup.object().shape({
     username: yup.string().min(1).max(30).required('Username is required'),
     password: yup.string().min(5).max(50).required('Password is required'),
@@ -85,9 +85,16 @@ const SignUpContainer = (onSubmit) => {
 const SignUp = () => {
   const [postUser, {data}] = useMutation(SIGN_UP); 
   const history = useHistory();
+  
   const createUser = async ({username, password}) => {
     try{
-      await postUser({variables:{username, password}});
+      await postUser({
+        variables:{
+          user:{
+            username, password
+          }
+        }
+      });
       history.push('/login');
     }catch(err){
       console.log(`ERROR: `, err);
