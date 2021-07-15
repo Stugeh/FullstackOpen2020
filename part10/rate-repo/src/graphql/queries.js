@@ -12,7 +12,7 @@ query fetchRepositories(
       orderDirection: $orderDirection
       orderBy: $orderBy
       after: $after
-      first: 5
+      first: 8
     ) {
       edges {
         node {
