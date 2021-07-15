@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, FlatList, StyleSheet} from 'react-native';
 import {useParams} from 'react-router-native';
-import {useQuery} from '@apollo/client';
 import {format} from 'date-fns';
 
 import theme from '../theme';
@@ -57,10 +56,10 @@ const Separator = () => (<View style={styles.separator}/>);
 
 const SingleRepo = () => {
   const {id} = useParams();
-  const {loading, error, repository, reviews, fetchMore} = useSingleRepo(id);
+  const {repository, reviews, fetchMore} = useSingleRepo(id);
 
   const cleanReviews = reviews?.edges.map(edge => edge.node);
-  
+
   return (
     <FlatList
       data={cleanReviews}
