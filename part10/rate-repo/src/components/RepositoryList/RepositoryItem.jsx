@@ -51,6 +51,9 @@ export const RepositoryItemContainer = ({
   singleRepoView=false,
   pressHandler=()=>{},
 }) => {
+
+  if(!item) return <View></View>;
+  
   const {
     id,
     stargazersCount,
@@ -98,6 +101,7 @@ export const RepositoryItemContainer = ({
 
 const RepositoryItem = ({item}) => {
   const history = useHistory();
+  
   const openRepoView = (id) => {
     history.push(`/${id}`);
   };
