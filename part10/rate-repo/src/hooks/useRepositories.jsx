@@ -18,24 +18,38 @@ const SORTS = {
 };
 
 const useRepositories = (selectedSort, search) => {
-  const [fetchRepositories, { loading, data, refetch }] = useLazyQuery(
+  const [fetchRepositories, { loading, data, refetch, fetchMore }] = useLazyQuery(
     GET_REPOSITORIES,
     {fetchPolicy: 'cache-and-network'}
   );
 
-  useEffect(() => {
-    const sort = SORTS[selectedSort];
-    fetchRepositories({
+  const sort = SORTS[selectedSort];
+  const variables = {
+    orderBy: sort.orderBy,
+    orderDirection: sort.orderDirection,
+    search
+  };
+
+  const handleFetchMore = () => {
+    const canFetchMore = !loading && data?.repositories.pageInfo.hasNextPage;
+    if (!canFetchMore) {
+      return;
+    }
+    fetchMore({
       variables: {
-        orderBy: sort.orderBy,
-        orderDirection: sort.orderDirection,
-        search
-      }
+        after: data.repositories.pageInfo.endCursor,
+        ...variables,
+      },
     });
+  };
+
+  useEffect(() => {
+    fetchRepositories({variables});
   }, [selectedSort, search]);
 
   return { 
     repositories: data ? data.repositories : undefined,
+    fetchMore: handleFetchMore,
     loading,
     refetch
   };
