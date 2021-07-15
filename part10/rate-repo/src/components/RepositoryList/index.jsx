@@ -9,7 +9,9 @@ import useRepositories from '../../hooks/useRepositories';
 
 const styles = StyleSheet.create({
   picker: {
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: theme.colors.appbar
   },
   separator: {
     height: 5,
@@ -50,6 +52,7 @@ const RepositoryList = () => {
           <Picker.Item label='Lowest Rated' value='ratingLow'/>
         </Picker>
       </View>
+      <View style={styles.separator}/>
       <RepositoryListContainer repositories={repositories}/>
     </View>
   );

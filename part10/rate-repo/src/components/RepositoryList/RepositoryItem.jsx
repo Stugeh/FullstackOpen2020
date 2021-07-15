@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     padding: 10,
     flexDirection: 'column',
     borderWidth: 1,
+    borderColor: theme.colors.appbar,
     backgroundColor: '#ffffff'
   },
   header:{
