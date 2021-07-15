@@ -40,15 +40,16 @@ const RepositoryList = () => {
   const { repositories } = useRepositories(selectedSort);
   return (
     <View style={styles.container}>
-      <Picker
-        style={styles.picker}
-        selectedValue={selectedSort}
-        onValueChange={(itemValue)=> setSelectedSort(itemValue)}
-      >
-        <Picker.Item label='Latest' value='latest'/>
-        <Picker.Item label='Highest Rated' value='ratingHigh'/>
-        <Picker.Item label='Lowest Rated' value='ratingLow'/>
-      </Picker>
+      <View style={styles.picker}>
+        <Picker
+          selectedValue={selectedSort}
+          onValueChange={(itemValue)=> setSelectedSort(itemValue)}
+        >
+          <Picker.Item label='Latest' value='latest'/>
+          <Picker.Item label='Highest Rated' value='ratingHigh'/>
+          <Picker.Item label='Lowest Rated' value='ratingLow'/>
+        </Picker>
+      </View>
       <RepositoryListContainer repositories={repositories}/>
     </View>
   );
