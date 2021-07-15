@@ -83,7 +83,7 @@ const SignUpContainer = ({onSubmit}) => {
 };
 
 const SignUp = () => {
-  const [postUser, {data}] = useMutation(SIGN_UP); 
+  const [postUser] = useMutation(SIGN_UP); 
   const history = useHistory();
   
   const createUser = async ({username, password}) => {
@@ -102,8 +102,8 @@ const SignUp = () => {
   };
 
   return (
-    <View>
-      <Heading>sign up</Heading>
+    <View style={styles.container}>
+      <Heading style={{paddingLeft:30}}>Sign Up</Heading>
       <SignUpContainer onSubmit={createUser}/>
     </View>
   );
