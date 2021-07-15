@@ -59,7 +59,6 @@ const SingleRepo = () => {
   const {repository, reviews, fetchMore} = useSingleRepo(id);
 
   const cleanReviews = reviews?.edges.map(edge => edge.node);
-
   return (
     <FlatList
       data={cleanReviews}
