@@ -32,7 +32,7 @@ const SignUpContainer = (onSubmit) => {
     password: yup.string().min(5).max(50).required('Password is required'),
     passwordConfirmation: yup
       .string()
-      .oneOf([yup.ref('password'), null])
+      .oneOf([yup.ref('password'), null], 'Confirmation doesn\'t match password')
       .required('Password confirmation is required'),
   });
   const initialValues = {
