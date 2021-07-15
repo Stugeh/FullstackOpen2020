@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const RepoListHeader = ({selectedSort, setSelectedSort}) => {
+const RepoListHeader = ({props}) => {
+  const {selectedSort, setSelectedSort} = props;
   return(
     <View>
       <View style={styles.picker}>
@@ -41,19 +42,14 @@ const RepoListHeader = ({selectedSort, setSelectedSort}) => {
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-export const RepositoryListContainer = ({repositories, selectedSort, setSelectedSort}) => {
+export const RepositoryListContainer = ({repositories, ...props}) => {
   const repositoryNodes = repositories
     ? repositories.edges.map(edge => edge.node)
     : [];
 
   return (
     <FlatList
-      ListHeaderComponent={
-        <RepoListHeader 
-          selectedSort={selectedSort}
-          setSelectedSort={setSelectedSort}
-        />
-      }
+      ListHeaderComponent={<RepoListHeader props={props}/>}
       data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
       renderItem={({item}) => <RepositoryItem item={item}/>}
