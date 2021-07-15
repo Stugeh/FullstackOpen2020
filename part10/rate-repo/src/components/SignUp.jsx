@@ -1,12 +1,12 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, Pressable} from 'react-native';
 import {Formik} from 'formik';
 import {useMutation} from '@apollo/client';
 import {useHistory} from 'react-router-native';
 import * as yup from 'yup';
 
 import FormikTextInput from './FormikTextInput';
-import { Heading } from './Text';
+import Text, { Heading } from './Text';
 import { SIGN_UP } from '../graphql/mutations';
 
 import theme from '../theme';
@@ -47,7 +47,35 @@ const SignUpContainer = (onSubmit) => {
         initialValues={initialValues}
         onSubmit={onSubmit}
       >
-            
+        {({handleSubmit}) => (
+          <View style={styles.form}>
+            <FormikTextInput
+              testID='signUpUsernameInput'
+              style={styles.field}
+              placeholder='Username'
+              name='username'
+            />
+            <FormikTextInput
+              testID='signUpPasswordInput'
+              style={styles.field}
+              placeholder='Password'
+              name='password'
+              secureTextEntry
+            />
+            <FormikTextInput
+              testID='signUpPasswordConfirmInput'
+              style={styles.field}
+              placeholder='Password'
+              name='passwordConfirmation'
+              secureTextEntry
+            />
+            <Pressable testID='reviewSubmit' onPress={handleSubmit}>
+              <View style={theme.bigButton}>
+                <Text style={theme.buttonText}>Sign Up</Text>
+              </View>
+            </Pressable>
+          </View>
+        )}
       </Formik>
  
     </View>
