@@ -2,7 +2,8 @@ import React, {useState} from 'react';
 import { FlatList, View, StyleSheet } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import { Searchbar } from 'react-native-paper';
-
+import {useDebounce} from 'use-debounce';
+ 
 import theme from '../../theme';
 import RepositoryItem from './RepositoryItem';
 import useRepositories from '../../hooks/useRepositories';
@@ -67,7 +68,8 @@ export const RepositoryListContainer = ({repositories, ...props}) => {
 const RepositoryList = () => {
   const [selectedSort, setSelectedSort] = useState('latest');
   const [search, setSearch] = useState('');
-  const { repositories } = useRepositories(selectedSort, search);
+  const [debouncedSearch] = useDebounce(search, 500);
+  const { repositories } = useRepositories(selectedSort, debouncedSearch);
   return (
     <View style={styles.container}>
       <RepositoryListContainer 
