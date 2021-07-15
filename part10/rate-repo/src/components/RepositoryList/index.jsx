@@ -20,15 +20,40 @@ const styles = StyleSheet.create({
   },
 });
 
+const RepoListHeader = ({selectedSort, setSelectedSort}) => {
+  return(
+    <View>
+      <View style={styles.picker}>
+        <Picker
+          selectedValue={selectedSort}
+          onValueChange={(itemValue)=> setSelectedSort(itemValue)}
+          prompt='Sort by'
+        >
+          <Picker.Item label='Latest' value='latest'/>
+          <Picker.Item label='Highest Rated' value='ratingHigh'/>
+          <Picker.Item label='Lowest Rated' value='ratingLow'/>
+        </Picker>
+      </View>
+      <ItemSeparator/>
+    </View>
+  );
+};
+
 const ItemSeparator = () => <View style={styles.separator} />;
 
-export const RepositoryListContainer = ({repositories}) => {
+export const RepositoryListContainer = ({repositories, selectedSort, setSelectedSort}) => {
   const repositoryNodes = repositories
     ? repositories.edges.map(edge => edge.node)
     : [];
 
   return (
     <FlatList
+      ListHeaderComponent={
+        <RepoListHeader 
+          selectedSort={selectedSort}
+          setSelectedSort={setSelectedSort}
+        />
+      }
       data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
       renderItem={({item}) => <RepositoryItem item={item}/>}
@@ -43,19 +68,11 @@ const RepositoryList = () => {
   const { repositories } = useRepositories(selectedSort);
   return (
     <View style={styles.container}>
-      <View style={styles.picker}>
-        <Picker
-          selectedValue={selectedSort}
-          onValueChange={(itemValue)=> setSelectedSort(itemValue)}
-          prompt='Sort by'
-        >
-          <Picker.Item label='Latest' value='latest'/>
-          <Picker.Item label='Highest Rated' value='ratingHigh'/>
-          <Picker.Item label='Lowest Rated' value='ratingLow'/>
-        </Picker>
-      </View>
-      <View style={styles.separator}/>
-      <RepositoryListContainer repositories={repositories}/>
+      <RepositoryListContainer 
+        selectedSort={selectedSort}
+        setSelectedSort={setSelectedSort}
+        repositories={repositories}
+      />
     </View>
   );
 };
