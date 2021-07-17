@@ -1,10 +1,19 @@
 import React from 'react';
-import {View, FlatList, StyleSheet, Pressable} from 'react-native';
+import {
+  View,
+  FlatList,
+  StyleSheet,
+  Pressable,
+  Alert
+} from 'react-native';
 import {useParams, useHistory} from 'react-router-native';
 import {format} from 'date-fns';
+import {useMutation} from '@apollo/client';
 
 import theme from '../theme';
 
+import {DELETE_REVIEW} from '../graphql/mutations';
+import { IS_AUTHORIZED } from '../graphql/queries';
 import useSingleRepo from '../hooks/useSingleRepo';
 import Text, {Heading} from '../components/Text';
 import { RepositoryItemContainer } from './RepositoryList/RepositoryItem';
@@ -54,12 +63,38 @@ const styles = StyleSheet.create({
   },
 });
 
-export const ReviewItem = ({review, showButtons=true}) => {
+export const ReviewItem = ({review, showButtons=false}) => {
   const {text, rating, createdAt, user} = review;
+  const [deleteReview] = useMutation(DELETE_REVIEW,{
+    variables:{
+      id: review.id
+    },
+    refetchQueries: [
+      {
+        query:IS_AUTHORIZED,
+        variables:{includeReviews:true}
+      }
+    ]
+  });
   const history = useHistory('');
   
-  const deleteReview = () => {
-    console.log('delete');
+  const removeReview = async () => {
+    Alert.alert(
+      'Are you sure?',
+      'you\'re about to delete this review',
+      [
+        {
+          text: "Cancel",
+          style: "cancel"
+        },
+        { 
+          text: "OK",
+          onPress: () => {
+            deleteReview();
+          } 
+        }
+      ]
+    );
   };
 
   return (
@@ -82,7 +117,10 @@ export const ReviewItem = ({review, showButtons=true}) => {
             }}>
               <Heading style={{color:'white'}}>View repository</Heading>
             </Pressable>
-            <Pressable style={styles.deleteReview} onPress={deleteReview}>
+            <Pressable 
+              style={styles.deleteReview} 
+              onPress={removeReview}
+            >
               <Heading style={{color:'white'}}>Delete review</Heading>
             </Pressable>
           </View>
