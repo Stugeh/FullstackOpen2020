@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const ReviewItem = ({review}) => {
+export const ReviewItem = ({review}) => {
   const {text, rating, createdAt, user} = review;
   return (
     <View style={styles.reviewContainer}>
