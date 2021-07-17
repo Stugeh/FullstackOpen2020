@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export const ReviewItem = ({review}) => {
+export const ReviewItem = ({review, showButtons=true}) => {
   const {text, rating, createdAt, user} = review;
   return (
     <View style={styles.reviewContainer}>
@@ -49,6 +49,13 @@ export const ReviewItem = ({review}) => {
         <Text>{format(new Date(createdAt), 'dd/mm/yyyy')}</Text>
         <Text>{text}</Text>
       </View>
+      {showButtons 
+        ? (
+          <View style={styles.cardButtons}>
+            
+          </View>
+        ) : null
+      }
     </View>
   );
 };
