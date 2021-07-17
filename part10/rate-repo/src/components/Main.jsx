@@ -40,7 +40,7 @@ const Main = () => {
         <Route path="/sign-up">
           <SignUp/>
         </Route>
-        <Route path='my-reviews'>
+        <Route path='/my-reviews'>
           <MyReviews/>
         </Route>
         <Route path="/:id">
