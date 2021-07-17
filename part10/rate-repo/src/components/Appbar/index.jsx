@@ -32,6 +32,7 @@ const AppBar = () => {
         ? (
           <View style={{flexDirection: 'row'}}>
             <Tab route='/review-form'>Create a review</Tab>
+            <Tab route='/my-reviews'>My Reviews</Tab>
             <Tab route='/' callback={logout}>Log out</Tab>
           </View>
         )
