@@ -89,7 +89,8 @@ export const IS_AUTHORIZED = gql`
                   user {
                     id
                     username
-                  }           
+                  }
+                  repositoryId           
                 }
                 cursor
               }
