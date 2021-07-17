@@ -7,6 +7,7 @@ const theme = {
     separator: '#dddedc', 
     primary: '#0366d6',
     appbar: '#3c9600',
+    danger: '#d9534f'
   },
   fontSizes: {
     body: 14,
