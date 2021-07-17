@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, FlatList, StyleSheet} from 'react-native';
-import {useParams} from 'react-router-native';
+import {View, FlatList, StyleSheet, Pressable} from 'react-native';
+import {useParams, useHistory} from 'react-router-native';
 import {format} from 'date-fns';
 
 import theme from '../theme';
@@ -10,10 +10,12 @@ import Text, {Heading} from '../components/Text';
 import { RepositoryItemContainer } from './RepositoryList/RepositoryItem';
 
 const styles = StyleSheet.create({
-  reviewContainer:{
-    flex: 1,
+  card:{
     backgroundColor: 'white',
     padding: 10,
+  },
+  reviewContainer:{
+    flex: 1,
     flexDirection: 'row',
   },
   rating:{
@@ -34,25 +36,55 @@ const styles = StyleSheet.create({
   separator: {
     height: 5,
     backgroundColor: theme.colors.separator
-  }
+  },
+  cardButtons:{
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop:10,
+  },
+  viewRepo:{
+    backgroundColor: theme.colors.primary,
+    padding: 10,
+    borderRadius: 10
+  },
+  deleteReview:{
+    backgroundColor: theme.colors.danger,
+    padding:10,
+    borderRadius: 10
+  },
 });
 
 export const ReviewItem = ({review, showButtons=true}) => {
   const {text, rating, createdAt, user} = review;
+  const history = useHistory('');
+  
+  const deleteReview = () => {
+    console.log('delete');
+  };
+
   return (
-    <View style={styles.reviewContainer}>
-      <Heading style={styles.rating}>
-        {rating}
-      </Heading>
-      <View style={styles.body}>
-        <Heading>{user.username}</Heading>
-        <Text>{format(new Date(createdAt), 'dd/mm/yyyy')}</Text>
-        <Text>{text}</Text>
+    <View style={styles.card}>
+      <View style={styles.reviewContainer}>
+        <Heading style={styles.rating}>
+          {rating}
+        </Heading>
+        <View style={styles.body}>
+          <Heading>{user.username}</Heading>
+          <Text>{format(new Date(createdAt), 'dd/mm/yyyy')}</Text>
+          <Text>{text}</Text>
+        </View>
       </View>
       {showButtons 
         ? (
           <View style={styles.cardButtons}>
-            
+            <Pressable style={styles.viewRepo} onPress={()=>{
+              history.push(`/${review.repositoryId}`);
+            }}>
+              <Heading style={{color:'white'}}>View repository</Heading>
+            </Pressable>
+            <Pressable style={styles.deleteReview} onPress={deleteReview}>
+              <Heading style={{color:'white'}}>Delete review</Heading>
+            </Pressable>
           </View>
         ) : null
       }
