@@ -12,8 +12,14 @@ const SIGN_IN = gql`
 `;
 
 export const POST_REVIEW = gql`
-    mutation review($review: CreateReviewInput!) {
+    mutation addReview($review: CreateReviewInput!) {
         createReview(review: $review){repositoryId}
+  }
+`;
+
+export const DELETE_REVIEW = gql`
+  mutation removeReview($id: ID!){
+      deleteReview(id: $id)
   }
 `;
 
