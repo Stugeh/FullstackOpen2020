@@ -1,9 +1,17 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, FlatList} from 'react-native';
 import {useQuery} from '@apollo/client';
 
 import { IS_AUTHORIZED } from '../graphql/queries';
 import {ReviewItem} from './SingleRepo'; 
+import theme from '../theme';
+
+const styles = {
+  separator: {
+    height: 5,
+    backgroundColor: theme.colors.separator
+  }
+};
 
 const MyReviews = () => {
   const {data} = useQuery(IS_AUTHORIZED,{
@@ -12,11 +20,15 @@ const MyReviews = () => {
       includeReviews: true
     },
   });
-  console.log(data);
+  const reviews = data?.authorizedUser?.reviews?.edges.map(edge => edge.node);
+  
   return (
-    <View>
-            
-    </View>
+    <FlatList
+      data={reviews}
+      renderItem={({ item }) => <ReviewItem review={item} />}
+      ItemSeparatorComponent={()=><View style={styles.separator}/>}
+      keyExtractor={({ id }) => id}
+    />
   );
 };
 
