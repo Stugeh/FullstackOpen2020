@@ -9,7 +9,7 @@ const {PubSub} = require('apollo-server');
 const pubsub = new PubSub();
 
 //* move to .env asap *//
-const MONGO_URI = 'mongodb+srv://Stugeh:CwQxTeWrgycl1jwa@cluster0-cj4cb.mongodb.net/Library?retryWrites=true&w=majority';
+;
 const SECRET = 'secret';
 
 mongoose.connect(
