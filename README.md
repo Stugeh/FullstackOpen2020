@@ -15,7 +15,7 @@ Coursework for open fullstack course from University of Helsinki https://fullsta
 * phonebook
 
 ### part3 Programming a server with NODEJS and Express
-* [Phonebook]: https://github.com/Stugeh/Phonebook.git
+* [Phonebook](https://github.com/Stugeh/Phonebook.git)
 
 ### part4 Testing and user management backend
 * Bloglist
@@ -46,5 +46,5 @@ Coursework for open fullstack course from University of Helsinki https://fullsta
 * rate-repo
 
 ### part 11 CI/CD
-* [pokedex]: https://github.com/Stugeh/full-stack-open-pokedex
-* [VaxData]: https://github.com/Stugeh/VaxData
+* [pokedex](https://github.com/Stugeh/full-stack-open-pokedex)
+* [VaxData](https://github.com/Stugeh/VaxData)
